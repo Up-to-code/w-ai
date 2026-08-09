@@ -66,6 +66,10 @@ import { createPortal } from "react-dom";
 import { toast } from "sonner";
 
 import {
+  isLegacyPuckPageData,
+  legacyPageKey,
+} from "@/lib/qentrah/legacy-page-data";
+import {
   createQentrahPageData,
   isQentrahPageData,
 } from "@/lib/qentrah/page-data";
@@ -89,6 +93,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { QentrahColorPicker } from "@/components/qentrah/color-picker-field";
+import { LegacyPageAdapter } from "@/components/qentrah/legacy-page-adapter";
 import { ThemePanel } from "@/components/qentrah/theme-panel";
 
 import {
@@ -225,13 +230,13 @@ function StarterPage({ title, slug }: { title: string; slug: string }) {
               fontSize={18}
               weight={650}
             />
+            <QText as="h3" text="Add your content" fontSize={18} weight={650} />
             <QText
               as="h3"
-              text="Add your content"
+              text="Publish when ready"
               fontSize={18}
               weight={650}
             />
-            <QText as="h3" text="Publish when ready" fontSize={18} weight={650} />
           </CraftElement>
         </CraftElement>
       </CraftElement>
@@ -4035,7 +4040,12 @@ function EditorWorkspace({
                       : undefined
                   }
                 >
-                  {StarterPage({ title, slug: props.pageSlug })}
+                  {isLegacyPuckPageData(props.initialData)
+                    ? LegacyPageAdapter({
+                        data: props.initialData,
+                        locale: props.locale,
+                      })
+                    : StarterPage({ title, slug: props.pageSlug })}
                 </Frame>
               </QentrahViewportProvider>
             </div>
@@ -4062,7 +4072,7 @@ export function QentrahPageEditor(props: PageEditorProps) {
     () =>
       isQentrahPageData(props.initialData)
         ? props.initialData.serialized
-        : "starter",
+        : legacyPageKey(props.initialData),
     [props.initialData],
   );
   return (
