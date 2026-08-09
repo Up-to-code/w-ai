@@ -27,12 +27,16 @@ const KEYWORDS = [
 export function LayoutLengthControl({
   value,
   onChange,
-}: Pick<FieldProps, "value" | "onChange">) {
+  label = "Size",
+}: Pick<FieldProps, "value" | "onChange"> & { label?: string }) {
   const parsed = parseFlexibleLength(value);
   const mode = parsed.keyword ?? parsed.unit;
 
   return (
-    <div className="flex min-w-0 items-center gap-1.5">
+    <div className="grid min-w-0 grid-cols-[54px_minmax(0,1fr)_82px] items-center gap-1.5">
+      <span className="truncate text-[11px] font-medium text-muted-foreground">
+        {label}
+      </span>
       <Input
         type="number"
         step="any"
@@ -44,7 +48,7 @@ export function LayoutLengthControl({
           )
         }
         className="h-8 min-w-0 flex-1 rounded-md px-2 text-xs"
-        aria-label="Size value"
+        aria-label={`${label} value`}
       />
       <Select
         value={mode}
@@ -53,7 +57,10 @@ export function LayoutLengthControl({
           else onChange(`${parsed.amount}${next as LengthUnit}`);
         }}
       >
-        <SelectTrigger className="h-8 w-[86px] rounded-md px-2 text-xs">
+        <SelectTrigger
+          className="h-8 w-full rounded-md px-2 text-xs"
+          aria-label={`${label} unit`}
+        >
           <SelectValue />
         </SelectTrigger>
         <SelectContent>

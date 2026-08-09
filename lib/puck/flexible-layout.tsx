@@ -33,6 +33,16 @@ export const DEFAULT_FLEXIBLE_LAYOUT: FlexibleLayout = {
   align: "start",
 };
 
+export function withFlexibleLayoutDefaults(value: unknown): FlexibleLayout {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return { ...DEFAULT_FLEXIBLE_LAYOUT };
+  }
+  return {
+    ...DEFAULT_FLEXIBLE_LAYOUT,
+    ...(value as Partial<FlexibleLayout>),
+  };
+}
+
 const KEYWORDS = new Set([
   "auto",
   "none",

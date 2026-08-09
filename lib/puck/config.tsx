@@ -4,7 +4,7 @@ import {
   CmsCollectionBlock,
   CmsFieldBlock,
 } from "@/components/qentrah/cms-collection-block";
-import { LayoutLengthControl } from "@/components/qentrah/layout-length-control";
+import { LayoutInspectorControl } from "@/components/qentrah/layout-inspector-control";
 
 import {
   BuilderSection,
@@ -91,37 +91,10 @@ const localizedTextareaField = (label: string) => ({
   label,
 });
 
-const layoutLengthField = (label: string) => ({
-  type: "custom" as const,
-  label,
-  render: LayoutLengthControl,
-});
-
 const flexibleLayoutField = {
-  type: "object" as const,
-  label: "Size & position",
-  objectFields: {
-    width: layoutLengthField("Width"),
-    height: layoutLengthField("Height"),
-    minWidth: layoutLengthField("Minimum width"),
-    minHeight: layoutLengthField("Minimum height"),
-    maxWidth: layoutLengthField("Maximum width"),
-    maxHeight: layoutLengthField("Maximum height"),
-    offsetX: layoutLengthField("Horizontal offset"),
-    offsetY: layoutLengthField("Vertical offset"),
-    grow: { type: "number" as const, label: "Flex grow", min: 0, step: 1 },
-    shrink: { type: "number" as const, label: "Flex shrink", min: 0, step: 1 },
-    align: {
-      type: "radio" as const,
-      label: "Align in parent",
-      options: [
-        { label: "Start", value: "start" },
-        { label: "Center", value: "center" },
-        { label: "End", value: "end" },
-        { label: "Stretch", value: "stretch" },
-      ],
-    },
-  },
+  type: "custom" as const,
+  label: "Layout",
+  render: LayoutInspectorControl,
 };
 
 const L = (_ar: string, en: string) => en;

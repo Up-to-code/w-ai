@@ -5,9 +5,22 @@ import {
   flexibleLayoutStyle,
   pixelsToFlexibleLength,
   updateComponentLayout,
+  withFlexibleLayoutDefaults,
 } from "./flexible-layout";
 
 describe("flexible Puck layout", () => {
+  it("shows auto sizing for old components without layout data", () => {
+    expect(withFlexibleLayoutDefaults(undefined)).toMatchObject({
+      width: "auto",
+      height: "auto",
+      align: "start",
+    });
+    expect(withFlexibleLayoutDefaults({ width: "50%" })).toMatchObject({
+      width: "50%",
+      height: "auto",
+      maxWidth: "none",
+    });
+  });
   it("normalizes numeric and supported CSS lengths", () => {
     expect(cssLength(320)).toBe("320px");
     expect(cssLength("62.5%")).toBe("62.5%");
