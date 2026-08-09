@@ -1,0 +1,557 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   W-AI Design Token System
+   Foundation: warm neutrals (80-90% of every surface)
+   Schema colors: precise punctuation only (10-20%)
+   ============================================================ */
+
+@layer base {
+  :root {
+    /* --- Foundation palette --- */
+    /* W Black  #111111 → HSL 0 0% 6.7% */
+    /* Carbon   #242424 → HSL 0 0% 14.1% */
+    /* Graphite #6B6B6B → HSL 0 0% 42% */
+    /* Mist     #E9E9E7 → HSL 60 3% 91% */
+    /* Canvas   #F7F7F5 → HSL 60 5% 97% */
+    /* White    #FFFFFF */
+
+    /* shadcn semantic tokens mapped to W-AI foundation */
+    --background: 60 5% 97%; /* Canvas  #F7F7F5 — warm white, never cold */
+    --foreground: 0 0% 6.7%; /* W Black #111111 */
+
+    --card: 0 0% 100%; /* Pure White — card surfaces lift slightly */
+    --card-foreground: 0 0% 6.7%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 6.7%;
+
+    /* Primary = W Black (buttons, links, logo) */
+    --primary: 0 0% 6.7%; /* #111111 */
+    --primary-foreground: 0 0% 100%; /* white text on black */
+
+    /* Secondary = Canvas tinted surface */
+    --secondary: 60 3% 91%; /* Mist #E9E9E7 */
+    --secondary-foreground: 0 0% 6.7%;
+
+    --muted: 60 3% 91%; /* Mist */
+    --muted-foreground: 0 0% 42%; /* Graphite #6B6B6B */
+
+    --accent: 60 3% 91%;
+    --accent-foreground: 0 0% 6.7%;
+
+    --destructive: 2 61% 55%; /* W-AI Red #D44C47 */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 60 3% 91%; /* Mist #E9E9E7 — 1px structural lines */
+    --input: 60 3% 91%;
+    --ring: 0 0% 42%; /* Graphite for focus rings */
+
+    /* Radius — architectural, not rounded SaaS */
+    --radius: 0.5rem; /* 8px standard */
+
+    /* --- W-AI Schema Colors (strong variants) --- */
+    /* Used for status tags, badges, state indicators only */
+    --w-blue: 201 53% 43%; /* #337EA9 — CMS / Technology / Data */
+    --w-green: 149 30% 38%; /* #448361 — Live / Published / Available */
+    --w-yellow: 38 63% 49%; /* #CB912F — Development / Pending */
+    --w-orange: 27 90% 44%; /* #D9730D — Important / Launch */
+    --w-red: 2 61% 55%; /* #D44C47 — Critical / Error */
+    --w-purple: 279 27% 54%; /* #9065B0 — AI / Automation */
+    --w-pink: 322 44% 53%; /* #C14C8A — Creative / Campaigns */
+    --w-brown: 21 30% 47%; /* #9F6B53 — Land / Materials */
+
+    /* --- W-AI Schema Colors (soft background variants) --- */
+    --w-blue-soft: 201 53% 94%; /* #E7F3F8 */
+    --w-green-soft: 130 20% 93%; /* #EDF3EC */
+    --w-yellow-soft: 45 83% 92%; /* #FBF3DB */
+    --w-orange-soft: 20 83% 93%; /* #FAEBE3 */
+    --w-red-soft: 4 80% 96%; /* #FDECEA */
+    --w-purple-soft: 279 40% 95%; /* #F3ECF7 */
+    --w-pink-soft: 322 60% 96%; /* #FCEEF7 */
+    --w-brown-soft: 21 30% 94%; /* #F4EEEB */
+
+    /* Typography */
+    --font-sans:
+      var(--font-geist-sans), var(--font-tajawal), ui-sans-serif, system-ui,
+      -apple-system, sans-serif;
+    --font-mono:
+      var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo, Monaco,
+      Consolas, monospace;
+
+    /* Shadows — very subtle, architectural not material */
+    --shadow-xs: 0 1px 2px 0 hsl(0 0% 0% / 0.04);
+    --shadow-sm:
+      0 1px 3px 0 hsl(0 0% 0% / 0.06), 0 1px 2px -1px hsl(0 0% 0% / 0.06);
+    --shadow:
+      0 2px 6px -1px hsl(0 0% 0% / 0.08), 0 1px 2px -2px hsl(0 0% 0% / 0.08);
+
+    /* Product motion tokens, aligned to transitions.dev-style reusable snippets. */
+    --t-duration-fast: 160ms;
+    --t-duration-base: 260ms;
+    --t-duration-slow: 420ms;
+    --t-ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+    --t-distance-sm: 6px;
+    --t-distance-md: 14px;
+    --t-scale-press: 0.985;
+  }
+
+  /* ============================================================
+     Dark mode (Carbon surface, inverted text)
+     ============================================================ */
+  .dark {
+    --background: 0 0% 8%; /* near #141414 */
+    --foreground: 60 5% 95%; /* warm off-white */
+
+    --card: 0 0% 11%;
+    --card-foreground: 60 5% 95%;
+
+    --popover: 0 0% 11%;
+    --popover-foreground: 60 5% 95%;
+
+    --primary: 60 5% 97%; /* inverted: white CTAs */
+    --primary-foreground: 0 0% 6.7%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 60 5% 90%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 55%;
+
+    --accent: 0 0% 15%;
+    --accent-foreground: 60 5% 90%;
+
+    --destructive: 2 61% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 100% / 0.12; /* rgba(255,255,255,.12) per brand spec */
+    --input: 0 0% 100% / 0.12;
+    --ring: 0 0% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 4rem;
+    background-color: hsl(var(--background));
+    /* Lock to light until dark-mode is explicitly implemented */
+    color-scheme: light;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+    /* W-AI: body text is regular weight — never default-bold */
+    font-weight: 400;
+  }
+
+  html[lang="en"] body {
+    font-family:
+      -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+      "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* W-AI structural lines: 1px solid Mist */
+  hr {
+    @apply border-t border-border;
+  }
+
+  /* Crisp architectural focus ring across all interactive controls */
+  *:focus-visible {
+    @apply outline-none ring-1 ring-ring ring-offset-1 ring-offset-background;
+  }
+}
+
+/* ============================================================
+   W-AI utility classes
+   ============================================================ */
+
+@layer utilities {
+  .wf-ui {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+    --secondary: 0 0% 92%;
+    --secondary-foreground: 0 0% 14%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 43%;
+    --accent: 0 0% 95%;
+    --accent-foreground: 0 0% 12%;
+    --border: 0 0% 88%;
+    --input: 0 0% 87%;
+    --ring: 0 0% 12%;
+    font-size: 14px;
+    color: #171717;
+    background: #fff;
+  }
+
+  .wf-ui section,
+  .wf-ui article {
+    border-radius: 6px;
+  }
+
+  .wf-ui .label-meta {
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: #777;
+  }
+
+  .wf-ui .schema-green {
+    background: #edf7ed;
+    color: #27762d;
+  }
+  .wf-ui .schema-yellow {
+    background: #fff6df;
+    color: #8a5a00;
+  }
+  .wf-ui .schema-red {
+    background: #fff0ef;
+    color: #b42318;
+  }
+  .wf-ui .schema-blue,
+  .wf-ui .schema-purple {
+    background: #f1f1ef;
+    color: #2a2a2a;
+  }
+
+  .wf-ui [role="dialog"] {
+    border-radius: 8px;
+    border-color: #dcdcdc;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.16);
+  }
+
+  .wf-ui [role="tablist"] {
+    border-radius: 4px;
+    background: #f1f1f1;
+  }
+
+  .wf-ui main button.bg-foreground,
+  .wf-ui main a.bg-foreground {
+    border-radius: 999px;
+    background: #111;
+    color: #fff;
+  }
+
+  .wf-ui main button.bg-foreground:hover,
+  .wf-ui main a.bg-foreground:hover {
+    background: #333;
+  }
+
+  /* Schema tag — ● CMS  ● Live  ● AI etc. */
+  .tag-schema {
+    @apply inline-flex items-center gap-1.5 rounded-sm px-2 py-0.5 text-xs font-medium tracking-wide;
+  }
+
+  /* Metadata label — WEB / CMS  ·  STATUS · LIVE */
+  .label-meta {
+    @apply font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground;
+  }
+
+  /* Structural card — thin border, no shadow, small or zero radius */
+  .card-structural {
+    @apply rounded-sm border border-border bg-card;
+  }
+
+  /* Number label — 01 / 06 */
+  .label-number {
+    @apply font-mono text-xs tabular-nums text-muted-foreground;
+  }
+
+  /* Text CTA — View project ↗ */
+  .cta-text {
+    @apply inline-flex items-center gap-1 text-sm font-medium underline-offset-4 transition-colors duration-200 hover:underline;
+  }
+}
+
+/* ============================================================
+   W-AI schema color utilities
+   (bg + text pairs for status badges)
+   ============================================================ */
+
+@layer utilities {
+  .schema-blue {
+    background-color: hsl(var(--w-blue-soft));
+    color: hsl(var(--w-blue));
+  }
+  .schema-green {
+    background-color: hsl(var(--w-green-soft));
+    color: hsl(var(--w-green));
+  }
+  .schema-yellow {
+    background-color: hsl(var(--w-yellow-soft));
+    color: hsl(var(--w-yellow));
+  }
+  .schema-orange {
+    background-color: hsl(var(--w-orange-soft));
+    color: hsl(var(--w-orange));
+  }
+  .schema-red {
+    background-color: hsl(var(--w-red-soft));
+    color: hsl(var(--w-red));
+  }
+  .schema-purple {
+    background-color: hsl(var(--w-purple-soft));
+    color: hsl(var(--w-purple));
+  }
+  .schema-pink {
+    background-color: hsl(var(--w-pink-soft));
+    color: hsl(var(--w-pink));
+  }
+  .schema-brown {
+    background-color: hsl(var(--w-brown-soft));
+    color: hsl(var(--w-brown));
+  }
+}
+
+/* ============================================================
+   Motion — 200-400ms smooth easing, never bouncy
+   ============================================================ */
+
+@layer utilities {
+  .transition-brand {
+    transition-property:
+      color, background-color, border-color, opacity, transform;
+    transition-timing-function: var(--t-ease-standard);
+    transition-duration: var(--t-duration-base);
+  }
+
+  .t-page-enter {
+    animation: t-page-enter var(--t-duration-slow) var(--t-ease-standard) both;
+  }
+
+  .t-panel-reveal {
+    animation: t-panel-reveal var(--t-duration-slow) var(--t-ease-standard) both;
+    transform-origin: top center;
+  }
+
+  .t-card-rise {
+    transition:
+      background-color var(--t-duration-base) var(--t-ease-standard),
+      border-color var(--t-duration-base) var(--t-ease-standard),
+      box-shadow var(--t-duration-base) var(--t-ease-standard),
+      transform var(--t-duration-base) var(--t-ease-standard);
+  }
+  .t-card-rise:hover {
+    transform: translateY(calc(var(--t-distance-sm) * -1));
+    box-shadow: var(--shadow-sm);
+  }
+  .t-card-rise:active {
+    transform: translateY(-2px) scale(var(--t-scale-press));
+  }
+
+  .t-row-sweep {
+    transition:
+      background-color var(--t-duration-base) var(--t-ease-standard),
+      color var(--t-duration-base) var(--t-ease-standard),
+      transform var(--t-duration-base) var(--t-ease-standard);
+  }
+  .t-row-sweep:hover {
+    transform: translateX(var(--t-distance-sm));
+  }
+  [dir="rtl"] .t-row-sweep:hover {
+    transform: translateX(calc(var(--t-distance-sm) * -1));
+  }
+
+  .t-number-pop {
+    animation: t-number-pop var(--t-duration-slow) var(--t-ease-standard) both;
+  }
+
+  .t-preview-resize {
+    transition: width var(--t-duration-slow) var(--t-ease-standard);
+  }
+
+  .t-text-swap {
+    animation: t-text-swap var(--t-duration-base) var(--t-ease-standard) both;
+  }
+
+  /* Scroll reveal — translate 12px, fade */
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 350ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 {
+    transition-delay: 80ms;
+  }
+  .reveal-delay-2 {
+    transition-delay: 160ms;
+  }
+  .reveal-delay-3 {
+    transition-delay: 240ms;
+  }
+  .reveal-delay-4 {
+    transition-delay: 320ms;
+  }
+
+  [dir="rtl"] .reveal {
+    transform: translateY(12px);
+  } /* same vertical on RTL */
+
+  @keyframes t-page-enter {
+    from {
+      opacity: 0;
+      transform: translateY(var(--t-distance-md));
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes t-text-swap {
+    from {
+      opacity: 0;
+      transform: translateY(3px);
+      filter: blur(3px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes t-panel-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(var(--t-distance-sm)) scale(0.985);
+      filter: blur(3px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes t-number-pop {
+    0% {
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+      filter: blur(3px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .t-page-enter,
+    .t-panel-reveal,
+    .t-number-pop,
+    .t-text-swap {
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+      animation: none !important;
+      transition: none !important;
+    }
+    .t-card-rise,
+    .t-row-sweep,
+    .t-preview-resize {
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+}
+
+/* ============================================================
+   Scrollbar — matches Mist border system
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+/* ============================================================
+   RTL support
+   ============================================================ */
+
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+[dir="rtl"] .ProseMirror ul,
+[dir="rtl"] .ProseMirror ol {
+  @apply pl-0 pr-6;
+}
+[dir="rtl"] .ProseMirror blockquote {
+  @apply border-l-0 border-r-4 border-border pl-0 pr-4;
+}
+
+/* ============================================================
+   TipTap / ProseMirror editor
+   ============================================================ */
+
+.ProseMirror {
+  @apply min-h-[500px] outline-none;
+}
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  @apply pointer-events-none float-left h-0 text-muted-foreground;
+}
+.ProseMirror h1 {
+  @apply mb-4 mt-6 text-3xl font-semibold;
+}
+.ProseMirror h2 {
+  @apply mb-3 mt-5 text-2xl font-medium;
+}
+.ProseMirror h3 {
+  @apply mb-2 mt-4 text-xl font-medium;
+}
+.ProseMirror ul,
+.ProseMirror ol {
+  @apply my-4 pl-6;
+}
+.ProseMirror ul {
+  @apply list-disc;
+}
+.ProseMirror ol {
+  @apply list-decimal;
+}
+.ProseMirror blockquote {
+  @apply my-4 border-l-2 border-border pl-4 italic text-muted-foreground;
+}
+.ProseMirror img {
+  @apply my-4 rounded-sm;
+}
+.ProseMirror a {
+  @apply underline underline-offset-4 transition-colors hover:text-foreground;
+}
+.ProseMirror .ProseMirror-selectednode {
+  @apply outline outline-2 outline-ring;
+}

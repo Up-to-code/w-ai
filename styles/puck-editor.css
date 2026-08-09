@@ -1,0 +1,242 @@
+/* Curious Vessel — Puck chrome overrides (W-AI system) */
+
+.Puck {
+  --puck-color-azure-04: #4353ff;
+  --puck-color-azure-05: #3545e8;
+  --puck-color-azure-06: #2937ca;
+  --puck-color-azure-11: #efedff;
+  --puck-color-azure-12: #ffffff;
+  --puck-color-grey-02: #111111;
+  --puck-color-grey-03: #242424;
+  --puck-color-grey-04: #6b6b6b;
+  --puck-color-grey-09: #e9e9e7;
+  --puck-color-grey-10: #f7f7f5;
+  --puck-color-grey-11: #f7f7f5;
+  --puck-color-grey-12: #ffffff;
+  height: 100% !important;
+  min-height: 100% !important;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+.Puck-frame,
+.Puck [class*="PuckLayout"],
+.Puck [class*="Frame"] {
+  height: 100%;
+}
+
+/* Make publish match brand black instead of default purple/blue */
+.Puck button[class*="Button--primary"],
+.Puck [class*="Button-primary"] {
+  background: #4353ff !important;
+  border-radius: 4px !important;
+}
+
+/* Softer side rails */
+.Puck [class*="Sidebar"],
+.Puck [class*="LeftSideBar"],
+.Puck [class*="RightSideBar"] {
+  border-color: #dedede !important;
+  background: #f7f7f7 !important;
+}
+
+.Puck input,
+.Puck textarea,
+.Puck select {
+  border-radius: 3px !important;
+  border-color: #d8d8d8 !important;
+  font-size: 12px !important;
+}
+
+/* Empty drop zone hint */
+.Puck [class*="DropZone"] {
+  min-height: 48px;
+}
+
+/* Single editor command bar */
+.cv-editor-toolbar {
+  position: relative;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  min-height: 58px;
+  border-bottom: 1px solid #dedede;
+  background: #fff;
+  padding: 0 12px;
+  color: #171717;
+}
+
+.cv-editor-toolbar__start,
+.cv-editor-toolbar__end,
+.cv-editor-viewports {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+}
+
+.cv-editor-toolbar__end {
+  grid-column: 3;
+  justify-content: flex-end;
+}
+
+.cv-editor-viewports {
+  border: 1px solid #dedede;
+  border-radius: 7px;
+  background: #f7f7f7;
+  padding: 3px;
+}
+
+.cv-editor-page-name {
+  margin-inline-start: 6px;
+  min-width: 0;
+  max-width: 220px;
+}
+
+.cv-editor-icon-button,
+.cv-editor-secondary-action,
+.cv-editor-primary-action {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 34px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.cv-editor-icon-button {
+  width: 34px;
+  border: 0;
+  background: transparent;
+  color: #666;
+}
+
+.cv-editor-icon-button:hover,
+.cv-editor-icon-button[data-active="true"] {
+  background: #e9e9e9;
+  color: #171717;
+}
+
+.cv-editor-icon-button:disabled {
+  cursor: default;
+  opacity: 0.3;
+}
+
+.cv-editor-secondary-action {
+  border: 1px solid #d8d8d8;
+  background: #fff;
+  padding: 0 11px;
+  color: #252525;
+}
+
+.cv-editor-secondary-action:hover {
+  background: #f3f3f3;
+}
+
+.cv-editor-primary-action {
+  border: 1px solid #4353ff;
+  background: #4353ff;
+  padding: 0 12px;
+  color: #fff;
+}
+
+.cv-editor-primary-action:hover {
+  background: #3545e8;
+}
+
+/* Component drawer with real visual categories and icons */
+.cv-editor-drawer-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cv-editor-drawer-item__icon {
+  pointer-events: none;
+  position: absolute;
+  inset-inline-start: 11px;
+  z-index: 2;
+  width: 15px;
+  height: 15px;
+  color: #666;
+}
+
+.cv-editor-drawer-item > div > * {
+  padding-inline-start: 36px !important;
+}
+
+/* The complete inspector can collapse without losing the selection. */
+.cv-editor-fields {
+  border: 0;
+}
+
+.cv-editor-fields > summary {
+  display: flex;
+  cursor: pointer;
+  list-style: none;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #dedede;
+  padding: 11px 14px;
+  color: #555;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cv-editor-fields > summary::-webkit-details-marker {
+  display: none;
+}
+
+.cv-editor-fields > summary svg {
+  transition: transform 150ms ease;
+}
+
+.cv-editor-fields:not([open]) > summary svg {
+  transform: rotate(-90deg);
+}
+
+.cv-editor-fields__body {
+  padding: 0 2px 12px;
+}
+
+/* Dropdowns must stay readable and above the canvas/iframe. */
+.Puck select {
+  min-height: 36px !important;
+  background-color: #fff !important;
+  color: #171717 !important;
+  cursor: pointer;
+}
+
+.Puck [role="listbox"],
+.Puck [data-radix-popper-content-wrapper],
+.Puck [class*="Popover"] {
+  z-index: 1000 !important;
+  background: #fff !important;
+  color: #171717 !important;
+}
+
+/* Puck's native viewport + mouse zoom controller lives in the single header. */
+.Puck [class*="PuckCanvas-controls"] {
+  position: fixed !important;
+  inset-block-start: 9px !important;
+  inset-inline-start: 50% !important;
+  z-index: 60 !important;
+  transform: translateX(-50%) !important;
+}
+
+@media (max-width: 900px) {
+  .cv-editor-toolbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .cv-editor-page-name,
+  .cv-editor-toolbar__end .cv-editor-secondary-action {
+    display: none;
+  }
+}

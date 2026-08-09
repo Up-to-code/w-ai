@@ -1,0 +1,1220 @@
+{
+  "HomePage": {
+    "title": "مرحبا بالعالم!",
+    "contact": "اتصل بي"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "projects": "مشاريعنا",
+    "about": "من نحن",
+    "contact": "اتصل بنا",
+    "signin": "تسجيل الدخول",
+    "dashboard": "لوحة التحكم",
+    "blog": "المدونة",
+    "goToDashboard": "انتقل إلى لوحة التحكم",
+    "services": "خدماتنا"
+  },
+  "sidebar": {
+    "menu": "القائمة",
+    "global": "عام",
+    "options": "خيارات",
+    "adminPanel": "لوحة الإدارة",
+    "charts": "الرسوم البيانية",
+    "orders": "الطلبات",
+    "projects": "المشاريع",
+    "forms": "النماذج",
+    "blogs": "المدونات",
+    "media": "الوسائط",
+    "settings": "الإعدادات",
+    "homepage": "الصفحة الرئيسية",
+    "documentation": "التوثيق",
+    "support": "الدعم",
+    "dashboard": "لوحة التحكم",
+    "home": "الرئيسية",
+    "properties": "العقارات",
+    "addProperty": "إضافة عقار",
+    "about": "عننا",
+    "blog": "المدونة",
+    "users": "المستخدمين",
+    "services": "خدماتنا",
+    "interests": "المهتمين",
+    "leads": "العملاء المحتملين"
+  },
+  "SaveModal": {
+    "title": {
+      "idle": "حفظ التغييرات",
+      "saving": "جاري الحفظ...",
+      "success": "تم بنجاح!",
+      "error": "خطأ"
+    },
+    "description": {
+      "idle": "هل تريد حفظ التغييرات في الإعدادات العامة؟",
+      "saving": "يرجى الانتظار أثناء حفظ الإعدادات.",
+      "success": "تم حفظ التغييرات بنجاح.",
+      "error": "فشل في حفظ الإعدادات. يرجى المحاولة مرة أخرى."
+    },
+    "buttons": {
+      "cancel": "إلغاء",
+      "save": "حفظ التغييرات",
+      "close": "إغلاق",
+      "retry": "محاولة مرة أخرى"
+    }
+  },
+  "properties": {
+    "title": "العقارات",
+    "subtitle": "إدارة محفظة عقاراتك",
+    "stats": {
+      "total": "إجمالي العقارات",
+      "available": "متاحة",
+      "rented": "مؤجرة",
+      "sold": "مبيعة"
+    },
+    "search": {
+      "placeholder": "ابحث في العقارات..."
+    },
+    "searchPlaceholder": "ابحث في العقارات...",
+    "filters": {
+      "all": "جميع الحالات"
+    },
+    "status": {
+      "available": "متاح",
+      "rented": "مؤجر",
+      "sold": "مباع"
+    },
+    "types": {
+      "apartment": "شقة",
+      "villa": "فيلا",
+      "office": "مكتب",
+      "shop": "محل"
+    },
+    "badges": {
+      "featured": "مميز"
+    },
+    "actions": {
+      "addProperty": "إضافة عقار",
+      "add": "إضافة عقار",
+      "moreFilters": "المزيد من الفلاتر",
+      "view": "عرض التفاصيل",
+      "edit": "تعديل",
+      "delete": "حذف"
+    },
+    "empty": {
+      "title": "لم يتم العثور على عقارات",
+      "description": "حاول تعديل بحثك أو معايير الفلترة"
+    },
+    "createFirst": "أنشئ عقارك الأول للبدء",
+    "noProperties": "لا توجد عقارات تطابق معايير البحث الخاصة بك",
+    "currency": "ريال"
+  },
+  "property": {
+    "title": "إضافة عقار جديد",
+    "subtitle": "أضف جميع تفاصيل العقار بسهولة",
+    "tabs": {
+      "basic": "المعلومات الأساسية",
+      "details": "التفاصيل",
+      "features": "المميزات",
+      "images": "الصور"
+    },
+    "sections": {
+      "basic": "المعلومات الأساسية",
+      "details": "تفاصيل العقار",
+      "features": "المميزات والمرافق",
+      "images": "صور العقار"
+    },
+    "form": {
+      "title": "عنوان العقار",
+      "description": "الوصف",
+      "price": "السعر",
+      "type": "نوع العقار",
+      "city": "المدينة",
+      "district": "الحي",
+      "bedrooms": "غرف النوم",
+      "bathrooms": "دورات المياه",
+      "area": "المساحة",
+      "parking": "مواقف السيارات"
+    },
+    "placeholders": {
+      "title": "شقة فاخرة في المدينة",
+      "description": "وصف مفصل للعقار...",
+      "city": "أدخل المدينة",
+      "district": "أدخل الحي"
+    },
+    "types": {
+      "apartment": "شقة",
+      "villa": "فيلا",
+      "office": "مكتب",
+      "shop": "محل"
+    },
+    "features": {
+      "list": [
+        "مواقف سيارات",
+        "حراسة أمنية",
+        "تكييف",
+        "مسبح",
+        "صالة رياضية",
+        "انترنت",
+        "مطبخ",
+        "بلكونة",
+        "مصعد"
+      ],
+      "selected": "تم اختيار {{count}} ميزة"
+    },
+    "images": {
+      "upload": "انقر لرفع الصور",
+      "requirements": "PNG, JPG, GIF حتى 10MB"
+    },
+    "actions": {
+      "preview": "معاينة",
+      "save": "حفظ العقار"
+    },
+    "summary": {
+      "title": "ملخص سريع",
+      "price": "السعر",
+      "bedrooms": "غرف النوم",
+      "area": "المساحة (م²)",
+      "images": "الصور"
+    },
+    "success": "تم حفظ العقار بنجاح!"
+  },
+  "navigation": {
+    "switchToArabic": "التبديل إلى العربية",
+    "switchToEnglish": "Switch to English"
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "confirmDelete": "هل أنت متأكد من حذف هذا العنصر؟",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "create": "إنشاء",
+    "update": "تحديث",
+    "close": "إغلاق",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "submit": "إرسال",
+    "reset": "إعادة تعيين",
+    "search": "بحث",
+    "filter": "فلترة",
+    "clear": "مسح",
+    "yes": "نعم",
+    "no": "لا",
+    "ok": "موافق"
+  },
+  "propertyForm": {
+    "createTitle": "إنشاء عقار جديد",
+    "editTitle": "تعديل العقار",
+    "subtitle": "املأ التفاصيل أدناه لإنشاء عقار جديد",
+    "editSubtitle": "قم بتحديث تفاصيل العقار أدناه",
+    "images": "صور العقار",
+    "uploadImage": "رفع صورة",
+    "basicInfo": "المعلومات الأساسية",
+    "content": "المحتوى",
+    "types": {
+      "apartment": "شقة",
+      "villa": "فيلا",
+      "office": "مكتب",
+      "shop": "محل"
+    },
+    "labels": {
+      "price": "السعر",
+      "type": "نوع العقار",
+      "city": "المدينة",
+      "district": "الحي",
+      "bedrooms": "غرف النوم",
+      "bathrooms": "دورات المياه",
+      "area": "المساحة (م²)",
+      "parking": "مواقف السيارات",
+      "title": "عنوان العقار",
+      "description": "الوصف"
+    },
+    "placeholders": {
+      "price": "0.00"
+    },
+    "actions": {
+      "back": "رجوع إلى العقارات",
+      "cancel": "إلغاء",
+      "create": "إنشاء العقار",
+      "update": "تحديث العقار"
+    }
+  },
+  "GlobalSettings": {
+    "title": "الإعدادات العامة",
+    "description": "قم بتكوين الإعدادات العامة لموقعك",
+    "loading": "جاري تحميل الإعدادات...",
+    "resetConfirmation": "هل أنت متأكد من إعادة تعيين جميع الإعدادات إلى الافتراضي؟",
+    "resetButton": "إعادة تعيين الإعدادات",
+    "saveButton": "حفظ الإعدادات",
+    "tabs": {
+      "navigation": "التنقل",
+      "footer": "التذييل",
+      "logo": "الشعار",
+      "meta": "البيانات الوصفية"
+    }
+  },
+  "propertyDetail": {
+    "actions": {
+      "backToProperties": "العودة إلى العقارات",
+      "save": "حفظ",
+      "share": "مشاركة",
+      "print": "طباعة",
+      "contactAgent": "اتصل بالوكيل",
+      "sendMessage": "إرسال رسالة",
+      "whatsapp": "واتساب",
+      "chat": "محادثة",
+      "call": "اتصال",
+      "viewAllSimilar": "عرض جميع العقارات المشابهة"
+    },
+    "badges": {
+      "featured": "مميز",
+      "available": "متاح",
+      "rented": "مؤجر",
+      "sold": "مباع"
+    },
+    "sections": {
+      "propertyOverview": "نظرة عامة على العقار",
+      "description": "الوصف",
+      "featuresAmenities": "المميزات والمرافق",
+      "propertyDetails": "تفاصيل العقار",
+      "locationMap": "الموقع والخريطة",
+      "agentInformation": "معلومات الوكيل",
+      "propertyStatistics": "إحصائيات العقار",
+      "similarProperties": "عقارات مشابهة"
+    },
+    "details": {
+      "bedrooms": "غرف النوم",
+      "bathrooms": "دورات المياه",
+      "area": "م²",
+      "parking": "مواقف السيارات",
+      "propertyType": "نوع العقار",
+      "status": "الحالة",
+      "location": "الموقع",
+      "listedDate": "تاريخ الإدراج",
+      "lastUpdated": "آخر تحديث",
+      "propertyId": "رقم العقار",
+      "views": "المشاهدات",
+      "favorites": "المفضلة",
+      "shares": "المشاركات",
+      "daysOnMarket": "أيام في السوق"
+    },
+    "amenities": {
+      "wifi": "واي فاي",
+      "security": "أمان",
+      "garden": "حديقة",
+      "gym": "صالة رياضية",
+      "pool": "مسبح",
+      "parking": "مواقف سيارات",
+      "kitchen": "مطبخ",
+      "cableTV": "تلفزيون كابل",
+      "internet": "إنترنت"
+    },
+    "location": {
+      "nearSchools": "قريب من المدارس",
+      "nearHospitals": "قريب من المستشفيات",
+      "nearShopping": "قريب من التسوق",
+      "publicTransport": "النقل العام",
+      "interactiveMap": "خريطة تفاعلية",
+      "clickToViewFullMap": "انقر لعرض الخريطة الكاملة"
+    },
+    "agent": {
+      "title": "وكيل عقاري أول",
+      "phone": "+1 (555) 123-4567",
+      "email": "john@realestate.com"
+    },
+    "similar": {
+      "description": "عقارات بمميزات مشابهة في نفس المنطقة",
+      "property": "عقار مشابه"
+    },
+    "stats": {
+      "views": "مشاهدات",
+      "listed": "مدرج",
+      "updated": "محدث"
+    }
+  },
+  "about": {
+    "title": "عن نحن",
+    "subtitle": "نبذة مختصرة عنا",
+    "emailUs": "البريد الإلكتروني",
+    "contactUs": "اتصل بنا",
+    "complitet": "تم الاكتمال",
+    "callUs": "اتصل بنا",
+    "visitUs": "زيارة نا",
+    "badge": "تم الاكتمال",
+    "viewProperties": "عرض العقارات",
+    "teamTitle": "الفريق",
+    "teamSubtitle": "الفريق الذي يتم إدارة هذا المشروع",
+    "ourStory": "مقالنا",
+    "storyTitle": "مقالنا",
+    "storyParagraph1": "الفقرة الأولى من القصة",
+    "storyParagraph2": "الفقرة الثانية من القصة",
+    "storyParagraph3": "الفقرة الثالثة من القصة",
+    "valuesTitle": "قيم العمل",
+    "ourValues": "قيمنا",
+    "ourTeam": "فريقنا",
+    "achievements": "النجاح",
+    "yearsInBusiness": "سنوات في العمل",
+    "ctaTitle": "هل أنت مستعد لاتخاذ الخطوة التالية؟",
+    "ctaSubtitle": "دعنا نعمل معًا لتحقيق أحلامك العقارية"
+  },
+  "aboutEditor": {
+    "editorTitle": "عنوان المحرر",
+    "preview": "معاينة",
+    "reset": "إعادة تعيين",
+    "save": "حفظ",
+    "saveError": "فشل حفظ بيانات من نحن",
+    "tabs": {
+      "hero": "البطل",
+      "story": "القصة",
+      "stats": "الإحصائيات",
+      "values": "القيم",
+      "team": "الفريق",
+      "cta": "دعوة للعمل"
+    },
+    "sections": {
+      "hero": {
+        "title": "عنوان البطل",
+        "badge": "شارة",
+        "subtitle": "عنوان فرعي",
+        "badgePlaceholder": "أدخل الشارة",
+        "titlePlaceholder": "أدخل العنوان",
+        "subtitlePlaceholder": "أدخل العنوان الفرعي"
+      },
+      "story": {
+        "title": "عنوان القصة",
+        "storyTitle": "عنوان القصة الرئيسي",
+        "paragraph1": "الفقرة الأولى",
+        "paragraph2": "الفقرة الثانية",
+        "paragraph3": "الفقرة الثالثة",
+        "image": "صورة",
+        "uploadImage": "رفع صورة",
+        "yearsInBusiness": "سنوات في العمل"
+      },
+      "stats": {
+        "title": "عنوان الإحصائيات",
+        "addStat": "إضافة إحصائية",
+        "value": "القيمة",
+        "label": "التسمية"
+      },
+      "values": {
+        "title": "عنوان القيم",
+        "addValue": "إضافة قيمة",
+        "description": "الوصف"
+      },
+      "team": {
+        "title": "عنوان الفريق",
+        "addMember": "إضافة عضو",
+        "name": "الاسم",
+        "role": "الدور",
+        "avatar": "الصورة الرمزية",
+        "uploadAvatar": "رفع الصورة الرمزية",
+        "description": "الوصف"
+      },
+      "cta": {
+        "title": "عنوان دعوة العمل",
+        "ctaTitle": "عنوان الدعوة",
+        "subtitle": "عنوان فرعي"
+      },
+      "contact": {
+        "title": "عنوان الاتصال",
+        "address": "العنوان",
+        "phone": "الهاتف",
+        "email": "البريد الإلكتروني"
+      }
+    }
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "orgPicker": {
+      "title": "اختر موقعاً",
+      "subtitle": "اختر الموقع الذي تريد إدارته",
+      "open": "فتح"
+    },
+    "orgNotFound": {
+      "badge": "الموقع غير موجود",
+      "title": "لوحة هذا الموقع غير متاحة",
+      "subtitle": "العنوان الذي فتحته لا يطابق موقعاً في مساحة عملك. اختر أحد مواقعك المتاحة أو أنشئ موقعاً جديداً.",
+      "chooseSite": "اختيار موقع",
+      "createSite": "إنشاء موقع",
+      "newSite": "موقع جديد",
+      "availableSites": "المواقع المتاحة",
+      "empty": "لا توجد لديك مواقع بعد."
+    },
+    "sidebar": {
+      "overview": "نظرة عامة",
+      "pages": "الصفحات",
+      "settings": "إعدادات الموقع",
+      "newSite": "موقع جديد",
+      "signOut": "تسجيل الخروج",
+      "viewSite": "عرض الموقع",
+      "menu": "القائمة",
+      "properties": "العقارات",
+      "posts": "المدونة",
+      "contacts": "الرسائل",
+      "interests": "الاهتمامات",
+      "inbox": "صندوق الدردشة",
+      "services": "الخدمات",
+      "siteSettings": "إعدادات الموقع",
+      "domains": "النطاقات"
+    },
+    "overview": {
+      "title": "نظرة عامة",
+      "subtitle": "أدر موقعك وصفحاتك وإعداداتك من هنا.",
+      "commandCenter": "مركز إدارة الموقع",
+      "pages": "الصفحات",
+      "published": "منشورة",
+      "drafts": "مسودات",
+      "liveContent": "المحتوى المباشر",
+      "ofTotal": "من أصل {total} عنصر",
+      "openLeads": "العملاء المفتوحون",
+      "needsAttention": "تحتاج متابعة عبر الرسائل والدردشة",
+      "pageDrafts": "{count} مسودات صفحات",
+      "team": "الفريق",
+      "role": "دورك: {role}",
+      "publishedDrafts": "{published} منشورة · {drafts} مسودات",
+      "propertiesDetail": "{published} منشورة · {featured} مميزة",
+      "postsDetail": "{published} منشورة · {drafts} مسودات",
+      "servicesDetail": "{enabled} مفعلة",
+      "unreadCount": "{count} غير مقروءة",
+      "openConversationCount": "{count} محادثات مفتوحة",
+      "contentOps": "عمليات المحتوى",
+      "leadDesk": "مكتب العملاء",
+      "siteStatus": "حالة الموقع",
+      "siteOnline": "الموقع متصل",
+      "plan": "الخطة",
+      "domains": "النطاقات",
+      "manage": "إدارة",
+      "openInbox": "فتح الصندوق",
+      "manageInventory": "إدارة المخزون",
+      "reviewLeads": "مراجعة العملاء",
+      "recentActivity": "النشاط الأخير",
+      "noActivity": "لا توجد رسائل أو اهتمامات أو محادثات بعد.",
+      "read": "مقروءة",
+      "unread": "غير مقروءة",
+      "visitor": "زائر",
+      "editPages": "تعديل الصفحات",
+      "siteUrl": "عنوان موقعك",
+      "copy": "نسخ",
+      "copied": "تم النسخ",
+      "openSite": "فتح الموقع",
+      "quickActions": "إجراءات سريعة"
+    },
+    "pages": {
+      "title": "الصفحات",
+      "subtitle": "أنشئ وعدّل وانشر صفحات موقعك.",
+      "newPage": "صفحة جديدة",
+      "pageName": "اسم الصفحة",
+      "pageAddress": "عنوان الصفحة",
+      "cancel": "إلغاء",
+      "create": "إنشاء الصفحة",
+      "created": "تم إنشاء الصفحة",
+      "nameAr": "الاسم (عربي)",
+      "nameEn": "الاسم (إنجليزي)",
+      "slug": "العنوان",
+      "status": "الحالة",
+      "published": "منشورة",
+      "draft": "مسودة",
+      "updated": "آخر تحديث",
+      "actions": "",
+      "edit": "تعديل",
+      "preview": "معاينة",
+      "publish": "نشر",
+      "unpublish": "إلغاء النشر",
+      "delete": "حذف",
+      "deleteTitle": "حذف الصفحة؟",
+      "deleteDesc": "سيؤدي هذا إلى حذف الصفحة نهائياً. لا يمكن التراجع.",
+      "deleteConfirm": "حذف",
+      "homeNote": "الصفحة الرئيسية مطلوبة ولا يمكن حذفها.",
+      "empty": "لا توجد صفحات بعد. أنشئ صفحتك الأولى.",
+      "error": "حدث خطأ ما. حاول مجدداً.",
+      "slugInvalid": "عنوان غير صالح (أحرف لاتينية صغيرة وأرقام وشرطات، من 3 إلى 80 حرف)"
+    },
+    "settings": {
+      "title": "إعدادات الموقع",
+      "subtitle": "هوية الموقع والهوية البصرية.",
+      "name": "اسم الموقع",
+      "namePlaceholder": "اسم شركتك",
+      "defaultLanguage": "اللغة الافتراضية",
+      "theme": "الهوية البصرية",
+      "primary": "اللون الأساسي",
+      "background": "الخلفية",
+      "foreground": "لون النص",
+      "secondary": "ثانوي",
+      "accent": "تمييز",
+      "radius": "نصف قطر الزوايا (بكسل)",
+      "save": "حفظ التغييرات",
+      "saved": "تم حفظ الإعدادات",
+      "saveError": "تعذر حفظ الإعدادات",
+      "customDomain": "النطاق المخصص",
+      "customDomainHint": "أضف نطاقاً ووجّه سجلات DNS إلى هذا الموقع. النطاقات الموثقة تُعرض مباشرة.",
+      "domainPlaceholder": "example.com",
+      "addDomain": "إضافة نطاق",
+      "verify": "توثيق",
+      "domainAdded": "تمت إضافة النطاق. ثققه بعد انتشار DNS.",
+      "loading": "جارٍ التحميل…"
+    },
+    "editor": {
+      "back": "العودة للصفحات",
+      "save": "حفظ",
+      "saved": "تم الحفظ",
+      "saveError": "تعذر حفظ الصفحة",
+      "publish": "نشر",
+      "unpublish": "إلغاء النشر",
+      "preview": "معاينة",
+      "loading": "جارٍ تحميل المحرر…",
+      "notFound": "الصفحة غير موجودة",
+      "saving": "جارٍ الحفظ…"
+    },
+    "properties": {
+      "title": "العقارات",
+      "subtitle": "إدارة عقارات موقعك.",
+      "newProperty": "عقار جديد",
+      "published": "منشور",
+      "draft": "مسودة",
+      "featured": "مميز",
+      "price": "السعر",
+      "type": "النوع",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "deleteTitle": "حذف العقار؟",
+      "deleteDesc": "لا يمكن التراجع عن هذا الإجراء.",
+      "deleteConfirm": "حذف",
+      "cancel": "إلغاء",
+      "empty": "لا توجد عقارات بعد.",
+      "error": "حدث خطأ.",
+      "titleAr": "الاسم (عربي)",
+      "titleEn": "الاسم (إنجليزي)",
+      "priceSAR": "السعر (ريال)",
+      "propertyType": "نوع العقار",
+      "save": "حفظ",
+      "saved": "تم الحفظ"
+    },
+    "posts": {
+      "title": "المدونة",
+      "subtitle": "أنشئ وعدّل مقالات موقعك.",
+      "newPost": "مقال جديد",
+      "published": "منشور",
+      "draft": "مسودة",
+      "archived": "مؤرشف",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "deleteTitle": "حذف المقال؟",
+      "deleteDesc": "لا يمكن التراجع.",
+      "deleteConfirm": "حذف",
+      "cancel": "إلغاء",
+      "empty": "لا توجد مقالات بعد.",
+      "error": "حدث خطأ.",
+      "titleAr": "العنوان (عربي)",
+      "titleEn": "العنوان (إنجليزي)",
+      "excerptAr": "الوصف المختصر (عربي)",
+      "excerptEn": "الوصف المختصر (إنجليزي)",
+      "contentAr": "المحتوى (عربي)",
+      "contentEn": "المحتوى (إنجليزي)",
+      "save": "حفظ",
+      "saved": "تم الحفظ"
+    },
+    "contacts": {
+      "title": "الرسائل",
+      "subtitle": "رسائل التواصل من زوار موقعك.",
+      "empty": "لا توجد رسائل بعد.",
+      "markRead": "تمت القراءة",
+      "markUnread": "غير مقروء",
+      "delete": "حذف",
+      "deleteTitle": "حذف الرسالة؟",
+      "deleteDesc": "لا يمكن التراجع.",
+      "deleteConfirm": "حذف",
+      "cancel": "إلغاء",
+      "unread": "غير مقروءة",
+      "all": "الكل"
+    },
+    "interests": {
+      "title": "الاهتمامات",
+      "subtitle": "اهتمامات الزوار بالعقارات.",
+      "empty": "لا توجد اهتمامات بعد.",
+      "markRead": "تمت القراءة",
+      "markUnread": "غير مقروء",
+      "delete": "حذف",
+      "deleteTitle": "حذف؟",
+      "deleteDesc": "لا يمكن التراجع.",
+      "deleteConfirm": "حذف",
+      "cancel": "إلغاء",
+      "unread": "غير مقروءة",
+      "all": "الكل"
+    },
+    "inbox": {
+      "title": "صندوق الدردشة",
+      "subtitle": "محادثات الزوار في الوقت الفعلي.",
+      "empty": "لا توجد محادثات بعد.",
+      "send": "إرسال",
+      "resolve": "إغلاق",
+      "open": "مفتوح",
+      "resolved": "مغلق",
+      "messagePlaceholder": "اكتب ردك...",
+      "allConversations": "جميع المحادثات"
+    },
+    "services": {
+      "title": "الخدمات",
+      "subtitle": "إدارة خدمات موقعك.",
+      "newService": "خدمة جديدة",
+      "enabled": "مفعّلة",
+      "disabled": "معطّلة",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "deleteTitle": "حذف الخدمة؟",
+      "deleteDesc": "لا يمكن التراجع.",
+      "deleteConfirm": "حذف",
+      "cancel": "إلغاء",
+      "empty": "لا توجد خدمات بعد.",
+      "error": "حدث خطأ.",
+      "titleAr": "الاسم (عربي)",
+      "titleEn": "الاسم (إنجليزي)",
+      "descAr": "الوصف (عربي)",
+      "descEn": "الوصف (إنجليزي)",
+      "save": "حفظ",
+      "saved": "تم الحفظ"
+    },
+    "siteSettings": {
+      "title": "إعدادات الموقع",
+      "subtitle": "التنقل، التذييل، الشعار، والبيانات الوصفية.",
+      "navigation": "التنقل",
+      "footer": "التذييل",
+      "logo": "الشعار",
+      "meta": "البيانات الوصفية",
+      "mainLinks": "روابط رئيسية",
+      "addLink": "إضافة رابط",
+      "labelAr": "النص (عربي)",
+      "labelEn": "النص (إنجليزي)",
+      "href": "الرابط",
+      "sticky": "شريط تنقل ثابت",
+      "showLogo": "إظهار الشعار",
+      "ctaLabel": "نص زر الدعوة (عربي/إنجليزي)",
+      "ctaHref": "رابط زر الدعوة",
+      "save": "حفظ",
+      "saved": "تم الحفظ",
+      "saveError": "تعذر الحفظ",
+      "titleMetaAr": "عنوان الصفحة (عربي)",
+      "titleMetaEn": "عنوان الصفحة (إنجليزي)",
+      "descMetaAr": "الوصف (عربي)",
+      "descMetaEn": "الوصف (إنجليزي)",
+      "logoUrl": "رابط الشعار"
+    }
+  },
+  "homePageEditor": {
+    "title": "محرر الصفحة الرئيسية",
+    "subtitle": "إدارة المحتوى بلغات متعددة",
+    "currentLanguage": "اللغة الحالية",
+    "loading": "جاري تحميل المحرر...",
+    "saving": "جاري الحفظ...",
+    "saveChanges": "حفظ التغييرات",
+    "import": "استيراد",
+    "export": "تصدير",
+    "english": "الإنجليزية",
+    "arabic": "العربية",
+    "sections": {
+      "hero": "البطل",
+      "banners": "اللافتات",
+      "about": "من نحن",
+      "testimonials": "الشهادات",
+      "whyus": "لماذا نختارنا",
+      "contact": "اتصل بنا",
+      "partners": "الشركاء"
+    },
+    "hero": {
+      "title": "قسم البطل",
+      "heroTitle": "عنوان البطل",
+      "backgroundVideo": "فيديو الخلفية",
+      "overlayColor": "لون التغطية",
+      "primaryButton": "زر أساسي",
+      "secondaryButton": "زر ثانوي",
+      "buttonText": "نص الزر",
+      "buttonLink": "رابط الزر",
+      "buttonVariant": "نوع الزر",
+      "uploadVideo": "رفع فيديو",
+      "placeholders": {
+        "mainHeroTitle": "عنوان البطل الرئيسي",
+        "videoPath": "/videos/hero-bg.mp4",
+        "overlayColorExample": "rgba(0,0,0,0.4)",
+        "buttonText": "نص الزر",
+        "buttonLink": "رابط الزر"
+      },
+      "variants": {
+        "primary": "أساسي",
+        "secondary": "ثانوي",
+        "outline": "إطار"
+      }
+    },
+    "banners": {
+      "title": "قسم اللافتات",
+      "currentBanners": "اللافتات الحالية",
+      "addNewBanner": "إضافة لافتة جديدة",
+      "bannerTitle": "عنوان اللافتة",
+      "bannerDescription": "وصف اللافتة",
+      "imageUrl": "رابط الصورة",
+      "linkUrl": "رابط الرابط",
+      "position": "الموضع",
+      "uploadBannerImage": "رفع صورة اللافتة",
+      "remove": "إزالة",
+      "addBanner": "إضافة لافتة",
+      "positions": {
+        "top": "أعلى",
+        "middle": "وسط",
+        "bottom": "أسفل"
+      }
+    },
+    "aboutUs": {
+      "title": "قسم من نحن",
+      "sectionTitle": "عنوان القسم",
+      "content": "المحتوى",
+      "image": "الصورة",
+      "statistics": "الإحصائيات",
+      "addNewStatistic": "إضافة إحصائية جديدة",
+      "addStatistic": "إضافة إحصائية",
+      "value": "القيمة",
+      "label": "التسمية",
+      "uploadAboutImage": "رفع صورة من نحن",
+      "placeholders": {
+        "aboutOurCompany": "عن شركتنا",
+        "companyDescription": "وصف الشركة",
+        "imagePath": "/images/about-us.jpg",
+        "valueExample": "1000+",
+        "labelExample": "عملاء سعداء"
+      }
+    },
+    "testimonials": {
+      "title": "قسم الشهادات",
+      "sectionTitle": "عنوان القسم",
+      "sectionSubtitle": "العنوان الفرعي للقسم",
+      "testimonials": "الشهادات",
+      "addNewTestimonial": "إضافة شهادة جديدة",
+      "addTestimonial": "إضافة شهادة",
+      "clientName": "اسم العميل",
+      "position": "المنصب",
+      "company": "الشركة",
+      "testimonialContent": "محتوى الشهادة",
+      "avatarUrl": "رابط الصورة الشخصية",
+      "uploadAvatar": "رفع صورة شخصية",
+      "rating": "التقييم",
+      "remove": "إزالة"
+    },
+    "whyUs": {
+      "title": "قسم لماذا نختارنا",
+      "sectionTitle": "عنوان القسم",
+      "sectionSubtitle": "العنوان الفرعي للقسم",
+      "features": "الميزات",
+      "addNewFeature": "إضافة ميزة جديدة",
+      "addFeature": "إضافة ميزة",
+      "iconUrlOrEmoji": "رابط الأيقونة أو الرمز التعبيري",
+      "uploadIcon": "رفع أيقونة",
+      "featureTitle": "عنوان الميزة",
+      "featureDescription": "وصف الميزة",
+      "remove": "إزالة"
+    },
+    "contactUs": {
+      "title": "قسم اتصل بنا",
+      "contactSettings": "إعدادات الاتصال",
+      "contactInfo": "معلومات الاتصال",
+      "formFields": "حقول النموذج",
+      "mapSettings": "إعدادات الخريطة",
+      "titleLabel": "العنوان",
+      "subtitleLabel": "العنوان الفرعي",
+      "description": "الوصف",
+      "address": "عنوان الشركة",
+      "phone": "رقم الهاتف",
+      "email": "عنوان البريد الإلكتروني",
+      "workingHours": "ساعات العمل",
+      "fieldName": "اسم_الحقل",
+      "displayLabel": "تسمية العرض",
+      "addField": "إضافة حقل",
+      "placeholders": {
+        "contactUs": "اتصل بنا",
+        "wereHereToHelp": "نحن هنا للمساعدة",
+        "getInTouch": "ابق على تواصل معنا...",
+        "mapEmbed": "<iframe src=\"https://maps.google.com/...\" />"
+      },
+      "fieldTypes": {
+        "text": "نص",
+        "email": "بريد إلكتروني",
+        "tel": "هاتف",
+        "textarea": "منطقة نص"
+      }
+    },
+    "partners": {
+      "title": "قسم الشركاء",
+      "currentPartners": "الشركاء الحاليون",
+      "addNewPartner": "إضافة شريك جديد",
+      "logoImageUrl": "رابط صورة الشعار",
+      "uploadPartnerLogo": "رفع شعار الشريك",
+      "altText": "نص بديل",
+      "remove": "إزالة",
+      "addPartner": "إضافة شريك"
+    },
+    "messages": {
+      "dataExported": "تم تصدير البيانات بنجاح!",
+      "dataImported": "تم استيراد البيانات بنجاح! لا تنس الحفظ.",
+      "invalidDataStructure": "بنية بيانات غير صالحة. المتوقع { en: ..., ar: ... }",
+      "errorParsingJson": "خطأ في تحليل ملف JSON",
+      "changesSaved": "تم حفظ التغييرات بنجاح!",
+      "errorSaving": "خطأ في حفظ التغييرات",
+      "errorExporting": "خطأ في تصدير البيانات"
+    }
+  },
+  "uploader": {
+    "dragAndDrop": "اسحب وأفلت {type} هنا",
+    "orClickToBrowse": "أو انقر للتصفح",
+    "upToFiles": "حتى {maxFiles} ملف، {maxSize} ميجابايت لكل ملف",
+    "uploading": "جاري الرفع...",
+    "uploadFiles": "رفع الملفات",
+    "files": "الملفات",
+    "clearAll": "مسح الكل",
+    "retry": "إعادة المحاولة",
+    "view": "عرض",
+    "previews": "المعاينات",
+    "status": {
+      "uploading": "جاري الرفع",
+      "success": "نجح",
+      "error": "خطأ"
+    },
+    "errors": {
+      "tooManyFiles": "ملفات كثيرة جداً",
+      "invalidFileType": "نوع ملف غير صالح",
+      "fileTooLarge": "الملف كبير جداً",
+      "uploadFailed": "فشل الرفع",
+      "retryFailed": "فشلت إعادة المحاولة"
+    },
+    "success": {
+      "uploaded": "تم رفع {count} ملف بنجاح",
+      "uploaded_plural": "تم رفع {count} ملفات بنجاح"
+    },
+    "messages": {
+      "maxFilesAllowed": "الحد الأقصى {maxFiles} ملف. لديك {current} ملف",
+      "maxFilesAllowed_plural": "الحد الأقصى {maxFiles} ملف. لديك {current} ملفات",
+      "invalidFileType": "\"{fileName}\" ليس ملف {type} صالح. يرجى اختيار ملفات {type} فقط.",
+      "fileTooLarge": "\"{fileName}\" ({size} ميجابايت) يتجاوز الحد الأقصى {maxSize} ميجابايت.",
+      "bucketNotConfigured": "دلو التخزين غير مُكوّن. يرجى الاتصال بالمسؤول.",
+      "permissionDenied": "تم رفض إذن الرفع. يرجى التحقق من إعدادات التخزين.",
+      "networkError": "خطأ في الشبكة. يرجى التحقق من اتصالك والمحاولة مرة أخرى."
+    },
+    "types": {
+      "files": "ملفات",
+      "images": "صور",
+      "videos": "فيديوهات"
+    }
+  },
+  "interests": {
+    "title": "اهتمامات العقارات",
+    "subtitle": "إدارة استفسارات ورسائل العقارات",
+    "searchPlaceholder": "بحث في الرسائل...",
+    "filters": {
+      "all": "الكل",
+      "unread": "غير مقروء",
+      "read": "مقروء"
+    },
+    "table": {
+      "status": "الحالة",
+      "name": "الاسم",
+      "email": "البريد",
+      "phone": "الهاتف",
+      "property": "العقار",
+      "message": "الرسالة",
+      "date": "التاريخ",
+      "actions": "الإجراءات"
+    },
+    "actions": {
+      "markRead": "تمت القراءة",
+      "markUnread": "غير مقروء",
+      "delete": "حذف",
+      "viewProperty": "عرض العقار"
+    },
+    "empty": {
+      "title": "لم يتم العثور على رسائل",
+      "description": "لا توجد اهتمامات عقارية تطابق معايير البحث"
+    },
+    "badges": {
+      "read": "مقروء",
+      "unread": "غير مقروء"
+    }
+  },
+  "footer": {
+    "home": "الرئيسية",
+    "projects": "المشاريع",
+    "services": "الخدمات",
+    "blog": "المدونة",
+    "about": "من نحن",
+    "contact": "اتصل بنا",
+    "brandName": "روشن ريت",
+    "rightsReserved": "جميع الحقوق محفوظة"
+  },
+  "landing": {
+    "formTitle": "سجل الآن",
+    "formSubtitle": "سجل اهتمامك",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "phone": "رقم الهاتف",
+    "submit": "سجل اهتمامك",
+    "placeholders": {
+      "firstName": "فضل",
+      "lastName": "الصلاحي",
+      "phone": "05xxxxxxxx",
+      "email": "example@domain.com"
+    },
+    "email": "البريد الإلكتروني",
+    "successMessage": "تم التسجيل بنجاح!",
+    "thankYou": "شكراً لك!",
+    "successDescription": "تم استلام بياناتك وسنتواصل معك قريباً."
+  },
+  "errors": {
+    "somethingWentWrong": "حدث خطأ غير متوقع",
+    "tryAgain": "حاول مرة أخرى"
+  },
+  "home": {
+    "brand": "قنطرة",
+    "tagline": "منصة إدارة المحتوى العقاري",
+    "comingSoon": "منصة قيد الإنشاء"
+  },
+  "auth": {
+    "loginTitle": "تسجيل الدخول",
+    "loginSubtitle": "أهلاً بعودتك إلى كوريوس فيسل",
+    "registerTitle": "إنشاء حساب جديد",
+    "registerSubtitle": "أنشئ حساباً وأطلق موقعك الأول",
+    "name": "الاسم",
+    "namePlaceholder": "اسمك الكامل",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "name@company.com",
+    "password": "كلمة المرور",
+    "passwordPlaceholder": "••••••••",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "loading": "يرجى الانتظار...",
+    "noAccount": "ليس لديك حساب؟",
+    "createOne": "أنشئ حساباً",
+    "haveAccount": "لديك حساب بالفعل؟",
+    "signInHere": "سجّل الدخول من هنا",
+    "errorInvalidEmailOrPassword": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    "errorUserAlreadyExists": "يوجد حساب مسجل بهذا البريد",
+    "errorInvalidEmail": "يرجى إدخال بريد إلكتروني صالح",
+    "errorPasswordTooShort": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
+    "errorNameTooShort": "الاسم يجب أن يكون حرفين على الأقل",
+    "errorGeneric": "حدث خطأ، يرجى المحاولة مرة أخرى",
+    "passwordHint": "8 أحرف على الأقل",
+    "errorPasswordTooLong": "كلمة المرور طويلة جداً",
+    "errorNameRequired": "يرجى إدخال الاسم",
+    "errorEmailRequired": "يرجى إدخال البريد الإلكتروني",
+    "errorPasswordRequired": "يرجى إدخال كلمة المرور",
+    "errorEmailNotVerified": "يرجى تأكيد بريدك قبل تسجيل الدخول",
+    "errorTooManyRequests": "محاولات كثيرة. حاول لاحقاً.",
+    "errorNetwork": "خطأ في الشبكة. تحقق من الاتصال وحاول مجدداً.",
+    "errorNotAllowed": "غير مسموح بإنشاء موقع حالياً.",
+    "errorLimit": "وصلت إلى حد المواقع في خطتك.",
+    "errorBetaRequired": "يلزم وصول البيتا. أدخل رمز الدعوة أولاً.",
+    "errorInviteInvalid": "رمز الدعوة غير صالح أو غير نشط",
+    "errorInviteExpired": "انتهت صلاحية رمز الدعوة",
+    "errorInviteExhausted": "لم يتبق استخدامات لرمز الدعوة",
+    "errorInviteRequired": "أدخل رمز الدعوة"
+  },
+  "onboarding": {
+    "title": "إنشاء موقعك",
+    "subtitle": "اختر اسماً وعنواناً. يمكنك تغييرهما لاحقاً.",
+    "orgName": "اسم الموقع",
+    "orgNamePlaceholder": "مثال: استوديو نورث",
+    "slug": "عنوان الموقع",
+    "slugHint": "سيكون موقعك متاحاً على",
+    "slugTaken": "هذا العنوان مستخدم بالفعل",
+    "slugInvalid": "استخدم أحرفاً صغيرة وأرقاماً وشرطات فقط (3–40)",
+    "create": "إنشاء الموقع",
+    "creating": "جارٍ الإنشاء...",
+    "backToSites": "العودة إلى المواقع",
+    "betaHint": "يتطلب إنشاء موقع رمز دعوة بيتا.",
+    "inviteCode": "رمز الدعوة",
+    "invitePlaceholder": "YOUR-CODE",
+    "redeem": "تفعيل الوصول",
+    "redeeming": "جارٍ التحقق..."
+  },
+  "dashboardPlaceholder": {
+    "title": "لوحة التحكم",
+    "welcome": "أهلاً بك",
+    "noOrgs": "لم تقم بإنشاء موقع بعد",
+    "createSite": "إنشاء موقعك الأول",
+    "switchSite": "اختر موقعاً للبدء",
+    "signOut": "تسجيل الخروج"
+  },
+  "marketing": {
+    "brand": "كوريوس فيسل",
+    "nav": {
+      "features": "المميزات",
+      "howItWorks": "كيف يعمل",
+      "pricing": "الأسعار",
+      "faq": "الأسئلة الشائعة",
+      "login": "تسجيل الدخول",
+      "getStarted": "ابدأ الآن"
+    },
+    "hero": {
+      "badge": "منشئ مواقع",
+      "title": "ابنِ وانشر مواقعك بصرياً.",
+      "subtitle": "منشئ مواقع متعددة لتصميم الصفحات وربط النطاقات والنشر دون التنازل عن التحكم.",
+      "ctaPrimary": "ابدأ البناء",
+      "ctaSecondary": "استكشف المنتج",
+      "note": "مواقع · نطاقات · صفحات · ابدأ مجاناً",
+      "demoHint": ""
+    },
+    "logos": "موثوق من فرق عقارية متنامية",
+    "stats": [
+      {
+        "value": "3 دقائق",
+        "label": "لإطلاق موقع"
+      },
+      {
+        "value": "2",
+        "label": "لغتان جاهزتان"
+      },
+      {
+        "value": "100%",
+        "label": "تصميم بصري بدون كود"
+      },
+      {
+        "value": "0",
+        "label": "رسوم تصميم"
+      }
+    ],
+    "features": {
+      "eyebrow": "المميزات",
+      "title": "منصة بناء مواقع مركّزة.",
+      "subtitle": "كل ما تحتاجه لتشغيل المواقع — لا أكثر.",
+      "items": [
+        {
+          "title": "محرر صفحات بصري",
+          "description": "اسحب الأقسام، عدّل النصوص، وانشر مع معاينة حية."
+        },
+        {
+          "title": "مساحات متعددة المواقع",
+          "description": "أنشئ مواقع، بدّل بينها، وأدر كلاً بشكل مستقل."
+        },
+        {
+          "title": "نطاقات مخصصة",
+          "description": "اربط النطاقات، تحقق من الملكية، وحدد حالة النشر."
+        },
+        {
+          "title": "الهوية والسمة",
+          "description": "ألوان ونصف قطر وهيكل الموقع على كل الصفحات."
+        },
+        {
+          "title": "إعدادات الموقع",
+          "description": "SEO والتنقل والإعدادات في مكان واحد."
+        },
+        {
+          "title": "نشر سريع",
+          "description": "صفحات من الخادم جاهزة لحظة النشر."
+        }
+      ]
+    },
+    "how": {
+      "eyebrow": "كيف يعمل",
+      "title": "ثلاث خطوات لموقع حي.",
+      "steps": [
+        {
+          "title": "أنشئ موقعاً",
+          "description": "سمّه، اختر المسار، واحصل على مساحة فوراً."
+        },
+        {
+          "title": "ابنِ الصفحات",
+          "description": "افتح المحرر وركّب بالكتل."
+        },
+        {
+          "title": "اربط وانشر",
+          "description": "أضف نطاقاً، انشر الصفحات، وشارك الرابط."
+        }
+      ]
+    },
+    "pricing": {
+      "eyebrow": "الأسعار",
+      "title": "خطط بسيطة للبناة.",
+      "toggle": "شهرياً / سنوياً",
+      "plans": [
+        {
+          "name": "مجاني",
+          "price": "0",
+          "period": "/شهرياً",
+          "features": ["موقع واحد", "نطاق فرعي", "محرر بصري", "دعم المجتمع"],
+          "cta": "ابدأ مجاناً",
+          "highlight": false
+        },
+        {
+          "name": "احترافي",
+          "price": "19",
+          "period": "/شهرياً",
+          "features": [
+            "نطاقات مخصصة",
+            "صفحات غير محدودة",
+            "دعم ذو أولوية",
+            "إزالة العلامة"
+          ],
+          "cta": "ابدأ التجربة",
+          "highlight": true
+        },
+        {
+          "name": "وكالات",
+          "price": "49",
+          "period": "/شهرياً",
+          "features": ["حتى 10 مواقع", "مقاعد فريق", "علامة بيضاء", "دعم مخصص"],
+          "cta": "تواصل",
+          "highlight": false
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "الأسئلة",
+      "title": "أسئلة شائعة.",
+      "items": [
+        {
+          "q": "هل هذا للعقار فقط؟",
+          "a": "لا. كوريوس فيسل منشئ مواقع عام. العقار مجرد نوع واحد من المواقع."
+        },
+        {
+          "q": "هل يمكنني استخدام نطاقي؟",
+          "a": "نعم. أضف النطاق في الإعدادات، تحقق منه، وانشر."
+        },
+        {
+          "q": "هل أحتاج للكود؟",
+          "a": "لا. الصفحات تُبنى بصرياً في المحرر."
+        },
+        {
+          "q": "كم موقعاً يمكنني تشغيله؟",
+          "a": "ابدأ بواحد على المجاني. الخطط الأعلى تفتح مساحات أكثر."
+        }
+      ]
+    },
+    "cta": {
+      "title": "أطلق موقعك التالي اليوم.",
+      "subtitle": "افتح المحرر، اربط نطاقاً، وانشر.",
+      "button": "أنشئ موقعاً"
+    },
+    "footer": {
+      "tagline": "منشئ مواقع للفرق متعددة المواقع.",
+      "product": "المنتج",
+      "productLinks": ["المميزات", "الأسعار", "الأسئلة"],
+      "company": "الحساب",
+      "companyLinks": ["تسجيل الدخول", "التسجيل"],
+      "legal": "جميع الحقوق محفوظة."
+    },
+    "showcase": {
+      "eyebrow": "المنتج",
+      "title": "بطاقات لكل موقع تُطلقه.",
+      "subtitle": "المحرر والنطاقات وإعدادات الموقع — بمسافات واضحة وجاهزة.",
+      "builder": {
+        "meta": "EDITOR",
+        "title": "محرر صفحات بصري",
+        "description": "ركّب المكونات، انشر فوراً، واحتفظ بالمسودات منفصلة."
+      },
+      "domains": {
+        "meta": "DNS",
+        "title": "نطاقات مخصصة",
+        "description": "اربط النطاقات، تحقق منها، وانطلق بهويتك."
+      },
+      "sites": {
+        "meta": "MULTI-SITE",
+        "title": "مواقع متعددة، لوحة واحدة",
+        "description": "بدّل بين المساحات، اضبط كل موقع، وافتح الرابط الحي."
+      }
+    }
+  }
+}

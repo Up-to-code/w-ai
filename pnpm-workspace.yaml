@@ -1,0 +1,6 @@
+onlyBuiltDependencies:
+  - sharp
+  - esbuild
+  - '@swc/core'
+  - msgpackr-extract
+  - unrs-resolver

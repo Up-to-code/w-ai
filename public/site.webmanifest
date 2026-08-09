@@ -1,0 +1,16 @@
+{
+  "name": "W-AI",
+  "short_name": "W-AI",
+  "description": "Build, manage, and publish responsive websites with W-AI.",
+  "start_url": "/",
+  "scope": "/",
+  "icons": [
+    { "src": "/icons/vessel-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/vessel-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/vessel-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "theme_color": "#0a0a0a",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "any"
+}

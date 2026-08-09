@@ -1,0 +1,1224 @@
+{
+  "HomePage": {
+    "title": "Hello World!",
+    "contact": "Contact Me"
+  },
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "signin": "Sign In",
+    "dashboard": "Dashboard",
+    "blog": "Blog",
+    "services": "Services",
+    "goToDashboard": "Go to Dashboard"
+  },
+  "sidebar": {
+    "menu": "Menu",
+    "global": "Global",
+    "options": "Options",
+    "adminPanel": "Admin Panel",
+    "charts": "Charts",
+    "orders": "Orders",
+    "projects": "Projects",
+    "forms": "Forms",
+    "blogs": "Blogs",
+    "media": "Media",
+    "settings": "Settings",
+    "homepage": "Homepage",
+    "documentation": "Documentation",
+    "support": "Support",
+    "dashboard": "Dashboard",
+    "home": "Home",
+    "properties": "Properties",
+    "addProperty": "Add Property",
+    "users": "Users",
+    "services": "Services",
+    "interests": "Current Frames",
+    "leads": "Leads"
+  },
+  "SaveModal": {
+    "title": {
+      "idle": "Save Changes",
+      "saving": "Saving...",
+      "success": "Success!",
+      "error": "Error"
+    },
+    "description": {
+      "idle": "Do you want to save changes in general settings?",
+      "saving": "Please wait while saving settings.",
+      "success": "Changes saved successfully.",
+      "error": "Failed to save settings. Please try again."
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "save": "Save Changes",
+      "close": "Close",
+      "retry": "Try Again"
+    }
+  },
+  "properties": {
+    "title": "Properties",
+    "subtitle": "Manage your property portfolio",
+    "stats": {
+      "total": "Total Properties",
+      "available": "Available",
+      "rented": "Rented",
+      "sold": "Sold"
+    },
+    "search": {
+      "placeholder": "Search properties..."
+    },
+    "searchPlaceholder": "Search properties...",
+    "filters": {
+      "all": "All Status"
+    },
+    "status": {
+      "available": "Available",
+      "rented": "Rented",
+      "sold": "Sold"
+    },
+    "types": {
+      "apartment": "Apartment",
+      "villa": "Villa",
+      "office": "Office",
+      "shop": "Shop"
+    },
+    "badges": {
+      "featured": "Featured"
+    },
+    "actions": {
+      "addProperty": "Add Property",
+      "add": "Add Property",
+      "moreFilters": "More Filters",
+      "view": "View Details",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "empty": {
+      "title": "No properties found",
+      "description": "Try adjusting your search or filter criteria"
+    },
+    "createFirst": "Create your first property to get started",
+    "noProperties": "No properties match your search criteria",
+    "currency": "SAR"
+  },
+  "property": {
+    "title": "Add New Property",
+    "subtitle": "Add all property details easily",
+    "tabs": {
+      "basic": "Basic Info",
+      "details": "Details",
+      "features": "Features",
+      "images": "Images"
+    },
+    "sections": {
+      "basic": "Basic Information",
+      "details": "Property Details",
+      "features": "Features & Amenities",
+      "images": "Property Images"
+    },
+    "form": {
+      "title": "Property Title",
+      "description": "Description",
+      "price": "Price",
+      "type": "Property Type",
+      "city": "City",
+      "district": "District",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "area": "Area",
+      "parking": "Parking"
+    },
+    "placeholders": {
+      "title": "Luxury Apartment in City",
+      "description": "Detailed property description...",
+      "city": "Enter city",
+      "district": "Enter district"
+    },
+    "types": {
+      "apartment": "Apartment",
+      "villa": "Villa",
+      "office": "Office",
+      "shop": "Shop"
+    },
+    "features": {
+      "list": [
+        "Parking",
+        "Security",
+        "AC",
+        "Pool",
+        "Gym",
+        "Internet",
+        "Kitchen",
+        "Balcony",
+        "Elevator"
+      ],
+      "selected": "{{count}} features selected"
+    },
+    "images": {
+      "upload": "Click to upload images",
+      "requirements": "PNG, JPG, GIF up to 10MB"
+    },
+    "actions": {
+      "preview": "Preview",
+      "save": "Save Property"
+    },
+    "summary": {
+      "title": "Quick Summary",
+      "price": "Price",
+      "bedrooms": "Bedrooms",
+      "area": "Area (m²)",
+      "images": "Images"
+    },
+    "success": "Property saved successfully!"
+  },
+  "navigation": {
+    "switchToArabic": "Switch to Arabic",
+    "switchToEnglish": "Switch to English"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "confirmDelete": "Are you sure you want to delete this item?",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "update": "Update",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "reset": "Reset",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK"
+  },
+  "propertyForm": {
+    "createTitle": "Create New Property",
+    "editTitle": "Edit Property",
+    "subtitle": "Fill in the details below to create a new property",
+    "editSubtitle": "Update the property details below",
+    "images": "Property Images",
+    "uploadImage": "Upload Image",
+    "basicInfo": "Basic Information",
+    "content": "Content",
+    "types": {
+      "apartment": "Apartment",
+      "villa": "Villa",
+      "office": "Office",
+      "shop": "Shop"
+    },
+    "labels": {
+      "price": "Price",
+      "type": "Property Type",
+      "city": "City",
+      "district": "District",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "area": "Area (m²)",
+      "parking": "Parking Spaces",
+      "title": "Property Title",
+      "description": "Description"
+    },
+    "placeholders": {
+      "price": "0.00"
+    },
+    "actions": {
+      "back": "Back to Properties",
+      "cancel": "Cancel",
+      "create": "Create Property",
+      "update": "Update Property"
+    }
+  },
+  "GlobalSettings": {
+    "title": "Global Settings",
+    "description": "Configure your website's global settings",
+    "loading": "Loading settings...",
+    "resetConfirmation": "Are you sure you want to reset all settings to default?",
+    "resetButton": "Reset Settings",
+    "saveButton": "Save Settings",
+    "tabs": {
+      "navigation": "Navigation",
+      "footer": "Footer",
+      "logo": "Logo",
+      "meta": "Meta"
+    }
+  },
+  "propertyDetail": {
+    "actions": {
+      "backToProperties": "Back to Properties",
+      "save": "Save",
+      "share": "Share",
+      "print": "Print",
+      "contactAgent": "Contact Agent",
+      "sendMessage": "Send Message",
+      "whatsapp": "WhatsApp",
+      "chat": "Chat",
+      "call": "Call",
+      "viewAllSimilar": "View All Similar Properties"
+    },
+    "badges": {
+      "featured": "Featured",
+      "available": "Available",
+      "rented": "Rented",
+      "sold": "Sold"
+    },
+    "sections": {
+      "propertyOverview": "Property Overview",
+      "description": "Description",
+      "featuresAmenities": "Features & Amenities",
+      "propertyDetails": "Property Details",
+      "locationMap": "Location & Map",
+      "agentInformation": "Agent Information",
+      "propertyStatistics": "Property Statistics",
+      "similarProperties": "Similar Properties"
+    },
+    "details": {
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "area": "m²",
+      "parking": "Parking",
+      "propertyType": "Property Type",
+      "status": "Status",
+      "location": "Location",
+      "listedDate": "Listed Date",
+      "lastUpdated": "Last Updated",
+      "propertyId": "Property ID",
+      "views": "Views",
+      "favorites": "Favorites",
+      "shares": "Shares",
+      "daysOnMarket": "Days on Market"
+    },
+    "amenities": {
+      "wifi": "WiFi",
+      "security": "Security",
+      "garden": "Garden",
+      "gym": "Gym",
+      "pool": "Pool",
+      "parking": "Parking",
+      "kitchen": "Kitchen",
+      "cableTV": "Cable TV",
+      "internet": "Internet"
+    },
+    "location": {
+      "nearSchools": "Near Schools",
+      "nearHospitals": "Near Hospitals",
+      "nearShopping": "Near Shopping",
+      "publicTransport": "Public Transport",
+      "interactiveMap": "Interactive Map",
+      "clickToViewFullMap": "Click to view full map"
+    },
+    "agent": {
+      "title": "Senior Real Estate Agent",
+      "phone": "+1 (555) 123-4567",
+      "email": "john@realestate.com"
+    },
+    "similar": {
+      "description": "Properties with similar features in the same area",
+      "property": "Similar Property"
+    },
+    "stats": {
+      "views": "views",
+      "listed": "Listed",
+      "updated": "Updated"
+    }
+  },
+  "aboutEditor": {
+    "editorTitle": "Editor Title",
+    "preview": "Preview",
+    "reset": "Reset",
+    "save": "Save",
+    "tabs": {
+      "hero": "Hero",
+      "story": "Story",
+      "stats": "Statistics",
+      "values": "Values",
+      "team": "Team",
+      "cta": "Call to Action"
+    },
+    "sections": {
+      "hero": {
+        "title": "Hero Title",
+        "badge": "Badge",
+        "subtitle": "Subtitle"
+      },
+      "story": {
+        "title": "Story Title",
+        "storyTitle": "Main Story Title",
+        "paragraph1": "Paragraph 1",
+        "paragraph2": "Paragraph 2",
+        "paragraph3": "Paragraph 3",
+        "image": "Image",
+        "uploadImage": "Upload Image",
+        "yearsInBusiness": "Years in Business"
+      },
+      "stats": {
+        "title": "Statistics Title",
+        "addStat": "Add Statistic",
+        "value": "Value",
+        "label": "Label"
+      },
+      "values": {
+        "title": "Values Title",
+        "addValue": "Add Value",
+        "description": "Description"
+      },
+      "team": {
+        "title": "Team Title",
+        "addMember": "Add Member",
+        "name": "Name",
+        "role": "Role",
+        "avatar": "Avatar",
+        "uploadAvatar": "Upload Avatar",
+        "description": "Description"
+      },
+      "cta": {
+        "title": "Call to Action Title",
+        "ctaTitle": "CTA Title",
+        "subtitle": "Subtitle"
+      },
+      "contact": {
+        "title": "Contact Title",
+        "address": "Address",
+        "phone": "Phone",
+        "email": "Email"
+      }
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "A brief introduction",
+    "emailUs": "Email Us",
+    "contactUs": "Contact Us",
+    "complitet": "Completed",
+    "callUs": "Call Us",
+    "visitUs": "Visit Us",
+    "badge": "Completed",
+    "viewProperties": "View Properties",
+    "teamTitle": "Team",
+    "teamSubtitle": "The team managing this project",
+    "ourStory": "Our Story",
+    "storyTitle": "Our Story",
+    "storyParagraph1": "Story paragraph one",
+    "storyParagraph2": "Story paragraph two",
+    "storyParagraph3": "Story paragraph three",
+    "valuesTitle": "Work Values",
+    "ourValues": "Our Values",
+    "ourTeam": "Our Team",
+    "achievements": "Achievements",
+    "yearsInBusiness": "Years in Business",
+    "ctaTitle": "Ready to take the next step?",
+    "ctaSubtitle": "Let's work together to achieve your real estate goals"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "orgPicker": {
+      "title": "Choose a site",
+      "subtitle": "Select the site you want to manage",
+      "open": "Open"
+    },
+    "orgNotFound": {
+      "badge": "Site not found",
+      "title": "This site dashboard is not available",
+      "subtitle": "The address you opened does not match a site in your workspace. Choose one of your available sites or create a new one.",
+      "chooseSite": "Choose site",
+      "createSite": "Create site",
+      "newSite": "New site",
+      "availableSites": "Available sites",
+      "empty": "You do not have any sites yet."
+    },
+    "sidebar": {
+      "overview": "Overview",
+      "pages": "Pages",
+      "settings": "Site settings",
+      "newSite": "New site",
+      "signOut": "Sign out",
+      "viewSite": "View site",
+      "menu": "Menu",
+      "properties": "Properties",
+      "posts": "Blog",
+      "contacts": "Messages",
+      "interests": "Interests",
+      "inbox": "Chat inbox",
+      "services": "Services",
+      "siteSettings": "Site settings",
+      "domains": "Domains"
+    },
+    "overview": {
+      "title": "Overview",
+      "subtitle": "Manage your site, pages and settings from here.",
+      "commandCenter": "Site command center",
+      "pages": "Pages",
+      "published": "Published",
+      "drafts": "Drafts",
+      "liveContent": "Live content",
+      "ofTotal": "of {total} total items",
+      "openLeads": "Open leads",
+      "needsAttention": "Needs attention across messages and chat",
+      "pageDrafts": "{count} page drafts",
+      "team": "Team",
+      "role": "Your role: {role}",
+      "publishedDrafts": "{published} published · {drafts} drafts",
+      "propertiesDetail": "{published} published · {featured} featured",
+      "postsDetail": "{published} published · {drafts} drafts",
+      "servicesDetail": "{enabled} enabled",
+      "unreadCount": "{count} unread",
+      "openConversationCount": "{count} open conversations",
+      "contentOps": "Content operations",
+      "leadDesk": "Lead desk",
+      "siteStatus": "Site status",
+      "siteOnline": "Site is online",
+      "plan": "Plan",
+      "domains": "Domains",
+      "manage": "Manage",
+      "openInbox": "Open inbox",
+      "manageInventory": "Manage inventory",
+      "reviewLeads": "Review leads",
+      "recentActivity": "Recent activity",
+      "noActivity": "No messages, interests, or conversations yet.",
+      "read": "Read",
+      "unread": "Unread",
+      "visitor": "Visitor",
+      "editPages": "Edit pages",
+      "siteUrl": "Your site address",
+      "copy": "Copy",
+      "copied": "Copied",
+      "openSite": "Open site",
+      "quickActions": "Quick actions"
+    },
+    "pages": {
+      "title": "Pages",
+      "subtitle": "Create, edit and publish the pages of your site.",
+      "newPage": "New page",
+      "pageName": "Page name",
+      "pageAddress": "Page address",
+      "cancel": "Cancel",
+      "create": "Create page",
+      "created": "Page created",
+      "nameAr": "Name (Arabic)",
+      "nameEn": "Name (English)",
+      "slug": "Address",
+      "status": "Status",
+      "published": "Published",
+      "draft": "Draft",
+      "updated": "Updated",
+      "actions": "",
+      "edit": "Edit",
+      "preview": "Preview",
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "delete": "Delete",
+      "deleteTitle": "Delete page?",
+      "deleteDesc": "This will permanently remove the page. This action cannot be undone.",
+      "deleteConfirm": "Delete",
+      "homeNote": "The home page is required and cannot be deleted.",
+      "empty": "No pages yet. Create your first page.",
+      "error": "Something went wrong. Try again.",
+      "slugInvalid": "Invalid address (lowercase letters, numbers and dashes, 3-80 characters)"
+    },
+    "settings": {
+      "title": "Site settings",
+      "subtitle": "Site identity and brand theme.",
+      "name": "Site name",
+      "namePlaceholder": "Your company name",
+      "defaultLanguage": "Default language",
+      "theme": "Brand theme",
+      "primary": "Primary color",
+      "background": "Background",
+      "foreground": "Text color",
+      "secondary": "Secondary",
+      "accent": "Accent",
+      "radius": "Corner radius (px)",
+      "save": "Save changes",
+      "saved": "Settings saved",
+      "saveError": "Could not save settings",
+      "customDomain": "Custom domain",
+      "customDomainHint": "Add a domain and point its DNS to this site. Verified domains serve your site directly.",
+      "domainPlaceholder": "example.com",
+      "addDomain": "Add domain",
+      "verify": "Verify",
+      "domainAdded": "Domain added. Verify it after DNS propagation.",
+      "loading": "Loading…"
+    },
+    "editor": {
+      "back": "Back to pages",
+      "save": "Save",
+      "saved": "Saved",
+      "saveError": "Could not save page",
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "preview": "Preview",
+      "loading": "Loading editor…",
+      "notFound": "Page not found",
+      "saving": "Saving…"
+    },
+    "properties": {
+      "title": "Properties",
+      "subtitle": "Manage your site properties.",
+      "newProperty": "New property",
+      "published": "Published",
+      "draft": "Draft",
+      "featured": "Featured",
+      "price": "Price",
+      "type": "Type",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleteTitle": "Delete property?",
+      "deleteDesc": "This cannot be undone.",
+      "deleteConfirm": "Delete",
+      "cancel": "Cancel",
+      "empty": "No properties yet.",
+      "error": "Something went wrong.",
+      "titleAr": "Title (Arabic)",
+      "titleEn": "Title (English)",
+      "priceSAR": "Price (SAR)",
+      "propertyType": "Property type",
+      "save": "Save",
+      "saved": "Saved"
+    },
+    "posts": {
+      "title": "Blog",
+      "subtitle": "Create and manage your blog posts.",
+      "newPost": "New post",
+      "published": "Published",
+      "draft": "Draft",
+      "archived": "Archived",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleteTitle": "Delete post?",
+      "deleteDesc": "This cannot be undone.",
+      "deleteConfirm": "Delete",
+      "cancel": "Cancel",
+      "empty": "No posts yet.",
+      "error": "Something went wrong.",
+      "titleAr": "Title (Arabic)",
+      "titleEn": "Title (English)",
+      "excerptAr": "Excerpt (Arabic)",
+      "excerptEn": "Excerpt (English)",
+      "contentAr": "Content (Arabic)",
+      "contentEn": "Content (English)",
+      "save": "Save",
+      "saved": "Saved"
+    },
+    "contacts": {
+      "title": "Messages",
+      "subtitle": "Contact form submissions from your site visitors.",
+      "empty": "No messages yet.",
+      "markRead": "Mark read",
+      "markUnread": "Mark unread",
+      "delete": "Delete",
+      "deleteTitle": "Delete message?",
+      "deleteDesc": "This cannot be undone.",
+      "deleteConfirm": "Delete",
+      "cancel": "Cancel",
+      "unread": "Unread",
+      "all": "All"
+    },
+    "interests": {
+      "title": "Interests",
+      "subtitle": "Visitor interest submissions for your properties.",
+      "empty": "No interests yet.",
+      "markRead": "Mark read",
+      "markUnread": "Mark unread",
+      "delete": "Delete",
+      "deleteTitle": "Delete?",
+      "deleteDesc": "This cannot be undone.",
+      "deleteConfirm": "Delete",
+      "cancel": "Cancel",
+      "unread": "Unread",
+      "all": "All"
+    },
+    "inbox": {
+      "title": "Chat inbox",
+      "subtitle": "Real-time visitor conversations.",
+      "empty": "No conversations yet.",
+      "send": "Send",
+      "resolve": "Resolve",
+      "open": "Open",
+      "resolved": "Resolved",
+      "messagePlaceholder": "Type your reply...",
+      "allConversations": "All conversations"
+    },
+    "services": {
+      "title": "Services",
+      "subtitle": "Manage your site services.",
+      "newService": "New service",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleteTitle": "Delete service?",
+      "deleteDesc": "This cannot be undone.",
+      "deleteConfirm": "Delete",
+      "cancel": "Cancel",
+      "empty": "No services yet.",
+      "error": "Something went wrong.",
+      "titleAr": "Title (Arabic)",
+      "titleEn": "Title (English)",
+      "descAr": "Description (Arabic)",
+      "descEn": "Description (English)",
+      "save": "Save",
+      "saved": "Saved"
+    },
+    "siteSettings": {
+      "title": "Site settings",
+      "subtitle": "Navigation, footer, logo and meta.",
+      "navigation": "Navigation",
+      "footer": "Footer",
+      "logo": "Logo",
+      "meta": "Meta",
+      "mainLinks": "Main links",
+      "addLink": "Add link",
+      "labelAr": "Label (Arabic)",
+      "labelEn": "Label (English)",
+      "href": "URL",
+      "sticky": "Sticky navigation bar",
+      "showLogo": "Show logo",
+      "ctaLabel": "CTA button label (ar/en)",
+      "ctaHref": "CTA button URL",
+      "save": "Save",
+      "saved": "Saved",
+      "saveError": "Could not save",
+      "titleMetaAr": "Page title (Arabic)",
+      "titleMetaEn": "Page title (English)",
+      "descMetaAr": "Description (Arabic)",
+      "descMetaEn": "Description (English)",
+      "logoUrl": "Logo URL"
+    }
+  },
+  "homePageEditor": {
+    "title": "Home Page Editor",
+    "subtitle": "Manage content in multiple languages",
+    "currentLanguage": "Current language",
+    "loading": "Loading editor...",
+    "saving": "Saving...",
+    "saveChanges": "Save Changes",
+    "import": "Import",
+    "export": "Export",
+    "english": "English",
+    "arabic": "Arabic",
+    "sections": {
+      "hero": "Hero",
+      "banners": "Banners",
+      "about": "About Us",
+      "testimonials": "Testimonials",
+      "whyus": "Why Choose Us",
+      "contact": "Contact Us",
+      "partners": "Partners"
+    },
+    "hero": {
+      "title": "Hero Section",
+      "heroTitle": "Hero Title",
+      "backgroundVideo": "Background Video",
+      "overlayColor": "Overlay Color",
+      "primaryButton": "Primary Button",
+      "secondaryButton": "Secondary Button",
+      "buttonText": "Button Text",
+      "buttonLink": "Button Link",
+      "buttonVariant": "Button Variant",
+      "uploadVideo": "Upload Video",
+      "placeholders": {
+        "mainHeroTitle": "Main hero title",
+        "videoPath": "/videos/hero-bg.mp4",
+        "overlayColorExample": "rgba(0,0,0,0.4)",
+        "buttonText": "Button text",
+        "buttonLink": "Button link"
+      },
+      "variants": {
+        "primary": "Primary",
+        "secondary": "Secondary",
+        "outline": "Outline"
+      }
+    },
+    "banners": {
+      "title": "Banners Section",
+      "currentBanners": "Current Banners",
+      "addNewBanner": "Add New Banner",
+      "bannerTitle": "Banner Title",
+      "bannerDescription": "Banner Description",
+      "imageUrl": "Image URL",
+      "linkUrl": "Link URL",
+      "position": "Position",
+      "uploadBannerImage": "Upload Banner Image",
+      "remove": "Remove",
+      "addBanner": "Add Banner",
+      "positions": {
+        "top": "Top",
+        "middle": "Middle",
+        "bottom": "Bottom"
+      }
+    },
+    "aboutUs": {
+      "title": "About Us Section",
+      "sectionTitle": "Section Title",
+      "content": "Content",
+      "image": "Image",
+      "statistics": "Statistics",
+      "addNewStatistic": "Add New Statistic",
+      "addStatistic": "Add Statistic",
+      "value": "Value",
+      "label": "Label",
+      "uploadAboutImage": "Upload About Image",
+      "placeholders": {
+        "aboutOurCompany": "About Our Company",
+        "companyDescription": "Company description",
+        "imagePath": "/images/about-us.jpg",
+        "valueExample": "1000+",
+        "labelExample": "Happy Clients"
+      }
+    },
+    "testimonials": {
+      "title": "Testimonials Section",
+      "sectionTitle": "Section Title",
+      "sectionSubtitle": "Section Subtitle",
+      "testimonials": "Testimonials",
+      "addNewTestimonial": "Add New Testimonial",
+      "addTestimonial": "Add Testimonial",
+      "clientName": "Client name",
+      "position": "Position",
+      "company": "Company",
+      "testimonialContent": "Testimonial content",
+      "avatarUrl": "Avatar URL",
+      "uploadAvatar": "Upload Avatar",
+      "rating": "Rating",
+      "remove": "Remove"
+    },
+    "whyUs": {
+      "title": "Why Choose Us Section",
+      "sectionTitle": "Section Title",
+      "sectionSubtitle": "Section Subtitle",
+      "features": "Features",
+      "addNewFeature": "Add New Feature",
+      "addFeature": "Add Feature",
+      "iconUrlOrEmoji": "Icon URL or emoji",
+      "uploadIcon": "Upload Icon",
+      "featureTitle": "Feature title",
+      "featureDescription": "Feature description",
+      "remove": "Remove"
+    },
+    "contactUs": {
+      "title": "Contact Us Section",
+      "contactSettings": "Contact Settings",
+      "contactInfo": "Contact Info",
+      "formFields": "Form Fields",
+      "mapSettings": "Map Settings",
+      "titleLabel": "Title",
+      "subtitleLabel": "Subtitle",
+      "description": "Description",
+      "address": "Company address",
+      "phone": "Phone number",
+      "email": "Email address",
+      "workingHours": "Working hours",
+      "fieldName": "field_name",
+      "displayLabel": "Display label",
+      "addField": "Add Field",
+      "placeholders": {
+        "contactUs": "Contact Us",
+        "wereHereToHelp": "We're here to help",
+        "getInTouch": "Get in touch with us...",
+        "mapEmbed": "<iframe src=\"https://maps.google.com/...\" />"
+      },
+      "fieldTypes": {
+        "text": "Text",
+        "email": "Email",
+        "tel": "Phone",
+        "textarea": "Text Area"
+      }
+    },
+    "partners": {
+      "title": "Partners Section",
+      "currentPartners": "Current Partners",
+      "addNewPartner": "Add New Partner",
+      "logoImageUrl": "Logo image URL",
+      "uploadPartnerLogo": "Upload Partner Logo",
+      "altText": "Alt text",
+      "remove": "Remove",
+      "addPartner": "Add Partner"
+    },
+    "messages": {
+      "dataExported": "Data exported successfully!",
+      "dataImported": "Data imported successfully! Don't forget to save.",
+      "invalidDataStructure": "Invalid data structure. Expected { en: ..., ar: ... }",
+      "errorParsingJson": "Error parsing JSON file",
+      "changesSaved": "Changes saved successfully!",
+      "errorSaving": "Error saving changes",
+      "errorExporting": "Error exporting data"
+    }
+  },
+  "uploader": {
+    "dragAndDrop": "Drag and drop your {type} here",
+    "orClickToBrowse": "or click to browse files",
+    "upToFiles": "Up to {maxFiles} files, {maxSize}MB each",
+    "uploading": "Uploading...",
+    "uploadFiles": "Upload Files",
+    "files": "Files",
+    "clearAll": "Clear All",
+    "retry": "Retry",
+    "view": "View",
+    "previews": "Previews",
+    "status": {
+      "uploading": "uploading",
+      "success": "success",
+      "error": "error"
+    },
+    "errors": {
+      "tooManyFiles": "Too many files",
+      "invalidFileType": "Invalid file type",
+      "fileTooLarge": "File too large",
+      "uploadFailed": "Upload failed",
+      "retryFailed": "Retry failed"
+    },
+    "success": {
+      "uploaded": "Successfully uploaded {count} file",
+      "uploaded_plural": "Successfully uploaded {count} files"
+    },
+    "messages": {
+      "maxFilesAllowed": "Maximum {maxFiles} files allowed. You have {current} file",
+      "maxFilesAllowed_plural": "Maximum {maxFiles} files allowed. You have {current} files",
+      "invalidFileType": "\"{fileName}\" is not a valid {type} file. Please select only {type} files.",
+      "fileTooLarge": "\"{fileName}\" ({size}MB) exceeds the {maxSize}MB limit.",
+      "bucketNotConfigured": "Storage bucket not configured. Please contact administrator.",
+      "permissionDenied": "Upload permission denied. Please check storage settings.",
+      "networkError": "Network error. Please check your connection and try again."
+    },
+    "types": {
+      "files": "files",
+      "images": "images",
+      "videos": "videos"
+    }
+  },
+  "interests": {
+    "title": "Property Interests",
+    "subtitle": "Manage property inquiries and messages",
+    "searchPlaceholder": "Search messages...",
+    "filters": {
+      "all": "All",
+      "unread": "Unread",
+      "read": "Read"
+    },
+    "table": {
+      "status": "Status",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "property": "Property",
+      "message": "Message",
+      "date": "Date",
+      "actions": "Actions"
+    },
+    "actions": {
+      "markRead": "Mark as Read",
+      "markUnread": "Mark as Unread",
+      "delete": "Delete",
+      "viewProperty": "View Property"
+    },
+    "empty": {
+      "title": "No messages found",
+      "description": "No property interests match your search criteria"
+    },
+    "badges": {
+      "read": "Read",
+      "unread": "Unread"
+    }
+  },
+  "footer": {
+    "home": "Home",
+    "projects": "Projects",
+    "services": "Services",
+    "blog": "Blog",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "brandName": "Roshn REIT",
+    "rightsReserved": "All rights reserved"
+  },
+  "landing": {
+    "formTitle": "Register Now",
+    "formSubtitle": "Register Your Interest",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone Number",
+    "submit": "Register Your Interest",
+    "placeholders": {
+      "firstName": "Enter first name",
+      "lastName": "Enter last name",
+      "phone": "05xxxxxxxx",
+      "email": "example@domain.com"
+    },
+    "email": "Email",
+    "successMessage": "Successfully registered!",
+    "thankYou": "Thank You!",
+    "successDescription": "We have received your details and will contact you shortly."
+  },
+  "errors": {
+    "somethingWentWrong": "Something went wrong",
+    "tryAgain": "Try again"
+  },
+  "home": {
+    "brand": "Qentrah",
+    "tagline": "Real estate content management platform",
+    "comingSoon": "Platform under construction"
+  },
+  "auth": {
+    "loginTitle": "Sign in",
+    "loginSubtitle": "Welcome back to Curious Vessel",
+    "registerTitle": "Create your account",
+    "registerSubtitle": "Create an account and launch your first site",
+    "name": "Name",
+    "namePlaceholder": "Your full name",
+    "email": "Email",
+    "emailPlaceholder": "name@company.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "login": "Sign in",
+    "register": "Create account",
+    "loading": "Please wait...",
+    "noAccount": "Don't have an account?",
+    "createOne": "Create one",
+    "haveAccount": "Already have an account?",
+    "signInHere": "Sign in here",
+    "errorInvalidEmailOrPassword": "Invalid email or password",
+    "errorUserAlreadyExists": "An account with this email already exists",
+    "errorInvalidEmail": "Please enter a valid email",
+    "errorPasswordTooShort": "Password must be at least 8 characters",
+    "errorNameTooShort": "Name must be at least 2 characters",
+    "errorGeneric": "Something went wrong, please try again",
+    "passwordHint": "At least 8 characters",
+    "errorPasswordTooLong": "Password is too long",
+    "errorNameRequired": "Please enter your name",
+    "errorEmailRequired": "Please enter your email",
+    "errorPasswordRequired": "Please enter your password",
+    "errorEmailNotVerified": "Please verify your email before signing in",
+    "errorTooManyRequests": "Too many attempts. Try again shortly.",
+    "errorNetwork": "Network error. Check your connection and try again.",
+    "errorNotAllowed": "You are not allowed to create a site right now.",
+    "errorLimit": "Site limit reached for your plan.",
+    "errorBetaRequired": "Beta access required. Redeem an invite code first.",
+    "errorInviteInvalid": "Invalid or inactive invite code",
+    "errorInviteExpired": "This invite code has expired",
+    "errorInviteExhausted": "This invite code has no remaining uses",
+    "errorInviteRequired": "Enter an invite code"
+  },
+  "onboarding": {
+    "title": "Create your site",
+    "subtitle": "Pick a name and address. You can change these later.",
+    "orgName": "Site name",
+    "orgNamePlaceholder": "e.g. Studio North",
+    "slug": "Site address",
+    "slugHint": "Your site will be available at",
+    "slugTaken": "This address is already taken",
+    "slugInvalid": "Use lowercase letters, numbers, and dashes only (3–40 chars)",
+    "create": "Create site",
+    "creating": "Creating...",
+    "backToSites": "Back to sites",
+    "betaHint": "This workspace requires a beta invite before you can create a site.",
+    "inviteCode": "Invite code",
+    "invitePlaceholder": "YOUR-CODE",
+    "redeem": "Unlock access",
+    "redeeming": "Checking..."
+  },
+  "dashboardPlaceholder": {
+    "title": "Dashboard",
+    "welcome": "Welcome",
+    "noOrgs": "You haven't created a site yet",
+    "createSite": "Create your first site",
+    "switchSite": "Pick a site to get started",
+    "signOut": "Sign out"
+  },
+  "marketing": {
+    "brand": "Curious Vessel",
+    "nav": {
+      "features": "Features",
+      "howItWorks": "How it works",
+      "pricing": "Pricing",
+      "faq": "FAQ",
+      "login": "Log in",
+      "getStarted": "Get started"
+    },
+    "hero": {
+      "badge": "WEB BUILDER",
+      "title": "Build and publish websites visually.",
+      "subtitle": "A multi-site web builder for designing pages, connecting domains, and publishing without giving up control.",
+      "ctaPrimary": "Start building",
+      "ctaSecondary": "See product",
+      "note": "Sites · Domains · Pages · Free to start",
+      "demoHint": ""
+    },
+    "logos": "Trusted by growing real estate teams",
+    "stats": [
+      {
+        "value": "3 min",
+        "label": "to launch a site"
+      },
+      {
+        "value": "2",
+        "label": "languages out of the box"
+      },
+      {
+        "value": "100%",
+        "label": "visual, no code"
+      },
+      {
+        "value": "0",
+        "label": "design fees"
+      }
+    ],
+    "features": {
+      "eyebrow": "Features",
+      "title": "A focused web builder stack.",
+      "subtitle": "Everything needed to run sites — nothing more.",
+      "items": [
+        {
+          "title": "Visual page builder",
+          "description": "Drag sections, edit copy, publish with a live preview."
+        },
+        {
+          "title": "Multi-site workspaces",
+          "description": "Create sites, switch between them, manage each independently."
+        },
+        {
+          "title": "Custom domains",
+          "description": "Connect hostnames, verify ownership, mark live status."
+        },
+        {
+          "title": "Brand & theme",
+          "description": "Colors, radius, and site chrome applied across pages."
+        },
+        {
+          "title": "Site configuration",
+          "description": "SEO, navigation, and settings in one place."
+        },
+        {
+          "title": "Fast publish",
+          "description": "Server-rendered pages ready the moment you hit publish."
+        }
+      ]
+    },
+    "how": {
+      "eyebrow": "How it works",
+      "title": "Three steps to a live site.",
+      "steps": [
+        {
+          "title": "Create a site",
+          "description": "Name it, pick a slug, get a workspace instantly."
+        },
+        {
+          "title": "Build pages",
+          "description": "Open the builder and compose with blocks."
+        },
+        {
+          "title": "Connect & publish",
+          "description": "Add a domain, publish pages, share the URL."
+        }
+      ]
+    },
+    "pricing": {
+      "eyebrow": "Pricing",
+      "title": "Simple plans for builders.",
+      "toggle": "Monthly / Yearly",
+      "plans": [
+        {
+          "name": "Free",
+          "price": "0",
+          "period": "/month",
+          "features": [
+            "1 site",
+            "Subdomain",
+            "Visual builder",
+            "Community support"
+          ],
+          "cta": "Start free",
+          "highlight": false
+        },
+        {
+          "name": "Pro",
+          "price": "19",
+          "period": "/month",
+          "features": [
+            "Custom domains",
+            "Unlimited pages",
+            "Priority support",
+            "Remove branding"
+          ],
+          "cta": "Start trial",
+          "highlight": true
+        },
+        {
+          "name": "Agency",
+          "price": "49",
+          "period": "/month",
+          "features": [
+            "Up to 10 sites",
+            "Team seats",
+            "White-label",
+            "Dedicated help"
+          ],
+          "cta": "Contact",
+          "highlight": false
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Common questions.",
+      "items": [
+        {
+          "q": "Is this only for real estate?",
+          "a": "No. Curious Vessel is a general web builder. Real estate is just one kind of site you can ship."
+        },
+        {
+          "q": "Can I use my own domain?",
+          "a": "Yes. Add a hostname in site settings, verify it, and publish."
+        },
+        {
+          "q": "Do I need to code?",
+          "a": "No. Pages are built visually in the editor."
+        },
+        {
+          "q": "How many sites can I run?",
+          "a": "Start with one on Free. Pro and Agency unlock more workspaces."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ship your next site today.",
+      "subtitle": "Open the builder, connect a domain, publish.",
+      "button": "Create a site"
+    },
+    "footer": {
+      "tagline": "Web builder for multi-site teams.",
+      "product": "PRODUCT",
+      "productLinks": ["Features", "Pricing", "FAQ"],
+      "company": "ACCOUNT",
+      "companyLinks": ["Log in", "Register"],
+      "legal": "All rights reserved."
+    },
+    "showcase": {
+      "eyebrow": "PRODUCT",
+      "title": "Cards for every site you ship.",
+      "subtitle": "Builder, domains, and site config — spaced, structural, ready.",
+      "builder": {
+        "meta": "EDITOR",
+        "title": "Visual page builder",
+        "description": "Compose blocks, publish instantly, keep drafts separate."
+      },
+      "domains": {
+        "meta": "DNS",
+        "title": "Custom domains",
+        "description": "Attach hostnames, verify, and go live on your brand."
+      },
+      "sites": {
+        "meta": "MULTI-SITE",
+        "title": "Many sites, one dashboard",
+        "description": "Switch workspaces, configure each site, open the live URL."
+      }
+    }
+  }
+}

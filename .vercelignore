@@ -1,0 +1,9 @@
+.next
+node_modules
+.convex/local
+.husky
+.kiro
+.poolside
+.qoder
+*.log
+.DS_Store

@@ -1,0 +1,273 @@
+{
+  "components": [
+    {
+      "name": "BrandMark / BrandLockup",
+      "path": "components/brand/brand-mark.tsx",
+      "kind": "shared-ui",
+      "summary": "Background-free responsive Vessel W mark and wordmark lockup using currentColor for automatic light/dark rendering",
+      "usedIn": [
+        "marketing",
+        "authentication",
+        "onboarding",
+        "workspace dashboard",
+        "site dashboard"
+      ],
+      "props": ["className", "markClassName", "title"],
+      "createdAt": "2026-08-09"
+    },
+    {
+      "name": "Button",
+      "path": "components/ui/button.tsx",
+      "kind": "primitive",
+      "summary": "shadcn button (cva variants: default/outline/secondary/ghost/link + sizes)",
+      "usedIn": ["all dashboards, tenant site, auth flows"],
+      "props": ["variant", "size", "asChild"],
+      "createdAt": "2026-08-07",
+      "notes": "shadcn/ui primitive; reuse before building custom buttons."
+    },
+    {
+      "name": "Card",
+      "path": "components/ui/card.tsx",
+      "kind": "primitive",
+      "summary": "shadcn card with header/title/description/content/footer slots",
+      "usedIn": ["dashboards, stat cards, editors"],
+      "props": ["asChild"],
+      "createdAt": "2026-08-07"
+    },
+    {
+      "name": "Dialog / Sheet / AlertDialog / Popover / DropdownMenu",
+      "path": "components/ui/{dialog,sheet,alert-dialog,popover,dropdown-menu}.tsx",
+      "kind": "primitive",
+      "summary": "Radix-based overlay primitives",
+      "usedIn": ["modals, confirmations, menus"],
+      "props": ["open", "onOpenChange", "trigger", "content"],
+      "createdAt": "2026-08-07"
+    },
+    {
+      "name": "Form",
+      "path": "components/ui/form.tsx",
+      "kind": "primitive",
+      "summary": "shadcn react-hook-form + zod wrapper (FormField/FormItem/FormLabel/FormMessage)",
+      "usedIn": ["auth, content editors, builder field editors"],
+      "props": ["control", "name", "render"],
+      "createdAt": "2026-08-07"
+    },
+    {
+      "name": "Input / Textarea / Select / Checkbox / Switch / RadioGroup / Slider",
+      "path": "components/ui/{input,textarea,select,checkbox,switch,radio-group,slider}.tsx",
+      "kind": "primitive",
+      "summary": "shadcn form controls",
+      "usedIn": ["forms across CMS"],
+      "props": [],
+      "createdAt": "2026-08-07"
+    },
+    {
+      "name": "Table",
+      "path": "components/ui/table.tsx",
+      "kind": "primitive",
+      "summary": "shadcn table primitives",
+      "usedIn": ["leads, interests, conversations, submissions tables"],
+      "props": [],
+      "createdAt": "2026-08-07"
+    },
+    {
+      "name": "Tabs / Accordion / Collapsible / Toggle / ToggleGroup / Command",
+      "path": "components/ui/{tabs,accordion,collapsible,toggle,toggle-group,command}.tsx",
+      "kind": "primitive",
+      "summary": "shadcn interaction primitives",
+      "usedIn": ["settings panels, builder side panels"],
+      "props": [],
+      "createdAt": "2026-08-07"
+    },
+    {
+      "name": "Avatar / Badge / Skeleton / Separator / ScrollArea / AspectRatio / Progress",
+      "path": "components/ui/{avatar,badge,skeleton,separator,scroll-area,aspect-ratio,progress}.tsx",
+      "kind": "primitive",
+      "summary": "shadcn display primitives",
+      "usedIn": ["profiles, status badges, loading states"],
+      "props": [],
+      "createdAt": "2026-08-07"
+    },
+    {
+      "name": "RichTextEditor",
+      "path": "components/ui/rich-text-editor.tsx",
+      "kind": "shared-ui",
+      "summary": "Tiptap editor wrapper (toolbar + extensions)",
+      "usedIn": ["blog/posts editor, page rich-text sections"],
+      "props": ["content", "onChange"],
+      "createdAt": "2026-08-07"
+    },
+    {
+      "name": "Chart",
+      "path": "components/ui/chart.tsx",
+      "kind": "primitive",
+      "summary": "shadcn recharts wrapper",
+      "usedIn": ["dashboard overview charts"],
+      "props": ["config", "children"],
+      "createdAt": "2026-08-07"
+    },
+    {
+      "name": "Marquee",
+      "path": "components/ui/marquee.tsx",
+      "kind": "shared-ui",
+      "summary": "CSS marquee carousel",
+      "usedIn": ["tenant site hero/partners"],
+      "props": ["reverse", "pauseOnHover", "children"],
+      "createdAt": "2026-08-07"
+    },
+    {
+      "name": "TailwindIndicator",
+      "path": "components/tailwind-indicator.tsx",
+      "kind": "shared-ui",
+      "summary": "Dev-only breakpoint indicator",
+      "usedIn": ["root layout"],
+      "props": [],
+      "createdAt": "2026-08-07"
+    },
+    {
+      "name": "Qentrah visual builder",
+      "path": "components/qentrah/qentrah-editor.tsx + components/qentrah/editor-nodes.tsx",
+      "kind": "tenant-builder",
+      "summary": "Craft.js visual editor with All/device-scoped properties, fluid responsive container defaults, unit-aware sizing and spacing, axis-correct magnetic resize and click-drag reordering, inline text editing, a simplified Add/CMS/Libraries/Layers rail, organization-scoped CMS collection schemas, a platform Basic pattern library, resizable panels, collapsible Style/Animation/Settings inspection, GSAP playback shared with preview and published rendering, advanced flex/grid layouts and typography, media backgrounds, undo/redo, save, and publish",
+      "usedIn": ["tenant page editor", "tenant page renderer", "page preview"],
+      "props": [
+        "orgId",
+        "orgSlug",
+        "pageSlug",
+        "initialData",
+        "locale",
+        "labels"
+      ],
+      "createdAt": "2026-08-07",
+      "notes": "QENTRAH_RESOLVER and QentrahViewportProvider are shared by editing and rendering. All is the default property scope and clears device overrides for the edited key; desktop, tablet, and mobile scopes remain isolated. Animation properties use the same scope model and run through GSAP with reduced-motion support. Saved data uses {builder: qentrah, version: 1, serialized}. PageRenderer keeps legacy Puck documents readable during migration."
+    },
+    {
+      "name": "QentrahColorPicker",
+      "path": "components/qentrah/color-picker-field.tsx",
+      "kind": "tenant-builder-control",
+      "summary": "Radix Popover control backed by react-colorful for full-spectrum section, component, and text color editing without native browser pickers",
+      "usedIn": ["Qentrah quick toolbar", "Qentrah inspector"],
+      "props": ["value", "onChange", "label", "compact"],
+      "createdAt": "2026-08-08"
+    },
+    {
+      "name": "QentrahThemePanel",
+      "path": "components/qentrah/theme-panel.tsx",
+      "kind": "tenant-builder-control",
+      "summary": "Craft-aware page theme control with reusable color palettes, system-button token updates, and searchable Google Fonts for body and heading typography",
+      "usedIn": ["Qentrah editor main tool rail"],
+      "props": ["query"],
+      "createdAt": "2026-08-08"
+    },
+    {
+      "name": "WorkspaceDashboard",
+      "path": "components/dashboard/workspace-dashboard-v2.tsx",
+      "kind": "dashboard-ui",
+      "summary": "Workspace-level project catalog with a Vessel navigation shell, persisted personal folders, folder routes, project movement, search, sorting, compact grid/table views, and site quick actions",
+      "usedIn": ["dashboard root"],
+      "props": ["locale"],
+      "createdAt": "2026-08-08"
+    },
+    {
+      "name": "WorkspaceDomains",
+      "path": "components/dashboard/workspace-domains.tsx",
+      "kind": "dashboard-ui",
+      "summary": "Workspace-wide BYOD console with public-suffix-aware automatic apex/subdomain detection, platform-managed Vercel attachment and TLS, explicit DNS instructions, TXT ownership checks, tenant assignment, permanent cross-host redirects, filtering, and safe detach/reassignment lifecycle controls",
+      "usedIn": ["dashboard domains"],
+      "props": ["locale"],
+      "createdAt": "2026-08-09"
+    },
+    {
+      "name": "DomainDnsRecords",
+      "path": "components/dashboard/domain-dns-records.tsx",
+      "kind": "dashboard-ui",
+      "summary": "Provider-backed DNS record manager for one verified hostname, with W-AI routing and ownership records protected from edits or deletion",
+      "usedIn": ["site dashboard domains"],
+      "props": ["domainId", "hostname"],
+      "createdAt": "2026-08-09"
+    },
+    {
+      "name": "RedirectsManager",
+      "path": "components/dashboard/redirects-manager.tsx",
+      "kind": "dashboard-ui",
+      "summary": "Site-scoped redirect console with hostname targeting, temporary/permanent rules, query preservation, live enablement, editing, search, and deletion",
+      "usedIn": ["site dashboard redirects"],
+      "props": ["orgId", "domains"],
+      "createdAt": "2026-08-09",
+      "notes": "Path rules are stored in Convex and enforced by the public tenant server routes. Whole-host redirects remain managed through Vercel in WorkspaceDomains/DomainsSettings."
+    },
+    {
+      "name": "LegalDocument",
+      "path": "components/marketing/legal-document.tsx",
+      "kind": "marketing-ui",
+      "summary": "Shared long-form legal and policy page layout with consistent landing navigation and readable section structure",
+      "usedIn": ["privacy", "terms", "refund", "reviews"],
+      "props": ["title", "summary", "sections"],
+      "createdAt": "2026-08-08"
+    },
+    {
+      "name": "MarketingJourney",
+      "path": "components/marketing/journey.tsx",
+      "kind": "marketing-ui",
+      "summary": "Full-height create, compose, and publish narrative with GSAP ScrollTrigger enhancement and reduced-motion fallback",
+      "usedIn": ["marketing landing page"],
+      "props": [],
+      "createdAt": "2026-08-08"
+    },
+    {
+      "name": "RouteLoadingStates",
+      "path": "components/dashboard/loading-state.tsx",
+      "kind": "shared-ui",
+      "summary": "Accessible route-shaped loading shells for workspace, dashboard panels, forms, editor canvas, preview, auth, onboarding, marketing, tenant pages, and live project grids",
+      "usedIn": [
+        "App Router loading boundaries",
+        "Convex client loading states"
+      ],
+      "props": ["cards", "rows", "className"],
+      "createdAt": "2026-08-08"
+    },
+    {
+      "name": "PreviewShell",
+      "path": "components/dashboard/preview-shell-v2.tsx",
+      "kind": "dashboard-ui",
+      "summary": "Responsive page preview chrome with desktop, tablet, and mobile canvas sizes plus publication state and edit/live actions",
+      "usedIn": ["dashboard page preview"],
+      "props": [
+        "orgSlug",
+        "pageSlug",
+        "title",
+        "published",
+        "publicUrl",
+        "children"
+      ],
+      "createdAt": "2026-08-08"
+    },
+    {
+      "name": "TenantShell",
+      "path": "components/tenant/tenant-site.tsx",
+      "kind": "tenant-site",
+      "summary": "Public tenant site shell: theme CSS vars from org theme, nav/footer from siteSettings, locale/dir from default language, and Qentrah rendering with legacy Puck compatibility",
+      "usedIn": ["app/c/[slug]/** tenant routes"],
+      "props": ["slug", "pageSlug"],
+      "createdAt": "2026-08-07"
+    },
+    {
+      "name": "tenant-host helpers",
+      "path": "lib/tenant-host.ts",
+      "kind": "shared-lib",
+      "summary": "tenantSlugFromHost / isAppHost for subdomain (slug.qentrah.com | slug.localhost) vs app-origin routing",
+      "usedIn": ["middleware", "convex/tenant.ts"],
+      "props": [],
+      "createdAt": "2026-08-07"
+    },
+    {
+      "name": "color helpers",
+      "path": "lib/color.ts",
+      "kind": "shared-lib",
+      "summary": "hexToHslTriplet + hexToRgba for building tenant theme CSS vars",
+      "usedIn": ["TenantShell"],
+      "props": [],
+      "createdAt": "2026-08-07"
+    }
+  ]
+}
