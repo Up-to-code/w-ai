@@ -196,6 +196,8 @@ const ATOMIC_COMPONENTS = [
   "IconBlock",
   "Divider",
   "Spacer",
+  "CmsCollection",
+  "CmsField",
 ];
 
 export function BuilderSection({
@@ -211,6 +213,8 @@ export function BuilderSection({
   backgroundCss,
   backgroundSound,
   overlay = "rgba(0,0,0,0)",
+  direction = "ltr",
+  rtlBehavior = "auto",
 }: {
   content: SlotComponent;
   contentWidth?: "narrow" | "wide" | "full";
@@ -224,6 +228,8 @@ export function BuilderSection({
   backgroundCss?: string;
   backgroundSound?: string;
   overlay?: string;
+  direction?: "ltr" | "rtl";
+  rtlBehavior?: "auto" | "preserve";
 }) {
   const maxWidth =
     contentWidth === "narrow"
@@ -261,7 +267,12 @@ export function BuilderSection({
   if (backgroundType === "css" && backgroundCss) style.background = backgroundCss;
 
   return (
-    <section className={`relative flex overflow-hidden ${height} ${spacing} ${justify}`} style={style}>
+    <section
+      className={`relative flex overflow-hidden ${height} ${spacing} ${justify}`}
+      style={style}
+      dir={rtlBehavior === "preserve" ? "ltr" : direction}
+      data-rtl-behavior={rtlBehavior}
+    >
       {backgroundType === "video" && backgroundVideo ? (
         <video
           src={backgroundVideo}
@@ -292,6 +303,8 @@ export function ColumnsBlock({
   columns = "2",
   gap = "medium",
   align = "stretch",
+  direction = "ltr",
+  rtlBehavior = "auto",
 }: {
   columnOne: SlotComponent;
   columnTwo: SlotComponent;
@@ -299,6 +312,8 @@ export function ColumnsBlock({
   columns?: "2" | "3";
   gap?: "none" | "small" | "medium" | "large";
   align?: "start" | "center" | "end" | "stretch";
+  direction?: "ltr" | "rtl";
+  rtlBehavior?: "auto" | "preserve";
 }) {
   const gapClass =
     gap === "none" ? "gap-0" : gap === "small" ? "gap-3" : gap === "large" ? "gap-10" : "gap-6";
@@ -306,7 +321,11 @@ export function ColumnsBlock({
     align === "start" ? "items-start" : align === "center" ? "items-center" : align === "end" ? "items-end" : "items-stretch";
   const slotClass = "min-w-0 rounded-sm border border-dashed border-transparent p-2";
   return (
-    <div className={`grid ${columns === "3" ? "md:grid-cols-3" : "md:grid-cols-2"} ${gapClass} ${alignClass}`}>
+    <div
+      className={`grid ${columns === "3" ? "md:grid-cols-3" : "md:grid-cols-2"} ${gapClass} ${alignClass}`}
+      dir={rtlBehavior === "preserve" ? "ltr" : direction}
+      data-rtl-behavior={rtlBehavior}
+    >
       <ColumnOne allow={ATOMIC_COMPONENTS} minEmptyHeight={120} className={slotClass} />
       <ColumnTwo allow={ATOMIC_COMPONENTS} minEmptyHeight={120} className={slotClass} />
       {columns === "3" ? (
@@ -416,7 +435,14 @@ export function IconBlock({
   const Icon = ICONS[icon] || Star;
   const alignment = align === "center" ? "justify-center" : align === "end" ? "justify-end" : "justify-start";
   const iconSize = size === "large" ? "size-12" : size === "small" ? "size-5" : "size-8";
-  return <div className={`flex ${alignment}`}><Icon className={iconSize} strokeWidth={1.5} /></div>;
+  return (
+    <div className={`flex ${alignment}`}>
+      <Icon
+        className={`${iconSize} ${icon === "arrow" ? "wai-directional-icon" : ""}`}
+        strokeWidth={1.5}
+      />
+    </div>
+  );
 }
 
 /* ─── Content blocks ────────────────────────────────────────────── */

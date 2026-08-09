@@ -134,10 +134,10 @@
       "createdAt": "2026-08-07"
     },
     {
-      "name": "Qentrah visual builder",
-      "path": "components/qentrah/qentrah-editor.tsx + components/qentrah/editor-nodes.tsx",
+      "name": "PuckPageEditor / PageRenderer",
+      "path": "components/qentrah/puck-page-editor.tsx + components/qentrah/page-renderer.tsx + lib/puck/config.tsx",
       "kind": "tenant-builder",
-      "summary": "Craft.js visual editor with All/device-scoped properties, fluid responsive container defaults, unit-aware sizing and spacing, axis-correct magnetic resize and click-drag reordering, inline text editing, a simplified Add/CMS/Libraries/Layers rail, organization-scoped CMS collection schemas, a platform Basic pattern library, resizable panels, collapsible Style/Animation/Settings inspection, GSAP playback shared with preview and published rendering, advanced flex/grid layouts and typography, media backgrounds, undo/redo, save, and publish",
+      "summary": "Puck 0.23 visual editor and renderer with a shared component tree, sparse locale and viewport overrides, per-locale preview/publishing, dynamic CMS fields, Tiptap rich text, RTL profiles, responsive viewports, and recoverable canvas errors",
       "usedIn": ["tenant page editor", "tenant page renderer", "page preview"],
       "props": [
         "orgId",
@@ -148,7 +148,7 @@
         "labels"
       ],
       "createdAt": "2026-08-07",
-      "notes": "QENTRAH_RESOLVER and QentrahViewportProvider are shared by editing and rendering. All is the default property scope and clears device overrides for the edited key; desktop, tablet, and mobile scopes remain isolated. Animation properties use the same scope model and run through GSAP with reduced-motion support. Saved data uses {builder: qentrah, version: 1, serialized}. PageRenderer keeps legacy Puck documents readable during migration."
+      "notes": "Saved data uses PageDocumentV2 { builder: puck, version: 2, data, overrides, bindings }. Resolution order is global, viewport, locale, then locale-and-viewport. Craft is no longer a runtime dependency; legacy conversion is isolated to the migration helper."
     },
     {
       "name": "QentrahColorPicker",
@@ -160,13 +160,13 @@
       "createdAt": "2026-08-08"
     },
     {
-      "name": "QentrahThemePanel",
-      "path": "components/qentrah/theme-panel.tsx",
-      "kind": "tenant-builder-control",
-      "summary": "Craft-aware page theme control with reusable color palettes, system-button token updates, and searchable Google Fonts for body and heading typography",
-      "usedIn": ["Qentrah editor main tool rail"],
-      "props": ["query"],
-      "createdAt": "2026-08-08"
+      "name": "CmsCollectionManager / CMS Puck blocks",
+      "path": "components/dashboard/cms-collection-manager.tsx + components/qentrah/cms-collection-block.tsx",
+      "kind": "tenant-cms",
+      "summary": "Organization-scoped CMS schema and item administration with stable fields, localized values, draft/published snapshots, pagination, indexed public feeds, Puck repeaters, single-field bindings, and dynamic detail templates",
+      "usedIn": ["site collections dashboard", "Puck editor", "published tenant pages"],
+      "props": ["orgId", "orgSlug", "collectionId", "interfaceLocale"],
+      "createdAt": "2026-08-09"
     },
     {
       "name": "WorkspaceDashboard",

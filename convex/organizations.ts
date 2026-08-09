@@ -33,24 +33,18 @@ const DEFAULT_THEME = {
   background: "#F5F2EC",
   foreground: "#17120B",
   radius: 12,
-  font: "tajawal",
+  font: "system-ui",
   mode: "light" as const,
 };
 
 async function bootstrapOrg(ctx: MutationCtx, orgId: OrgId) {
   await ctx.db.insert("languages", {
     orgId,
-    code: "ar",
-    name: "العربية",
-    rtl: true,
-    enabled: true,
-    isDefault: false,
-    createdAt: Date.now(),
-  });
-  await ctx.db.insert("languages", {
-    orgId,
     code: "en",
     name: "English",
+    nativeName: "English",
+    direction: "ltr",
+    preferredFont: "system-ui",
     rtl: false,
     enabled: true,
     isDefault: true,
@@ -113,7 +107,8 @@ async function bootstrapOrg(ctx: MutationCtx, orgId: OrgId) {
   };
 
   for (const page of starterPages) {
-    await ctx.db.insert("pages", {
+    const data = starterTemplates[page.slug] ?? pageDataForTemplate("blank");
+    const pageId = await ctx.db.insert("pages", {
       orgId,
       slug: page.slug,
       title: page.title,
@@ -121,7 +116,27 @@ async function bootstrapOrg(ctx: MutationCtx, orgId: OrgId) {
       // reachable on the public tenant hostname from the moment the site exists.
       published: true,
       order: page.order,
-      data: starterTemplates[page.slug] ?? pageDataForTemplate("blank"),
+      data,
+      editorVersion: 2,
+      createdAt: now,
+      updatedAt: now,
+    });
+    const publishedRevisionId = await ctx.db.insert("pageRevisions", {
+      orgId,
+      pageId,
+      localeCode: "en",
+      data,
+      source: "publish",
+      createdAt: now,
+    });
+    await ctx.db.insert("pageLocales", {
+      orgId,
+      pageId,
+      localeCode: "en",
+      slug: page.slug,
+      title: page.title.en ?? page.slug,
+      status: "published",
+      publishedRevisionId,
       createdAt: now,
       updatedAt: now,
     });

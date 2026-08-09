@@ -1,5 +1,9 @@
 import type { Config } from "@puckeditor/core";
 import {
+  CmsCollectionBlock,
+  CmsFieldBlock,
+} from "@/components/qentrah/cms-collection-block";
+import {
   BuilderSection,
   ButtonBlock,
   ColumnsBlock,
@@ -54,6 +58,8 @@ export type QentrahComponents = {
   CtaBand: Record<string, unknown>;
   ContactBand: Record<string, unknown>;
   PropertyShowcase: Record<string, unknown>;
+  CmsCollection: Record<string, unknown>;
+  CmsField: Record<string, unknown>;
   Divider: Record<string, unknown>;
   Spacer: Record<string, unknown>;
 };
@@ -75,26 +81,49 @@ const sideOptions = [
 ];
 
 const localizedTextareaField = (label: string) => ({
-  type: "object" as const,
+  type: "textarea" as const,
   label,
-  objectFields: {
-    ar: { type: "textarea" as const },
-    en: { type: "textarea" as const },
-  },
 });
 
-const L = (ar: string, en: string) => ({ ar, en });
+const L = (_ar: string, en: string) => en;
+const summary = (value: unknown, fallback: string) =>
+  typeof value === "string"
+    ? value
+    : value && typeof value === "object"
+      ? Object.values(value as Record<string, unknown>).find(
+          (item): item is string => typeof item === "string",
+        ) ?? fallback
+      : fallback;
 
 /**
  * Puck config for Curious Vessel builder.
  * Categories keep the Blocks panel organized and visible.
  */
-export function buildPuckConfig(locale: QentrahLocale): Config {
+export function buildPuckConfig(
+  locale: QentrahLocale,
+  profile: { direction?: "ltr" | "rtl"; preferredFont?: string } = {},
+  externalData: {
+    collections?: Array<{
+      id: string;
+      name: string;
+      fields: Array<{ id?: string; key: string; label: string }>;
+    }>;
+    cmsEntry?: {
+      collectionId: string;
+      values: Record<string, unknown>;
+    };
+  } = {},
+): Config {
   return {
     root: {
       label: "Page",
       render: ({ children }) => (
-        <main className="min-h-screen bg-background text-foreground">
+        <main
+          className="min-h-screen bg-background text-foreground"
+          dir={profile.direction ?? "ltr"}
+          lang={locale}
+          style={{ fontFamily: profile.preferredFont || "inherit" }}
+        >
           {children}
         </main>
       ),
@@ -143,14 +172,20 @@ export function buildPuckConfig(locale: QentrahLocale): Config {
       },
       media: {
         title: "Media",
-        components: ["PropertyShowcase"],
+        components: ["PropertyShowcase", "CmsCollection", "CmsField"],
         defaultExpanded: false,
       },
     },
     components: {
       Section: {
         label: "Section",
-        render: (props) => <BuilderSection {...(props as any)} />,
+        render: (props) =>
+          props.visibleInLanguage === false ? null : (
+            <BuilderSection
+              {...(props as any)}
+              direction={profile.direction ?? "ltr"}
+            />
+          ),
         fields: {
           content: {
             type: "slot",
@@ -161,6 +196,8 @@ export function buildPuckConfig(locale: QentrahLocale): Config {
               "MediaBlock",
               "IconBlock",
               "ColumnsBlock",
+              "CmsCollection",
+              "CmsField",
               "Divider",
               "Spacer",
             ],
@@ -222,6 +259,22 @@ export function buildPuckConfig(locale: QentrahLocale): Config {
           },
           backgroundSound: { type: "text", label: "Background audio URL" },
           overlay: { type: "text", label: "Overlay color" },
+          rtlBehavior: {
+            type: "radio",
+            label: "RTL behavior",
+            options: [
+              { label: "Auto", value: "auto" },
+              { label: "Preserve", value: "preserve" },
+            ],
+          },
+          visibleInLanguage: {
+            type: "radio",
+            label: `Visible in ${locale}`,
+            options: [
+              { label: "Visible", value: true },
+              { label: "Hidden", value: false },
+            ],
+          },
         },
         defaultProps: {
           content: [],
@@ -232,11 +285,18 @@ export function buildPuckConfig(locale: QentrahLocale): Config {
           backgroundType: "none",
           backgroundColor: "#ffffff",
           overlay: "rgba(0,0,0,0)",
+          rtlBehavior: "auto",
+          visibleInLanguage: true,
         },
       },
       ColumnsBlock: {
         label: "Columns",
-        render: (props) => <ColumnsBlock {...(props as any)} />,
+        render: (props) => (
+          <ColumnsBlock
+            {...(props as any)}
+            direction={profile.direction ?? "ltr"}
+          />
+        ),
         fields: {
           columnOne: { type: "slot" },
           columnTwo: { type: "slot" },
@@ -269,6 +329,14 @@ export function buildPuckConfig(locale: QentrahLocale): Config {
               { label: "Stretch", value: "stretch" },
             ],
           },
+          rtlBehavior: {
+            type: "radio",
+            label: "RTL behavior",
+            options: [
+              { label: "Auto", value: "auto" },
+              { label: "Preserve", value: "preserve" },
+            ],
+          },
         },
         defaultProps: {
           columnOne: [],
@@ -277,6 +345,7 @@ export function buildPuckConfig(locale: QentrahLocale): Config {
           columns: "2",
           gap: "medium",
           align: "stretch",
+          rtlBehavior: "auto",
         },
       },
       HeadingBlock: {
@@ -489,7 +558,7 @@ export function buildPuckConfig(locale: QentrahLocale): Config {
               body: L("وصف الميزة.", "Feature description."),
             },
             getItemSummary: (item: any, index) =>
-              item.title?.en || item.title?.ar || `Feature ${index ?? ""}`,
+              summary(item.title, `Feature ${index ?? ""}`),
           },
         },
         defaultProps: {
@@ -581,7 +650,7 @@ export function buildPuckConfig(locale: QentrahLocale): Config {
               caption: L("صورة", "Image"),
             },
             getItemSummary: (item: any, index) =>
-              item.caption?.en || item.caption?.ar || `Image ${index ?? ""}`,
+              summary(item.caption, `Image ${index ?? ""}`),
           },
         },
         defaultProps: {
@@ -640,7 +709,7 @@ export function buildPuckConfig(locale: QentrahLocale): Config {
               a: L("إجابة.", "An answer."),
             },
             getItemSummary: (item: any, index) =>
-              item.q?.en || item.q?.ar || `Q ${index ?? ""}`,
+              summary(item.q, `Q ${index ?? ""}`),
           },
         },
         defaultProps: {
@@ -696,7 +765,7 @@ export function buildPuckConfig(locale: QentrahLocale): Config {
               highlight: "no",
             },
             getItemSummary: (item: any, index) =>
-              item.name?.en || item.name?.ar || `Plan ${index ?? ""}`,
+              summary(item.name, `Plan ${index ?? ""}`),
           },
         },
         defaultProps: {
@@ -802,7 +871,7 @@ export function buildPuckConfig(locale: QentrahLocale): Config {
               href: "#",
             },
             getItemSummary: (item: any, index) =>
-              item.title?.en || item.title?.ar || `Card ${index ?? ""}`,
+              summary(item.title, `Card ${index ?? ""}`),
           },
         },
         defaultProps: {
@@ -825,6 +894,134 @@ export function buildPuckConfig(locale: QentrahLocale): Config {
               href: "#",
             },
           ],
+        },
+      },
+      CmsCollection: {
+        label: "CMS collection",
+        render: (props) => <CmsCollectionBlock {...(props as any)} locale={locale} />,
+        fields: {
+          collectionId: {
+            type: "select",
+            label: "Collection",
+            options: (externalData.collections ?? []).map((collection) => ({
+              label: collection.name,
+              value: collection.id,
+            })),
+          },
+          titleField: { type: "text", label: "Title field" },
+          bodyField: { type: "text", label: "Body field" },
+          imageField: { type: "text", label: "Image field" },
+          limit: { type: "number", label: "Limit", min: 1, max: 100 },
+          columns: {
+            type: "radio",
+            label: "Columns",
+            options: [
+              { label: "2", value: "2" },
+              { label: "3", value: "3" },
+              { label: "4", value: "4" },
+            ],
+          },
+          emptyText: { type: "text", label: "Empty state" },
+          pagination: {
+            type: "radio",
+            label: "Pagination",
+            options: [
+              { label: "None", value: "none" },
+              { label: "Load more", value: "loadMore" },
+            ],
+          },
+          indexFieldId: { type: "text", label: "Indexed search / sort field" },
+          match: { type: "text", label: "Search or filter prefix" },
+          sortDirection: {
+            type: "radio",
+            label: "Sort",
+            options: [
+              { label: "Ascending", value: "asc" },
+              { label: "Descending", value: "desc" },
+            ],
+          },
+        },
+        resolveFields: (data, { fields }) => {
+          const collection = (externalData.collections ?? []).find(
+            (item) => item.id === data.props?.collectionId,
+          );
+          const fieldOptions = (collection?.fields ?? []).map((field) => ({
+            label: field.label,
+            value: field.key,
+          }));
+          return {
+            ...fields,
+            titleField: { type: "select", label: "Title field", options: fieldOptions },
+            bodyField: { type: "select", label: "Body field", options: fieldOptions },
+            imageField: { type: "select", label: "Image field", options: fieldOptions },
+            indexFieldId: {
+              type: "select",
+              label: "Indexed search / sort field",
+              options: (collection?.fields ?? []).map((field) => ({
+                label: field.label,
+                value: field.id ?? `field_${field.key}`,
+              })),
+            },
+          } as typeof fields;
+        },
+        defaultProps: {
+          collectionId: "",
+          titleField: "title",
+          bodyField: "description",
+          imageField: "image",
+          limit: 6,
+          columns: "3",
+          emptyText: "No published items yet.",
+          pagination: "none",
+          indexFieldId: "",
+          match: "",
+          sortDirection: "asc",
+        },
+      },
+      CmsField: {
+        label: "CMS field",
+        render: (props) => (
+          <CmsFieldBlock
+            {...(props as any)}
+            locale={locale}
+            entryValues={externalData.cmsEntry?.values}
+          />
+        ),
+        fields: {
+          collectionId: {
+            type: "select",
+            label: "Collection",
+            options: (externalData.collections ?? []).map((collection) => ({
+              label: collection.name,
+              value: collection.id,
+            })),
+          },
+          fieldKey: { type: "text", label: "Field" },
+          fallback: { type: "text", label: "Empty state" },
+        },
+        resolveFields: (data, { fields }) => {
+          const collectionId =
+            String(data.props?.collectionId ?? "") ||
+            externalData.cmsEntry?.collectionId;
+          const collection = (externalData.collections ?? []).find(
+            (item) => item.id === collectionId,
+          );
+          return {
+            ...fields,
+            fieldKey: {
+              type: "select",
+              label: "Field",
+              options: (collection?.fields ?? []).map((field) => ({
+                label: field.label,
+                value: field.key,
+              })),
+            },
+          } as typeof fields;
+        },
+        defaultProps: {
+          collectionId: "",
+          fieldKey: "title",
+          fallback: "Select a CMS field",
         },
       },
       Divider: {

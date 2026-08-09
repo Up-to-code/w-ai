@@ -22,9 +22,17 @@ const qentrahData = v.object({
   serialized: v.string(),
 });
 
+const puckV2Data = v.object({
+  builder: v.literal("puck"),
+  version: v.literal(2),
+  data: puckData,
+  overrides: v.record(v.string(), v.any()),
+  bindings: v.record(v.string(), v.any()),
+});
+
 // Existing Puck pages remain readable while each page migrates to Qentrah on
 // its first save. New writes use the explicit, versioned Qentrah envelope.
-const pageData = v.union(puckData, qentrahData);
+const pageData = v.union(puckData, qentrahData, puckV2Data);
 
 function componentCount(data: unknown): number {
   if (!data || typeof data !== "object") return 0;
@@ -34,6 +42,15 @@ function componentCount(data: unknown): number {
     serialized?: unknown;
   };
   if (Array.isArray(value.content)) return value.content.length;
+  if (
+    value.builder === "puck" &&
+    "data" in value &&
+    value.data &&
+    typeof value.data === "object" &&
+    Array.isArray((value.data as { content?: unknown }).content)
+  ) {
+    return (value.data as { content: unknown[] }).content.length;
+  }
   if (value.builder !== "qentrah" || typeof value.serialized !== "string")
     return 0;
   try {
@@ -210,6 +227,14 @@ export const createPage = mutation({
     const { user } = await requireEditor(ctx, args.orgId);
     await assertWithinLimit(ctx, args.orgId, "pages");
     const slug = normalizeSlug(args.slug, { min: 1, max: 80 });
+    const reservedLanguage = await ctx.db
+      .query("languages")
+      .withIndex("by_org_code", (q) =>
+        q.eq("orgId", args.orgId).eq("code", slug),
+      )
+      .unique();
+    if (reservedLanguage?.enabled)
+      throw new ConvexError("Page addresses cannot use an enabled language code");
     const existing = await ctx.db
       .query("pages")
       .withIndex("by_org_slug", (q) =>
@@ -225,13 +250,32 @@ export const createPage = mutation({
       .order("desc")
       .first();
     const now = Date.now();
+    const data = pageDataForTemplate(args.template ?? "content");
     const id = await ctx.db.insert("pages", {
       orgId: args.orgId,
       slug,
       title: args.title,
       published: false,
       order: (max?.order ?? -1) + 1,
-      data: pageDataForTemplate(args.template ?? "content"),
+      data,
+      editorVersion: 2,
+      createdAt: now,
+      updatedAt: now,
+    });
+    const defaultLanguage = await ctx.db
+      .query("languages")
+      .withIndex("by_org", (q) => q.eq("orgId", args.orgId))
+      .filter((q) => q.eq(q.field("isDefault"), true))
+      .first();
+    const localeCode = defaultLanguage?.code ?? "en";
+    await ctx.db.insert("pageLocales", {
+      orgId: args.orgId,
+      pageId: id,
+      localeCode,
+      slug,
+      title:
+        args.title[localeCode] ?? args.title.en ?? Object.values(args.title)[0] ?? slug,
+      status: "draft",
       createdAt: now,
       updatedAt: now,
     });

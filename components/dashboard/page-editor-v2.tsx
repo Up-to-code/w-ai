@@ -1,1 +1,1 @@
-export { QentrahPageEditor as PageEditor } from "@/components/qentrah/qentrah-editor";
+export { PuckPageEditor as PageEditor } from "@/components/qentrah/puck-page-editor";

@@ -1,30 +1,44 @@
 "use client";
 
-import { Editor, Frame } from "@craftjs/core";
 import { Render } from "@puckeditor/core";
 
 import { buildPuckConfig } from "@/lib/puck/config";
 import type { QentrahLocale } from "@/lib/puck/localized";
-import { isQentrahPageData } from "@/lib/qentrah/page-data";
+import {
+  normalizePageDocument,
+  resolvePageDocument,
+} from "@/lib/puck/page-document";
 
-import { QENTRAH_RESOLVER, QentrahViewportProvider } from "./editor-nodes";
+import { EditorErrorBoundary } from "./editor-error-boundary";
 
 export function PageRenderer({
   data,
   locale,
+  direction = "ltr",
+  preferredFont,
+  cmsEntry,
 }: {
   data: unknown;
   locale: QentrahLocale;
+  direction?: "ltr" | "rtl";
+  preferredFont?: string;
+  cmsEntry?: {
+    collectionId: string;
+    values: Record<string, unknown>;
+  };
 }) {
-  if (isQentrahPageData(data)) {
-    return (
-      <Editor enabled={false} resolver={QENTRAH_RESOLVER}>
-        <QentrahViewportProvider>
-          <Frame data={data.serialized} />
-        </QentrahViewportProvider>
-      </Editor>
-    );
-  }
-
-  return <Render config={buildPuckConfig(locale)} data={data as never} />;
+  const document = normalizePageDocument(data);
+  const resolved = resolvePageDocument(document, locale, "desktop");
+  return (
+    <EditorErrorBoundary documentKey={`public:${locale}`}>
+      <Render
+        config={buildPuckConfig(
+          locale,
+          { direction, preferredFont },
+          { cmsEntry },
+        )}
+        data={resolved}
+      />
+    </EditorErrorBoundary>
+  );
 }

@@ -40,12 +40,13 @@ export default async function EditPage({ params }: EditPageProps) {
 
   return (
     <PageEditor
-      locale={locale === "en" ? "en" : "ar"}
+      interfaceLocale={locale}
       orgId={orgId}
       orgSlug={orgSlug}
       pageSlug={page.slug}
       initialTitle={page.title}
       initialPublished={page.published}
+      initialUpdatedAt={page.updatedAt}
       initialData={page.data}
       labels={{
         back: t("editor.back"),
