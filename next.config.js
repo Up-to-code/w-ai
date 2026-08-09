@@ -14,7 +14,9 @@ const puckBrowserAbs = path.join(
 const nextConfig = {
   // Version every client asset so deployments and long-lived dashboard tabs
   // never mix old UI modules with a new server render.
-  deploymentId: process.env.DEPLOYMENT_VERSION || "cv-ui-v2",
+  // Let managed hosts generate a unique ID for every deployment. Self-hosted
+  // rolling releases can opt in by setting DEPLOYMENT_VERSION.
+  deploymentId: process.env.DEPLOYMENT_VERSION,
   transpilePackages: ["@puckeditor/core"],
   turbopack: {
     resolveAlias: {
