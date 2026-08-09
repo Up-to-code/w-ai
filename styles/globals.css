@@ -1,3 +1,5 @@
+@import "@puckeditor/core/puck.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -130,6 +132,11 @@
     --input: 0 0% 100% / 0.12;
     --ring: 0 0% 55%;
   }
+}
+
+/* Flip only semantic directional glyphs in RTL. Media and brand artwork stay intact. */
+[dir="rtl"] .wai-directional-icon {
+  transform: scaleX(-1);
 }
 
 @layer base {

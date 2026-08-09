@@ -1,26 +1,23 @@
-export type QentrahLocale = "ar" | "en";
+export type QentrahLocale = string;
 
-export type Localized = { ar: string; en: string };
+export type Localized = string;
 
-/** Resolves a localized value to the active locale (falls back to ar). */
+/** Resolves legacy localized values; v2 documents normally store strings. */
 export function pick(
   value: string | Record<string, string> | undefined,
   locale: QentrahLocale,
 ): string {
   if (typeof value === "string") return value;
-  if (value && typeof value === "object") return value[locale] ?? value.ar ?? "";
+  if (value && typeof value === "object")
+    return value[locale] ?? value.en ?? Object.values(value)[0] ?? "";
   return "";
 }
 
-/** Field definition for localized text (the editor stores { ar, en }). */
+/** v2 fields are scalar; locale differences live in sparse page overrides. */
 export function localizedField(label: string) {
   return {
-    type: "object" as const,
+    type: "text" as const,
     label,
-    objectFields: {
-      ar: { type: "text" as const },
-      en: { type: "text" as const },
-    },
   };
 }
 
@@ -35,10 +32,10 @@ export function resolveLocalizedData<T>(data: T, locale: QentrahLocale): T {
     const isLocalized =
       keys.length >= 1 &&
       keys.length <= 2 &&
-      keys.every((k) => k === "ar" || k === "en") &&
+      keys.every((k) => /^[a-z]{2,5}(?:-[a-z0-9]{2,8})?$/.test(k)) &&
       keys.every((k) => typeof source[k] === "string");
     if (isLocalized) {
-      return (source[locale] ?? source.ar ?? "") as T;
+      return (source[locale] ?? source.en ?? Object.values(source)[0] ?? "") as T;
     }
     return Object.fromEntries(
       Object.entries(source).map(([k, v]) => [k, resolveLocalizedData(v, locale)]),

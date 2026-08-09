@@ -10,11 +10,13 @@ import { PageRenderer } from "@/components/qentrah/page-renderer";
 
 interface PagePreviewProps {
   params: Promise<{ locale: Locale; org: string; slug: string }>;
+  searchParams: Promise<{ locale?: string }>;
 }
 
-export default async function PagePreviewPage({ params }: PagePreviewProps) {
-  const { locale, org: orgSlug, slug: pageSlug } = await params;
-  const puckLocale = (locale === "en" ? "en" : "ar") as QentrahLocale;
+export default async function PagePreviewPage({ params, searchParams }: PagePreviewProps) {
+  const { org: orgSlug, slug: pageSlug } = await params;
+  const requestedLocale = (await searchParams).locale ?? "en";
+  const puckLocale = requestedLocale as QentrahLocale;
 
   let orgDetails;
   try {
@@ -25,17 +27,32 @@ export default async function PagePreviewPage({ params }: PagePreviewProps) {
     notFound();
   }
 
-  const page = await fetchAuthQuery(api.pages.getEditablePage, {
-    orgId: orgDetails.org._id,
-    slug: pageSlug,
-  });
+  const [page, pageLocaleData, languages] = await Promise.all([
+    fetchAuthQuery(api.pages.getEditablePage, {
+      orgId: orgDetails.org._id,
+      slug: pageSlug,
+    }),
+    fetchAuthQuery(api.pageLocales.listForPage, {
+      orgId: orgDetails.org._id,
+      pageSlug,
+    }),
+    fetchAuthQuery(api.languages.list, { orgId: orgDetails.org._id }),
+  ]);
 
   if (!page) notFound();
 
-  const title = pick(page.title, puckLocale) || page.slug;
+  const localeRecord = pageLocaleData.locales.find(
+    (item) => item.localeCode === requestedLocale,
+  );
+  const language = languages.find((item) => item.code === requestedLocale);
+  if (!localeRecord || !language?.enabled) notFound();
+  const title = localeRecord.title || pick(page.title, puckLocale) || page.slug;
+  const localePrefix =
+    requestedLocale === pageLocaleData.defaultLocale ? "" : `/${requestedLocale}`;
+  const localizedSlug = localeRecord.slug === "home" ? "" : `/${localeRecord.slug}`;
   const publicUrl = tenantUrl(
     orgSlug,
-    page.slug === "home" ? "/" : `/${page.slug}`,
+    `${localePrefix}${localizedSlug}` || "/",
   );
 
   return (
@@ -43,10 +60,15 @@ export default async function PagePreviewPage({ params }: PagePreviewProps) {
       orgSlug={orgSlug}
       pageSlug={page.slug}
       title={title}
-      published={page.published}
+      published={localeRecord.status === "published"}
       publicUrl={publicUrl}
     >
-      <PageRenderer data={page.data} locale={puckLocale} />
+      <PageRenderer
+        data={page.data}
+        locale={puckLocale}
+        direction={language.direction ?? (language.rtl ? "rtl" : "ltr")}
+        preferredFont={language.preferredFont}
+      />
     </PreviewShell>
   );
 }

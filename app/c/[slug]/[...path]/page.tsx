@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { TenantShell } from "@/components/tenant/tenant-site";
+import { tenantPageMetadata } from "@/lib/tenant-metadata";
 import {
   applyTenantRedirect,
   type TenantSearchParams,
@@ -8,6 +9,11 @@ import {
 interface PageProps {
   params: Promise<{ slug: string; path: string[] }>;
   searchParams: Promise<TenantSearchParams>;
+}
+
+export async function generateMetadata({ params }: PageProps) {
+  const { slug, path } = await params;
+  return tenantPageMetadata(slug, path);
 }
 
 export default async function TenantPage({ params, searchParams }: PageProps) {
@@ -19,5 +25,5 @@ export default async function TenantPage({ params, searchParams }: PageProps) {
     path: `/${pageSlug}`,
     searchParams: await searchParams,
   });
-  return <TenantShell slug={slug} pageSlug={pageSlug} />;
+  return <TenantShell slug={slug} requestPath={path} />;
 }

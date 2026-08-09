@@ -1,108 +1,53 @@
-# Qentrah editor integration
+# W-AI Puck editor integration
 
-## Current behavior
+## Runtime boundary
 
-The page edit route loads authenticated page data on the server, then hands a
-versioned Qentrah Craft document to the client editor. Preview and tenant routes
-share the same resolver and responsive viewport provider. Legacy Puck documents
-remain readable until they are resaved through Qentrah.
+- `components/qentrah/puck-page-editor.tsx` owns the interactive Puck 0.23 editor,
+  locale selector, responsive canvas, inspector overrides, save, preview, and
+  per-locale publication controls.
+- `components/qentrah/page-renderer.tsx` is the only read-only renderer used by
+  preview and tenant routes.
+- `lib/puck/config.tsx` is the component and field registry. Dynamic collection
+  fields use Puck's dynamic-field and external-data APIs; rich text uses Tiptap.
+- `lib/puck/page-document.ts` owns the PageDocumentV2 envelope, legacy migration,
+  sparse override resolution, linking, and CMS binding references.
+- Convex authorizes every editor query and mutation. Tenant-facing functions
+  return immutable published page and CMS snapshots only.
 
-## Target boundaries
+## Localization model
 
-- The route page remains a Server Component responsible for authenticated
-  organization/page loading and serializable props only.
-- `components/qentrah/qentrah-editor.tsx` owns the interactive Craft.js editor, responsive
-  canvas, block library, layers, inspector, history, save and publish controls.
-- `components/qentrah/page-renderer.tsx` owns read-only rendering for preview and tenant
-  pages.
-- `lib/qentrah/page-data` owns version detection, starter documents and the
-  temporary legacy Puck compatibility boundary.
-- Convex stores a versioned builder payload. Authorization remains enforced by
-  the existing `requireEditor`/`requireOrgAccess` server helpers.
+English is the only language seeded for new sites. Additional language profiles
+are site-level capabilities that must be enabled separately on each page. The
+dashboard interface locale never changes the canvas locale.
 
-## Implementation passes
+Properties resolve in this order:
 
-### Pass 1: Harden the editor controls
+1. shared global value;
+2. viewport value;
+3. locale value;
+4. locale-and-viewport value.
 
-Current behavior: Device glyphs are ambiguous, zoom persists unexpectedly
-between breakpoints, inspector tabs contain no-op controls, and layout editing
-is flex-only.
+Missing overrides remain linked. Editing localized content detaches that
+property; relinking removes the sparse override. Layout and styling remain
+linked until explicitly detached. Published revisions are immutable and scoped
+to one locale.
 
-Structural improvement: Use real responsive SVG icons, fit/reset zoom behavior,
-a working selected-node toolbar, working settings tab, and grid/flex controls.
+## Routing and CMS
 
-Validation check: Exercise every visible control in Chrome and require a clean
-console.
+- Default English pages use `/` and `/about`.
+- Secondary locales use `/{locale}` and `/{locale}/{localizedSlug}`.
+- Unpublished secondary locales return 404 and never expose English fallback.
+- Tenant routes resolve hostname in Proxy, but resolve locale, pages, redirects,
+  navigation, and dynamic CMS details in the tenant server route.
+- CMS bindings store references, not copied values. Published repeaters and
+  detail routes read normalized route/scalar indexes and published snapshots.
 
-### Pass 2: Introduce a versioned Craft payload
+## Migration and release gate
 
-Current behavior: Convex validates the Puck top-level shape.
+`convex/migrations.ts` creates immutable legacy backups and idempotently converts
+legacy Craft or Puck payloads to Puck v2. The migration runner is intentionally
+not executed during a deploy; run it only after taking a production backup and
+validating the target deployment.
 
-Structural improvement: Accept either the existing Puck document or a Qentrah
-Craft document `{ builder: "qentrah", version: 1, serialized: string }` during
-the migration. New saves always write Qentrah data.
-
-Validation check: Convex code generation and TypeScript validation pass; an
-existing page opens and can be saved into the new format.
-
-### Pass 3: Replace the editor route
-
-Current behavior: `PageEditor` imports and renders Puck.
-
-Structural improvement: The route composes the Qentrah client editor and keeps
-save/publish mutations in a domain hook.
-
-Validation check: Back, responsive modes, selection, editing, save, preview and
-publish work from the existing dashboard route.
-
-### Pass 4: Share rendering
-
-Current behavior: Preview and tenant routes call Puck's renderer directly.
-
-Structural improvement: Both routes use one Qentrah read-only renderer, with a
-legacy fallback only for rows not yet re-saved.
-
-Validation check: A newly saved page is identical in editor preview, dashboard
-preview and tenant output.
-
-### Pass 5: Responsive styles and media backgrounds
-
-Current behavior: All is the default scope and applies the edited property to
-every screen. Desktop, tablet and mobile scopes write only to that device; an
-edit in one never changes the other two. The same rule applies to content, size,
-spacing, layout, color, background media, quick colors and resize handles.
-Structure remains shared. Every inspector field exposes scope controls, while
-Advanced responsive controls add scoped visibility and reset.
-
-Structural improvement: Inspector controls are grouped into collapsible Layout,
-Spacing, Size & position, Item in parent, Background and Advanced responsive
-sections. Background mode conditionally exposes solid color, gradient, uploaded
-image or uploaded video controls. Uploads use the authenticated Convex asset
-pipeline and its existing organization limits.
-
-Validation check: A desktop property edit does not change its mobile value,
-reset removes only the selected device values, and published rendering chooses
-the correct device state without duplicating page structure.
-
-## Parity gates
-
-- Existing authentication and organization scoping remain server-enforced.
-- No visible button or tab is a placeholder.
-- Saved content survives reload.
-- Responsive canvas fit never mutates the page document.
-- Unit tests, lint, TypeScript, Next production build and one Convex push pass.
-
-## Current interaction model
-
-- The left rail switches between elements, reusable sections, components,
-  collections, libraries and layers. The tool panel closes independently and
-  both sidebars can be resized without changing the page document.
-- Selecting a node exposes a canvas outline, four resize handles, a full-surface
-  move target, quick insertion, rename, parent selection, delete, color and
-  reset-size actions. Double-clicking the selected element renames its layer.
-- Style fields are contextual. Flex, grid, background media, border and
-  responsive controls only reveal settings that apply to the current choice.
-  Layout opens first; secondary and advanced groups remain collapsed.
-- Animation is a GSAP-backed runtime shared by editor playback, preview and the
-  published site. Effect, trigger and timing controls are conditional, custom
-  motion is supported, and reduced-motion preferences bypass movement.
+Release requires unit tests, TypeScript, Convex validation, a production Next.js
+build, and authenticated browser smoke tests of editor save/publish behavior.

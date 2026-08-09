@@ -56,9 +56,21 @@ export const publicSiteValidator = v.object({
         }),
       ),
       navigation: v.object({
-        mainLinks: v.array(v.object({ label: localized, href: v.string() })),
+        mainLinks: v.array(
+          v.object({
+            label: localized,
+            href: v.string(),
+            pageId: v.optional(v.id("pages")),
+          }),
+        ),
         secondaryLinks: v.optional(
-          v.array(v.object({ label: localized, href: v.string() })),
+          v.array(
+            v.object({
+              label: localized,
+              href: v.string(),
+              pageId: v.optional(v.id("pages")),
+            }),
+          ),
         ),
         ctaLabel: v.optional(localized),
         ctaHref: v.optional(v.string()),
@@ -70,7 +82,13 @@ export const publicSiteValidator = v.object({
         sections: v.array(
           v.object({
             title: localized,
-            links: v.array(v.object({ label: localized, href: v.string() })),
+            links: v.array(
+              v.object({
+                label: localized,
+                href: v.string(),
+                pageId: v.optional(v.id("pages")),
+              }),
+            ),
           }),
         ),
         socialLinks: v.array(v.object({ type: v.string(), url: v.string() })),
@@ -93,6 +111,9 @@ export const publicSiteValidator = v.object({
     v.object({
       code: v.string(),
       name: v.string(),
+      nativeName: v.optional(v.string()),
+      direction: v.optional(v.union(v.literal("ltr"), v.literal("rtl"))),
+      preferredFont: v.optional(v.string()),
       rtl: v.boolean(),
       isDefault: v.boolean(),
     }),
@@ -146,6 +167,9 @@ export async function publicSite(ctx: QueryCtx, orgId: OrgId) {
       .map((l) => ({
         code: l.code,
         name: l.name,
+        nativeName: l.nativeName,
+        direction: l.direction,
+        preferredFont: l.preferredFont,
         rtl: l.rtl,
         isDefault: l.isDefault,
       })),

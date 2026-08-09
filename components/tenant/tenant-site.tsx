@@ -1,10 +1,15 @@
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { api } from "@/convex/_generated/api";
+import type { Id } from "@/convex/_generated/dataModel";
 
 import { blendHex, hexToHslTriplet, isLightColor } from "@/lib/color";
 import { convexClient } from "@/lib/convex-server";
 import { pick, type QentrahLocale } from "@/lib/puck/localized";
+import {
+  localizedPageHref,
+  resolveTenantPath,
+} from "@/lib/tenant-path";
 import { resolveTenantSite } from "@/lib/tenant-resolution";
 import { PageRenderer } from "@/components/qentrah/page-renderer";
 import {
@@ -74,12 +79,12 @@ function themeVars(site: NonNullable<PublicSite>) {
 
 interface TenantShellProps {
   slug: string;
-  pageSlug?: string;
+  requestPath?: string[];
 }
 
 export async function TenantShell({
   slug,
-  pageSlug = "home",
+  requestPath = [],
 }: TenantShellProps) {
   const headersList = await headers();
   const host = headersList.get("host") ?? "";
@@ -87,17 +92,87 @@ export async function TenantShell({
   const site = await resolveTenantSite(slug, host);
   if (!site) notFound();
 
-  const page = await convexClient.query(api.pages.getPageBySlug, {
+  const route = resolveTenantPath(requestPath, site.languages);
+  const localizedPage = await convexClient.query(api.pageLocales.resolvePublished, {
     orgId: site.id,
-    slug: pageSlug,
+    localeCode: route.localeCode,
+    slug: route.pageSlug,
   });
+  let page: { data: unknown } | null = localizedPage;
+  let cmsEntry:
+    | { collectionId: string; values: Record<string, unknown> }
+    | undefined;
+  if (!page) {
+    const [collectionSlug, ...entrySlugParts] = route.pageSlug.split("/");
+    if (collectionSlug && entrySlugParts.length > 0) {
+      const detail = await convexClient.query(api.cms.resolvePublishedDetail, {
+        orgId: site.id,
+        collectionSlug,
+        localeCode: route.localeCode,
+        slug: entrySlugParts.join("/"),
+      });
+      if (detail) {
+        page = await convexClient.query(api.pageLocales.resolvePublished, {
+          orgId: site.id,
+          localeCode: route.localeCode,
+          slug: detail.detailPageSlug,
+        });
+        cmsEntry = {
+          collectionId: String(detail.collectionId),
+          values: detail.values as Record<string, unknown>,
+        };
+      }
+    }
+  }
+  // Compatibility read for default-locale pages until the idempotent migration
+  // has materialized their publication snapshot. Secondary locales never fall back.
+  if (!page && route.isDefaultLocale) {
+    page = await convexClient.query(api.pages.getPageBySlug, {
+      orgId: site.id,
+      slug: route.pageSlug,
+    });
+  }
   if (!page) notFound();
 
-  const defaultLanguage =
-    site.languages.find((l) => l.isDefault) ?? site.languages[0] ?? null;
-  const locale = (defaultLanguage?.code ?? "ar") as QentrahLocale;
-  const dir = defaultLanguage?.rtl ? "rtl" : "ltr";
-  const lang = defaultLanguage?.code ?? "ar";
+  const defaultLanguage = site.languages.find((l) => l.isDefault) ?? site.languages[0];
+  const activeLanguage =
+    site.languages.find((language) => language.code === route.localeCode) ??
+    defaultLanguage;
+  const locale = route.localeCode as QentrahLocale;
+  const dir = activeLanguage?.direction ?? (activeLanguage?.rtl ? "rtl" : "ltr");
+  const lang = activeLanguage?.code ?? "en";
+
+  const [localizedNavigation, defaultNavigation] = await Promise.all([
+    convexClient.query(api.pageLocales.listPublishedForNavigation, {
+      orgId: site.id,
+      localeCode: route.localeCode,
+    }),
+    route.localeCode === defaultLanguage?.code
+      ? Promise.resolve([])
+      : convexClient.query(api.pageLocales.listPublishedForNavigation, {
+          orgId: site.id,
+          localeCode: defaultLanguage?.code ?? "en",
+        }),
+  ]);
+  const localizedById = new Map(
+    localizedNavigation.map((item) => [String(item.pageId), item]),
+  );
+  const defaultIdBySlug = new Map(
+    (route.localeCode === defaultLanguage?.code
+      ? localizedNavigation
+      : defaultNavigation
+    ).map((item) => [item.slug, String(item.pageId)]),
+  );
+
+  const hrefForLink = (link: { href: string; pageId?: Id<"pages"> }) => {
+    if (/^(?:[a-z]+:|#)/i.test(link.href)) return link.href;
+    const legacySlug = link.href.replace(/^\/+|\/+$/g, "") || "home";
+    const pageId = link.pageId ? String(link.pageId) : defaultIdBySlug.get(legacySlug);
+    const localized = pageId ? localizedById.get(pageId) : undefined;
+    return localized
+      ? localizedPageHref(localized.slug, route.localePrefix)
+      : link.href;
+  };
 
   const settings = site.settings;
   const navigation = settings?.navigation;
@@ -116,7 +191,7 @@ export async function TenantShell({
       >
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-6">
           <a
-            href="/"
+            href={localizedPageHref("home", route.localePrefix)}
             className="text-lg font-semibold tracking-tight text-foreground"
           >
             {settings?.logo?.image ? (
@@ -135,7 +210,7 @@ export async function TenantShell({
               {navigation.mainLinks.map((link) => (
                 <a
                   key={link.href}
-                  href={link.href}
+                  href={hrefForLink(link)}
                   className="text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
                 >
                   {pick(link.label, locale)}
@@ -143,7 +218,7 @@ export async function TenantShell({
               ))}
               {navigation.ctaLabel && navigation.ctaHref ? (
                 <a
-                  href={navigation.ctaHref}
+                  href={hrefForLink({ href: navigation.ctaHref })}
                   className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
                 >
                   {pick(navigation.ctaLabel, locale)}
@@ -154,7 +229,13 @@ export async function TenantShell({
         </div>
       </header>
 
-      <PageRenderer data={page.data} locale={locale} />
+      <PageRenderer
+        data={page.data}
+        locale={locale}
+        direction={dir}
+        preferredFont={activeLanguage?.preferredFont ?? site.theme?.font}
+        cmsEntry={cmsEntry}
+      />
 
       <footer className="border-t bg-muted/50">
         <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 md:grid-cols-3">
@@ -177,7 +258,7 @@ export async function TenantShell({
                 {section.links.map((link) => (
                   <li key={link.href}>
                     <a
-                      href={link.href}
+                      href={hrefForLink(link)}
                       className="text-sm text-muted-foreground transition-colors hover:text-primary"
                     >
                       {pick(link.label, locale)}

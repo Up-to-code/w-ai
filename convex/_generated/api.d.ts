@@ -36,8 +36,10 @@ import type * as languages from "../languages.js";
 import type * as libraries from "../libraries.js";
 import type * as limits from "../limits.js";
 import type * as mapLocations from "../mapLocations.js";
+import type * as migrations from "../migrations.js";
 import type * as openproviderClient from "../openproviderClient.js";
 import type * as organizations from "../organizations.js";
+import type * as pageLocales from "../pageLocales.js";
 import type * as pageTemplates from "../pageTemplates.js";
 import type * as pages from "../pages.js";
 import type * as posts from "../posts.js";
@@ -86,8 +88,10 @@ declare const fullApi: ApiFromModules<{
   libraries: typeof libraries;
   limits: typeof limits;
   mapLocations: typeof mapLocations;
+  migrations: typeof migrations;
   openproviderClient: typeof openproviderClient;
   organizations: typeof organizations;
+  pageLocales: typeof pageLocales;
   pageTemplates: typeof pageTemplates;
   pages: typeof pages;
   posts: typeof posts;
@@ -130,4 +134,5 @@ export declare const internal: FilterApi<
 
 export declare const components: {
   betterAuth: import("@convex-dev/better-auth/_generated/component.js").ComponentApi<"betterAuth">;
+  migrations: import("@convex-dev/migrations/_generated/component.js").ComponentApi<"migrations">;
 };

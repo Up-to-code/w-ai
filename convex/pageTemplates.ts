@@ -1,4 +1,5 @@
-type Localized = { ar: string; en: string };
+type Localized = string;
+type LocalizedRecord = Record<string, string>;
 
 type PuckComponent = {
   type: string;
@@ -7,8 +8,13 @@ type PuckComponent = {
 
 export type PageTemplate = "blank" | "landing" | "content" | "contact" | "properties";
 
-export function loc(ar: string, en: string): Localized {
-  return { ar, en };
+export function text(_ar: string, en: string): Localized {
+  return en;
+}
+
+/** Compatibility helper for settings records; page documents use `text`. */
+export function loc(_ar: string, en: string): LocalizedRecord {
+  return { en };
 }
 
 function blockId(type: string) {
@@ -31,25 +37,31 @@ function withIds(content: PuckComponent[]): PuckComponent[] {
 
 function page(content: PuckComponent[]) {
   return {
-    root: { props: { id: "root" } },
-    content: withIds(content),
+    builder: "puck" as const,
+    version: 2 as const,
+    data: {
+      root: { props: { id: "root" } },
+      content: withIds(content),
+    },
+    overrides: {},
+    bindings: {},
   };
 }
 
 const hero = (
   title: Localized,
   subtitle: Localized,
-  ctaLabel = loc("اكتشف المزيد", "Explore"),
+  ctaLabel = text("اكتشف المزيد", "Explore"),
   ctaHref = "/contact",
 ): PuckComponent => ({
   type: "Hero",
   props: {
-    eyebrow: loc("موقع عقاري", "Real estate site"),
+    eyebrow: text("موقع عقاري", "Real estate site"),
     title,
     subtitle,
     ctaLabel,
     ctaHref,
-    secondaryCtaLabel: loc("تواصل معنا", "Contact us"),
+    secondaryCtaLabel: text("تواصل معنا", "Contact us"),
     secondaryCtaHref: "/contact",
     align: "center",
     height: "standard",
@@ -62,19 +74,19 @@ export function pageDataForTemplate(template: PageTemplate) {
   if (template === "contact") {
     return page([
       hero(
-        loc("تواصل معنا", "Contact us"),
-        loc("فريقنا جاهز للإجابة عن أسئلتك ومساعدتك في الخطوة التالية.", "Our team is ready to answer questions and help with the next step."),
-        loc("ابدأ المحادثة", "Start the conversation"),
+        text("تواصل معنا", "Contact us"),
+        text("فريقنا جاهز للإجابة عن أسئلتك ومساعدتك في الخطوة التالية.", "Our team is ready to answer questions and help with the next step."),
+        text("ابدأ المحادثة", "Start the conversation"),
       ),
       {
         type: "ContactBand",
         props: {
-          eyebrow: loc("قنوات التواصل", "Contact channels"),
-          title: loc("يسعدنا سماعك", "We would like to hear from you"),
-          body: loc("اتصل بنا أو أرسل رسالة وسنعود إليك في أقرب وقت.", "Call us or send a message and we will respond soon."),
+          eyebrow: text("قنوات التواصل", "Contact channels"),
+          title: text("يسعدنا سماعك", "We would like to hear from you"),
+          body: text("اتصل بنا أو أرسل رسالة وسنعود إليك في أقرب وقت.", "Call us or send a message and we will respond soon."),
           phone: "+966 500 000 000",
           email: "hello@example.com",
-          ctaLabel: loc("إرسال رسالة", "Send a message"),
+          ctaLabel: text("إرسال رسالة", "Send a message"),
           ctaHref: "mailto:hello@example.com",
         },
       },
@@ -84,32 +96,32 @@ export function pageDataForTemplate(template: PageTemplate) {
   if (template === "properties") {
     return page([
       hero(
-        loc("وحدات تلائم أسلوب حياتك", "Homes that fit your lifestyle"),
-        loc("استعرض مجموعة مختارة من الوحدات السكنية والتجارية.", "Explore selected residential and commercial units."),
-        loc("عرض الوحدات", "View properties"),
+        text("وحدات تلائم أسلوب حياتك", "Homes that fit your lifestyle"),
+        text("استعرض مجموعة مختارة من الوحدات السكنية والتجارية.", "Explore selected residential and commercial units."),
+        text("عرض الوحدات", "View properties"),
         "/properties",
       ),
       {
         type: "PropertyShowcase",
         props: {
-          eyebrow: loc("مختارات", "Featured"),
-          title: loc("وحدات بارزة", "Highlighted properties"),
+          eyebrow: text("مختارات", "Featured"),
+          title: text("وحدات بارزة", "Highlighted properties"),
           items: [
             {
-              title: loc("شقة عصرية", "Modern apartment"),
-              location: loc("الرياض", "Riyadh"),
+              title: text("شقة عصرية", "Modern apartment"),
+              location: text("الرياض", "Riyadh"),
               price: "SAR 1.2M",
               href: "/properties",
             },
             {
-              title: loc("فيلا عائلية", "Family villa"),
-              location: loc("جدة", "Jeddah"),
+              title: text("فيلا عائلية", "Family villa"),
+              location: text("جدة", "Jeddah"),
               price: "SAR 3.8M",
               href: "/properties",
             },
             {
-              title: loc("مكتب تجاري", "Commercial office"),
-              location: loc("الخبر", "Khobar"),
+              title: text("مكتب تجاري", "Commercial office"),
+              location: text("الخبر", "Khobar"),
               price: "SAR 950K",
               href: "/properties",
             },
@@ -124,16 +136,16 @@ export function pageDataForTemplate(template: PageTemplate) {
       {
         type: "SectionHeading",
         props: {
-          eyebrow: loc("صفحة تعريفية", "Content page"),
-          title: loc("عنوان الصفحة", "Page title"),
-          body: loc("اكتب هنا مقدمة واضحة تساعد الزائر على فهم محتوى الصفحة.", "Write a clear introduction that helps visitors understand this page."),
+          eyebrow: text("صفحة تعريفية", "Content page"),
+          title: text("عنوان الصفحة", "Page title"),
+          body: text("اكتب هنا مقدمة واضحة تساعد الزائر على فهم محتوى الصفحة.", "Write a clear introduction that helps visitors understand this page."),
           align: "center",
         },
       },
       {
         type: "Text",
         props: {
-          body: loc(
+          body: text(
             "استخدم هذه المساحة لإضافة تفاصيل الصفحة. يمكنك سحب مكونات إضافية من لوحة البناء وتعديلها مباشرة.",
             "Use this space for page details. Drag additional builder components from the panel and edit them directly.",
           ),
@@ -145,29 +157,29 @@ export function pageDataForTemplate(template: PageTemplate) {
 
   return page([
     hero(
-      loc("نحو مستقبل عمراني متميز", "Towards a distinguished urban future"),
-      loc("نطور وحدات سكنية وتجارية بتصاميم عصرية ومواقع استثنائية.", "We develop residential and commercial units with modern designs and exceptional locations."),
-      loc("اكتشف مشاريعنا", "Discover our projects"),
+      text("نحو مستقبل عمراني متميز", "Towards a distinguished urban future"),
+      text("نطور وحدات سكنية وتجارية بتصاميم عصرية ومواقع استثنائية.", "We develop residential and commercial units with modern designs and exceptional locations."),
+      text("اكتشف مشاريعنا", "Discover our projects"),
       "/properties",
     ),
     {
       type: "FeatureGrid",
       props: {
-        eyebrow: loc("لماذا نحن", "Why us"),
-        title: loc("أساس قوي لموقعك العقاري", "A strong base for your real estate site"),
+        eyebrow: text("لماذا نحن", "Why us"),
+        title: text("أساس قوي لموقعك العقاري", "A strong base for your real estate site"),
         columns: "3",
         items: [
           {
-            title: loc("محتوى قابل للتعديل", "Editable content"),
-            body: loc("غيّر النصوص والصور والروابط مباشرة من محرر الصفحات.", "Change copy, images and links directly from the page editor."),
+            title: text("محتوى قابل للتعديل", "Editable content"),
+            body: text("غيّر النصوص والصور والروابط مباشرة من محرر الصفحات.", "Change copy, images and links directly from the page editor."),
           },
           {
-            title: loc("نشر فوري", "Instant publishing"),
-            body: loc("احفظ المسودة وانشر الصفحة عندما تصبح جاهزة للزوار.", "Save drafts and publish when the page is ready for visitors."),
+            title: text("نشر فوري", "Instant publishing"),
+            body: text("احفظ المسودة وانشر الصفحة عندما تصبح جاهزة للزوار.", "Save drafts and publish when the page is ready for visitors."),
           },
           {
-            title: loc("هوية موحدة", "Unified brand"),
-            body: loc("ألوان الموقع والتنقل والنطاقات تدار من لوحة واحدة.", "Site colors, navigation and domains are managed from one dashboard."),
+            title: text("هوية موحدة", "Unified brand"),
+            body: text("ألوان الموقع والتنقل والنطاقات تدار من لوحة واحدة.", "Site colors, navigation and domains are managed from one dashboard."),
           },
         ],
       },
@@ -176,19 +188,19 @@ export function pageDataForTemplate(template: PageTemplate) {
       type: "StatsStrip",
       props: {
         items: [
-          { value: "12+", label: loc("مشروع", "Projects") },
-          { value: "8", label: loc("مواقع نشطة", "Active locations") },
-          { value: "24/7", label: loc("دعم العملاء", "Client support") },
+          { value: "12+", label: text("مشروع", "Projects") },
+          { value: "8", label: text("مواقع نشطة", "Active locations") },
+          { value: "24/7", label: text("دعم العملاء", "Client support") },
         ],
       },
     },
     {
       type: "ContactBand",
       props: {
-        eyebrow: loc("ابدأ الآن", "Start now"),
-        title: loc("جاهز لإطلاق موقعك؟", "Ready to launch your site?"),
-        body: loc("خصص الصفحات، اربط نطاقك، وانشر الموقع عندما يصبح جاهزاً.", "Customize pages, connect your domain and publish when the site is ready."),
-        ctaLabel: loc("تواصل معنا", "Contact us"),
+        eyebrow: text("ابدأ الآن", "Start now"),
+        title: text("جاهز لإطلاق موقعك؟", "Ready to launch your site?"),
+        body: text("خصص الصفحات، اربط نطاقك، وانشر الموقع عندما يصبح جاهزاً.", "Customize pages, connect your domain and publish when the site is ready."),
+        ctaLabel: text("تواصل معنا", "Contact us"),
         ctaHref: "/contact",
       },
     },

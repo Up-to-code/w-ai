@@ -367,6 +367,9 @@ export const languages = defineTable({
   orgId: v.id("organizations"),
   code: v.string(),
   name: v.string(),
+  nativeName: v.optional(v.string()),
+  direction: v.optional(v.union(v.literal("ltr"), v.literal("rtl"))),
+  preferredFont: v.optional(v.string()),
   rtl: v.boolean(),
   enabled: v.boolean(),
   isDefault: v.boolean(),
@@ -392,6 +395,7 @@ export const theme = defineTable({
 export const navigationItem = v.object({
   label: localized,
   href: v.string(),
+  pageId: v.optional(v.id("pages")),
 });
 
 export const siteSettings = defineTable({
@@ -447,8 +451,8 @@ export const siteSettings = defineTable({
   updatedAt: v.number(),
 }).index("by_org", ["orgId"]);
 
-// A tenant page. `data` is a versioned Qentrah/Craft document. Legacy Puck
-// documents remain readable while existing pages migrate on their first save.
+// A tenant page. `data` is the shared Puck v2 document. Legacy payloads are
+// converted only by the idempotent migration in convex/migrations.ts.
 export const pages = defineTable({
   orgId: v.id("organizations"),
   slug: v.string(),
@@ -456,6 +460,7 @@ export const pages = defineTable({
   published: v.boolean(),
   order: v.number(),
   data: v.any(),
+  editorVersion: v.optional(v.union(v.literal(1), v.literal(2))),
   seo: v.optional(
     v.object({
       title: v.optional(localized),
@@ -469,6 +474,52 @@ export const pages = defineTable({
   .index("by_org_slug", ["orgId", "slug"])
   .index("by_org_published", ["orgId", "published"])
   .index("by_org_order", ["orgId", "order"]);
+
+/** Sparse locale metadata and immutable publication pointer for one page. */
+export const pageLocales = defineTable({
+  orgId: v.id("organizations"),
+  pageId: v.id("pages"),
+  localeCode: v.string(),
+  slug: v.string(),
+  title: v.string(),
+  status: v.union(
+    v.literal("draft"),
+    v.literal("published"),
+    v.literal("unpublished_changes"),
+  ),
+  seo: v.optional(
+    v.object({
+      title: v.optional(v.string()),
+      description: v.optional(v.string()),
+      ogImage: v.optional(v.string()),
+    }),
+  ),
+  publishedRevisionId: v.optional(v.id("pageRevisions")),
+  createdAt: v.number(),
+  updatedAt: v.number(),
+})
+  .index("by_org", ["orgId"])
+  .index("by_page", ["pageId"])
+  .index("by_page_locale", ["pageId", "localeCode"])
+  .index("by_org_locale_status", ["orgId", "localeCode", "status"])
+  .index("by_org_locale_slug", ["orgId", "localeCode", "slug"]);
+
+/** Append-only page backups and locale-specific publication snapshots. */
+export const pageRevisions = defineTable({
+  orgId: v.id("organizations"),
+  pageId: v.id("pages"),
+  localeCode: v.string(),
+  data: v.any(),
+  source: v.union(
+    v.literal("migration"),
+    v.literal("save"),
+    v.literal("publish"),
+  ),
+  createdBy: v.optional(v.string()),
+  createdAt: v.number(),
+})
+  .index("by_page", ["pageId"])
+  .index("by_page_locale", ["pageId", "localeCode"]);
 
 export const assets = defineTable({
   orgId: v.id("organizations"),
@@ -739,9 +790,12 @@ export const cmsCollections = defineTable({
   orgId: v.id("organizations"),
   name: v.string(),
   slug: v.string(),
+  /** Published page locale used as the item-detail template. */
+  detailPageSlug: v.optional(v.string()),
   fields: v.array(
     v.object({
       key: v.string(),
+      id: v.optional(v.string()),
       label: v.string(),
       type: v.union(
         v.literal("text"),
@@ -750,8 +804,19 @@ export const cmsCollections = defineTable({
         v.literal("boolean"),
         v.literal("date"),
         v.literal("image"),
+        v.literal("file"),
+        v.literal("select"),
+        v.literal("slug"),
+        v.literal("reference"),
+        v.literal("multiReference"),
       ),
       required: v.boolean(),
+      localizable: v.optional(v.boolean()),
+      indexable: v.optional(v.boolean()),
+      validation: v.optional(v.any()),
+      defaultValue: v.optional(v.any()),
+      options: v.optional(v.array(v.string())),
+      referenceCollectionId: v.optional(v.id("cmsCollections")),
     }),
   ),
   createdBy: v.string(),
@@ -766,6 +831,9 @@ export const cmsEntries = defineTable({
   collectionId: v.id("cmsCollections"),
   status: v.union(v.literal("draft"), v.literal("published")),
   values: v.any(),
+  publishedValues: v.optional(v.any()),
+  version: v.optional(v.number()),
+  publishedAt: v.optional(v.number()),
   createdBy: v.string(),
   createdAt: v.number(),
   updatedAt: v.number(),
@@ -773,6 +841,50 @@ export const cmsEntries = defineTable({
   .index("by_org", ["orgId"])
   .index("by_collection", ["collectionId"])
   .index("by_collection_status", ["collectionId", "status"]);
+
+/** Normalized CMS routes keep public detail lookups indexed and locale-safe. */
+export const cmsEntryRoutes = defineTable({
+  orgId: v.id("organizations"),
+  collectionId: v.id("cmsCollections"),
+  entryId: v.id("cmsEntries"),
+  localeCode: v.string(),
+  slug: v.string(),
+  published: v.boolean(),
+  updatedAt: v.number(),
+})
+  .index("by_entry", ["entryId"])
+  .index("by_org_locale_slug", ["orgId", "localeCode", "slug"])
+  .index("by_collection_locale_slug", [
+    "collectionId",
+    "localeCode",
+    "slug",
+  ]);
+
+/** One row per indexable scalar. Dynamic fields remain queryable by an index. */
+export const cmsScalarIndexes = defineTable({
+  orgId: v.id("organizations"),
+  collectionId: v.id("cmsCollections"),
+  entryId: v.id("cmsEntries"),
+  fieldId: v.string(),
+  localeCode: v.string(),
+  stringValue: v.optional(v.string()),
+  numberValue: v.optional(v.number()),
+  booleanValue: v.optional(v.boolean()),
+  updatedAt: v.number(),
+})
+  .index("by_entry", ["entryId"])
+  .index("by_collection_field_locale_string", [
+    "collectionId",
+    "fieldId",
+    "localeCode",
+    "stringValue",
+  ])
+  .index("by_collection_field_locale_number", [
+    "collectionId",
+    "fieldId",
+    "localeCode",
+    "numberValue",
+  ]);
 
 export const componentLibraries = defineTable({
   ownerType: v.union(
@@ -834,6 +946,8 @@ export default defineSchema({
   theme,
   siteSettings,
   pages,
+  pageLocales,
+  pageRevisions,
   assets,
   properties,
   interests,
@@ -852,6 +966,8 @@ export default defineSchema({
   platformConfig,
   cmsCollections,
   cmsEntries,
+  cmsEntryRoutes,
+  cmsScalarIndexes,
   componentLibraries,
   libraryInstallations,
   libraryEntitlements,
