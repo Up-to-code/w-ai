@@ -46,6 +46,7 @@ import type * as properties from "../properties.js";
 import type * as redirects from "../redirects.js";
 import type * as services from "../services.js";
 import type * as settings from "../settings.js";
+import type * as siteSlugs from "../siteSlugs.js";
 import type * as tenant from "../tenant.js";
 import type * as users from "../users.js";
 import type * as vercelDomainConfig from "../vercelDomainConfig.js";
@@ -95,6 +96,7 @@ declare const fullApi: ApiFromModules<{
   redirects: typeof redirects;
   services: typeof services;
   settings: typeof settings;
+  siteSlugs: typeof siteSlugs;
   tenant: typeof tenant;
   users: typeof users;
   vercelDomainConfig: typeof vercelDomainConfig;

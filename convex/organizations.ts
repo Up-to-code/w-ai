@@ -1,7 +1,13 @@
 import { ConvexError, v } from "convex/values";
 
 import { components } from "./_generated/api";
-import { mutation, MutationCtx, query, QueryCtx } from "./_generated/server";
+import {
+  internalMutation,
+  mutation,
+  MutationCtx,
+  query,
+  QueryCtx,
+} from "./_generated/server";
 import { authComponent } from "./auth";
 import {
   cascadeDeleteOrg,
@@ -17,6 +23,7 @@ import {
 } from "./helpers";
 import { assertOrgCreateAllowed, assertWithinLimit, getUsage } from "./limits";
 import { loc, pageDataForTemplate } from "./pageTemplates";
+import { siteSlugStatus } from "./siteSlugs";
 
 // Default brand palette (Qentrah style): refined gold on warm neutrals.
 const DEFAULT_THEME = {
@@ -110,7 +117,9 @@ async function bootstrapOrg(ctx: MutationCtx, orgId: OrgId) {
       orgId,
       slug: page.slug,
       title: page.title,
-      published: page.slug === "home",
+      // Every starter page is linked from the initial navigation, so it must be
+      // reachable on the public tenant hostname from the moment the site exists.
+      published: true,
       order: page.order,
       data: starterTemplates[page.slug] ?? pageDataForTemplate("blank"),
       createdAt: now,
@@ -133,6 +142,9 @@ export const create = mutation({
     if (name.length < 2)
       throw new ConvexError("Organization name must be at least 2 characters");
     const slug = normalizeSlug(args.slug, { min: 3, max: 40 });
+    if (siteSlugStatus(slug) === "reserved") {
+      throw new ConvexError("This site address is reserved");
+    }
 
     const existing = await ctx.db
       .query("organizations")
@@ -168,6 +180,73 @@ export const create = mutation({
     return orgId;
   },
   returns: v.id("organizations"),
+});
+
+export const checkSlugAvailability = query({
+  args: { slug: v.string() },
+  returns: v.object({
+    available: v.boolean(),
+    reason: v.union(
+      v.literal("available"),
+      v.literal("invalid"),
+      v.literal("reserved"),
+      v.literal("taken"),
+    ),
+  }),
+  handler: async (ctx, args) => {
+    const slug = args.slug.trim().toLowerCase();
+    const status = siteSlugStatus(slug);
+    if (status !== "available") {
+      return { available: false, reason: status };
+    }
+
+    const existing = await ctx.db
+      .query("organizations")
+      .withIndex("by_slug", (q) => q.eq("slug", slug))
+      .first();
+    return existing
+      ? { available: false, reason: "taken" as const }
+      : { available: true, reason: "available" as const };
+  },
+});
+
+/** Bounded repair for sites created before starter navigation pages were live. */
+export const publishStarterPagesForSite = internalMutation({
+  args: { slug: v.string() },
+  returns: v.number(),
+  handler: async (ctx, args) => {
+    const slug = normalizeSlug(args.slug, { min: 3, max: 40 });
+    const org = await ctx.db
+      .query("organizations")
+      .withIndex("by_slug", (q) => q.eq("slug", slug))
+      .first();
+    if (!org) throw new ConvexError("Organization not found");
+
+    let published = 0;
+    for (const pageSlug of [
+      "home",
+      "about",
+      "services",
+      "properties",
+      "blog",
+      "contact",
+    ]) {
+      const page = await ctx.db
+        .query("pages")
+        .withIndex("by_org_slug", (q) =>
+          q.eq("orgId", org._id).eq("slug", pageSlug),
+        )
+        .first();
+      if (page && !page.published) {
+        await ctx.db.patch(page._id, {
+          published: true,
+          updatedAt: Date.now(),
+        });
+        published += 1;
+      }
+    }
+    return published;
+  },
 });
 
 export const listMine = query({
@@ -391,6 +470,9 @@ export const update = mutation({
     }
     if (args.slug !== undefined) {
       const slug = normalizeSlug(args.slug, { min: 3, max: 40 });
+      if (siteSlugStatus(slug) === "reserved") {
+        throw new ConvexError("This site address is reserved");
+      }
       if (slug !== org.slug) {
         const existing = await ctx.db
           .query("organizations")

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { api } from "@/convex/_generated/api";
 import { Link, useRouter } from "@/i18n/routing";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { useTranslations } from "next-intl";
 
 import { useConvexReady } from "@/hooks/use-convex-ready";
@@ -25,6 +25,7 @@ function orgErrorKey(message: string | undefined): string {
   if (!message) return "errorGeneric";
   const m = message.toLowerCase();
   if (m.includes("already taken")) return "slugTaken";
+  if (m.includes("reserved")) return "slugReserved";
   if (m.includes("invalid site address") || m.includes("lowercase")) {
     return "slugInvalid";
   }
@@ -64,12 +65,31 @@ export default function OnboardingPage() {
     trimmedSlug.length >= 3 &&
     trimmedSlug.length <= 40 &&
     SLUG_RE.test(trimmedSlug);
+  const slugAvailability = useQuery(
+    api.organizations.checkSlugAvailability,
+    slugValid ? { slug: trimmedSlug } : "skip",
+  );
 
   const nameError = name && !nameValid ? tErr("errorNameTooShort") : null;
-  const slugError = slug && !slugValid ? t("slugInvalid") : null;
+  const slugError =
+    slug && !slugValid
+      ? t("slugInvalid")
+      : slugAvailability && !slugAvailability.available
+        ? t(
+            slugAvailability.reason === "reserved"
+              ? "slugReserved"
+              : "slugTaken",
+          )
+        : null;
 
   const submitDisabled =
-    loading || sessionPending || !hasSession || !nameValid || !slugValid;
+    loading ||
+    sessionPending ||
+    !hasSession ||
+    !nameValid ||
+    !slugValid ||
+    slugAvailability === undefined ||
+    !slugAvailability.available;
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -209,6 +229,14 @@ export default function OnboardingPage() {
                   {trimmedSlug || "my-site"}.qentrah.com
                 </span>
               </p>
+              {slugValid && slugAvailability === undefined ? (
+                <p className="text-xs text-muted-foreground">
+                  {t("slugChecking")}
+                </p>
+              ) : null}
+              {slugAvailability?.available ? (
+                <p className="text-xs text-emerald-700">{t("slugAvailable")}</p>
+              ) : null}
               {slugError && <p className="text-xs text-w-red">{slugError}</p>}
             </div>
 
