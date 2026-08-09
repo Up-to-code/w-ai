@@ -6,7 +6,21 @@ import { isAppHost, tenantSlugFromHost } from "./lib/tenant-host";
 
 const intl = createMiddleware(routing);
 
-const APP_ONLY_PATH_PREFIXES = ["/api", "/c", "/images", "/roshn-plus"];
+const APP_ONLY_PATH_PREFIXES = [
+  "/api",
+  "/brand",
+  "/c",
+  "/icons",
+  "/images",
+  "/metadata",
+  "/roshn-plus",
+];
+
+const APP_STATIC_PATHS = new Set([
+  "/icon.svg",
+  "/robots.txt",
+  "/site.webmanifest",
+]);
 
 /**
  * These paths belong to the W-AI application when they are requested on an
@@ -14,8 +28,11 @@ const APP_ONLY_PATH_PREFIXES = ["/api", "/c", "/images", "/roshn-plus"];
  * the same path names are valid customer-site URLs on a custom domain.
  */
 export function isAppOnlyPath(pathname: string) {
-  return APP_ONLY_PATH_PREFIXES.some(
-    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  return (
+    APP_STATIC_PATHS.has(pathname) ||
+    APP_ONLY_PATH_PREFIXES.some(
+      (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+    )
   );
 }
 
