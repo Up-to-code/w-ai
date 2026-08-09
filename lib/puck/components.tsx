@@ -455,6 +455,45 @@ export function ColumnsBlock({
   );
 }
 
+export function CarouselBlock({
+  slides: Slides,
+  slidesPerView = "1",
+  gap = "medium",
+  snap = true,
+}: {
+  slides: SlotComponent;
+  slidesPerView?: "1" | "2" | "3";
+  gap?: "small" | "medium" | "large";
+  snap?: boolean;
+}) {
+  const gapSize =
+    gap === "small" ? "0.75rem" : gap === "large" ? "2rem" : "1.25rem";
+  const width =
+    slidesPerView === "3"
+      ? "calc((100% - 4rem) / 3)"
+      : slidesPerView === "2"
+        ? "calc((100% - 1.25rem) / 2)"
+        : "100%";
+
+  return (
+    <div className="mx-auto w-full max-w-6xl overflow-hidden px-6 py-8">
+      <Slides
+        allow={ATOMIC_COMPONENTS}
+        minEmptyHeight={180}
+        collisionAxis="x"
+        className="wai-carousel flex overflow-x-auto overscroll-x-contain pb-3"
+        style={
+          {
+            gap: gapSize,
+            scrollSnapType: snap ? "x mandatory" : "none",
+            "--wai-slide-width": width,
+          } as CSSProperties
+        }
+      />
+    </div>
+  );
+}
+
 export function HeadingBlock({
   text,
   level = "2",

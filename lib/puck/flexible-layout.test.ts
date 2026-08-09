@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   cssLength,
+  flexibleLayoutStyle,
   pixelsToFlexibleLength,
   updateComponentLayout,
 } from "./flexible-layout";
@@ -43,5 +44,15 @@ describe("flexible Puck layout", () => {
     const section = next.content[0];
     expect(section.props.content[0].props.layout).toEqual({ width: "40%" });
     expect(section.props.id).toBe("section-1");
+  });
+
+  it("centers a sized child inside its parent without absolute positioning", () => {
+    expect(
+      flexibleLayoutStyle({ width: "50%", align: "center" }),
+    ).toMatchObject({
+      width: "50%",
+      marginInlineStart: "auto",
+      marginInlineEnd: "auto",
+    });
   });
 });

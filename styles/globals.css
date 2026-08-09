@@ -562,3 +562,9 @@
 .ProseMirror .ProseMirror-selectednode {
   @apply outline outline-2 outline-ring;
 }
+
+.wai-carousel > * {
+  flex: 0 0 var(--wai-slide-width, 100%);
+  min-width: 0;
+  scroll-snap-align: start;
+}

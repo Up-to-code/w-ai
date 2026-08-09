@@ -9,6 +9,7 @@ import { LayoutLengthControl } from "@/components/qentrah/layout-length-control"
 import {
   BuilderSection,
   ButtonBlock,
+  CarouselBlock,
   ColumnsBlock,
   ContactBand,
   CtaBand,
@@ -66,6 +67,7 @@ export type QentrahComponents = {
   CmsField: Record<string, unknown>;
   Divider: Record<string, unknown>;
   Spacer: Record<string, unknown>;
+  Carousel: Record<string, unknown>;
 };
 
 const alignOptions = [
@@ -109,6 +111,16 @@ const flexibleLayoutField = {
     offsetY: layoutLengthField("Vertical offset"),
     grow: { type: "number" as const, label: "Flex grow", min: 0, step: 1 },
     shrink: { type: "number" as const, label: "Flex shrink", min: 0, step: 1 },
+    align: {
+      type: "radio" as const,
+      label: "Align in parent",
+      options: [
+        { label: "Start", value: "start" },
+        { label: "Center", value: "center" },
+        { label: "End", value: "end" },
+        { label: "Stretch", value: "stretch" },
+      ],
+    },
   },
 };
 
@@ -174,6 +186,7 @@ export function buildPuckConfig(
           "IconBlock",
           "Divider",
           "Spacer",
+          "Carousel",
         ],
         defaultExpanded: true,
       },
@@ -373,6 +386,64 @@ export function buildPuckConfig(
           gap: "medium",
           align: "stretch",
           rtlBehavior: "auto",
+        },
+      },
+      Carousel: {
+        label: "Slider",
+        render: (props) => <CarouselBlock {...(props as any)} />,
+        fields: {
+          slides: {
+            type: "slot",
+            allow: [
+              "HeadingBlock",
+              "ParagraphBlock",
+              "ButtonBlock",
+              "MediaBlock",
+              "IconBlock",
+              "ColumnsBlock",
+              "Divider",
+              "Spacer",
+            ],
+          },
+          slidesPerView: {
+            type: "radio",
+            label: "Slides visible",
+            options: [
+              { label: "1", value: "1" },
+              { label: "2", value: "2" },
+              { label: "3", value: "3" },
+            ],
+          },
+          gap: {
+            type: "select",
+            label: "Gap",
+            options: [
+              { label: "Small", value: "small" },
+              { label: "Medium", value: "medium" },
+              { label: "Large", value: "large" },
+            ],
+          },
+          snap: {
+            type: "radio",
+            label: "Scroll snapping",
+            options: [
+              { label: "On", value: true },
+              { label: "Off", value: false },
+            ],
+          },
+        },
+        defaultProps: {
+          slides: [
+            { type: "MediaBlock", props: { kind: "image", alt: "Slide one" } },
+            { type: "MediaBlock", props: { kind: "image", alt: "Slide two" } },
+            {
+              type: "MediaBlock",
+              props: { kind: "image", alt: "Slide three" },
+            },
+          ],
+          slidesPerView: "1",
+          gap: "medium",
+          snap: true,
         },
       },
       HeadingBlock: {

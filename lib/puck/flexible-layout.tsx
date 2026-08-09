@@ -16,6 +16,7 @@ export type FlexibleLayout = {
   offsetY?: FlexibleLength;
   grow?: number;
   shrink?: number;
+  align?: "start" | "center" | "end" | "stretch";
 };
 
 export const DEFAULT_FLEXIBLE_LAYOUT: FlexibleLayout = {
@@ -29,6 +30,7 @@ export const DEFAULT_FLEXIBLE_LAYOUT: FlexibleLayout = {
   offsetY: "0px",
   grow: 0,
   shrink: 1,
+  align: "start",
 };
 
 const KEYWORDS = new Set([
@@ -108,6 +110,7 @@ export function flexibleLayoutStyle(
   if (!layout) return {};
   const offsetX = cssLength(layout.offsetX, "0px");
   const offsetY = cssLength(layout.offsetY, "0px");
+  const alignment = layout.align ?? "start";
   return {
     width: cssLength(layout.width),
     height: cssLength(layout.height),
@@ -120,6 +123,11 @@ export function flexibleLayoutStyle(
     top: offsetY !== "0px" ? offsetY : undefined,
     flexGrow: layout.grow,
     flexShrink: layout.shrink,
+    alignSelf: alignment === "stretch" ? "stretch" : undefined,
+    marginInlineStart:
+      alignment === "center" || alignment === "end" ? "auto" : undefined,
+    marginInlineEnd:
+      alignment === "center" || alignment === "start" ? "auto" : undefined,
   };
 }
 

@@ -9,7 +9,7 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from "react";
 import { registerOverlayPortal, usePuck } from "@puck-editor";
-import { RotateCcw } from "lucide-react";
+import { AlignCenter, Maximize2, Minimize2, RotateCcw } from "lucide-react";
 
 import {
   pixelsToFlexibleLength,
@@ -30,6 +30,7 @@ const RESET_PATCH: Partial<FlexibleLayout> = {
   offsetY: undefined,
   grow: undefined,
   shrink: undefined,
+  align: undefined,
 };
 
 export function PuckResizableOverlay({
@@ -45,7 +46,7 @@ export function PuckResizableOverlay({
   isSelected: boolean;
   snapEnabled: boolean;
 }) {
-  const { appState, dispatch, getItemById } = usePuck();
+  const { dispatch, getItemById } = usePuck();
   const [measurement, setMeasurement] = useState<string | null>(null);
   const cleanupRef = useRef<(() => void) | null>(null);
 
@@ -306,20 +307,61 @@ export function PuckResizableOverlay({
           }}
         />
       ))}
-      <button
+      <div
         ref={(node) => registerOverlayPortal(node, { disableDrag: true })}
-        type="button"
-        onClick={(event) => {
+        onPointerDown={(event) => {
           event.preventDefault();
           event.stopPropagation();
-          commit(RESET_PATCH);
         }}
-        className="pointer-events-auto absolute bottom-2 right-2 grid size-7 place-items-center rounded-md border border-black/10 bg-white text-zinc-700 shadow-sm hover:bg-zinc-50"
-        aria-label="Reset component size"
-        title="Reset component size"
+        className="pointer-events-auto absolute -top-10 left-0 flex items-center rounded-md border border-black/10 bg-white p-0.5 text-zinc-700 shadow-sm"
       >
-        <RotateCcw className="size-3.5" />
-      </button>
+        <button
+          type="button"
+          onClick={() =>
+            commit({
+              width: "auto",
+              height: "auto",
+              offsetX: "0px",
+              offsetY: "0px",
+            })
+          }
+          className="grid size-7 place-items-center rounded hover:bg-zinc-100"
+          aria-label="Fit component to content"
+          title="Fit to content"
+        >
+          <Minimize2 className="size-3.5" />
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            commit({ width: "100%", offsetX: "0px", align: "stretch" })
+          }
+          className="grid size-7 place-items-center rounded hover:bg-zinc-100"
+          aria-label="Fill parent width"
+          title="Fill parent width"
+        >
+          <Maximize2 className="size-3.5" />
+        </button>
+        <button
+          type="button"
+          onClick={() => commit({ align: "center", offsetX: "0px" })}
+          className="grid size-7 place-items-center rounded hover:bg-zinc-100"
+          aria-label="Center in parent"
+          title="Center in parent"
+        >
+          <AlignCenter className="size-3.5" />
+        </button>
+        <span className="mx-0.5 h-4 w-px bg-zinc-200" />
+        <button
+          type="button"
+          onClick={() => commit(RESET_PATCH)}
+          className="grid size-7 place-items-center rounded hover:bg-zinc-100"
+          aria-label="Reset component size"
+          title="Reset component size"
+        >
+          <RotateCcw className="size-3.5" />
+        </button>
+      </div>
       {measurement ? (
         <div className="pointer-events-none absolute left-1/2 top-2 -translate-x-1/2 rounded bg-zinc-950 px-2 py-1 font-mono text-[10px] text-white shadow-sm">
           {measurement}
