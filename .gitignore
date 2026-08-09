@@ -35,9 +35,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
-# convex
-/convex/_generated/
-
 # email
 /.react-email/
 
