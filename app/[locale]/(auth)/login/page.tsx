@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { Link, useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import { useRouter, Link } from "@/i18n/routing";
+
 import { signIn } from "@/lib/auth-client";
 import { authErrorKey, validateAuthFields } from "@/lib/auth-errors";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { AuthFormPanel } from "@/components/auth/auth-form-panel";
 
 export default function LoginPage() {
   const t = useTranslations("auth");
@@ -49,39 +52,42 @@ export default function LoginPage() {
       router.refresh();
     } catch (err) {
       setError(
-        authErrorKey(
-          undefined,
-          err instanceof Error ? err.message : "network",
-        ),
+        authErrorKey(undefined, err instanceof Error ? err.message : "network"),
       );
       setLoading(false);
     }
   }
 
   return (
-    <div className="w-full">
-      <div className="mb-8 border-b border-border pb-6">
-        <p className="label-meta mb-2">01 — AUTH</p>
-        <h1 className="text-h2 font-semibold text-foreground">
-          {t("loginTitle")}
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">{t("loginSubtitle")}</p>
-      </div>
-
-      <form onSubmit={onSubmit} className="space-y-4" noValidate>
+    <AuthFormPanel
+      title={t("loginTitle")}
+      subtitle={t("loginSubtitle")}
+      footer={
+        <p>
+          {t("noAccount")}{" "}
+          <Link
+            href="/register"
+            className="font-medium text-foreground underline underline-offset-4 transition-opacity hover:opacity-60"
+          >
+            {t("createOne")}
+          </Link>
+        </p>
+      }
+    >
+      <form onSubmit={onSubmit} className="space-y-5" noValidate>
         {error && (
           <div
             role="alert"
-            className="border border-w-red bg-w-red-soft px-3 py-2 text-xs text-w-red"
+            className="rounded-md border border-w-red/30 bg-w-red-soft px-3 py-2.5 text-sm text-w-red"
           >
             {t(error as Parameters<typeof t>[0])}
           </div>
         )}
 
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <Label
             htmlFor="email"
-            className="text-xs font-medium uppercase tracking-wide text-muted-foreground"
+            className="text-sm font-medium text-foreground"
           >
             {t("email")}
           </Label>
@@ -96,17 +102,17 @@ export default function LoginPage() {
               setEmail(e.target.value);
               if (error) setError(null);
             }}
-            className="rounded-sm border-border focus-visible:border-foreground focus-visible:ring-1 focus-visible:ring-foreground"
+            className="h-11 rounded-md border-border bg-white px-3 focus-visible:border-foreground focus-visible:ring-1 focus-visible:ring-foreground"
             required
             disabled={loading}
             aria-invalid={!!error}
           />
         </div>
 
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <Label
             htmlFor="password"
-            className="text-xs font-medium uppercase tracking-wide text-muted-foreground"
+            className="text-sm font-medium text-foreground"
           >
             {t("password")}
           </Label>
@@ -121,31 +127,21 @@ export default function LoginPage() {
               setPassword(e.target.value);
               if (error) setError(null);
             }}
-            className="rounded-sm border-border focus-visible:border-foreground focus-visible:ring-1 focus-visible:ring-foreground"
+            className="h-11 rounded-md border-border bg-white px-3 focus-visible:border-foreground focus-visible:ring-1 focus-visible:ring-foreground"
             required
             minLength={8}
             disabled={loading}
           />
         </div>
 
-        <button
+        <Button
           type="submit"
           disabled={loading}
-          className="mt-2 w-full rounded-sm bg-foreground py-2.5 text-sm font-medium text-background transition-brand hover:bg-w-carbon disabled:opacity-50"
+          className="mt-3 h-11 w-full rounded-md bg-foreground text-sm font-medium text-background hover:bg-w-carbon"
         >
           {loading ? t("loading") : t("login")}
-        </button>
+        </Button>
       </form>
-
-      <p className="mt-6 text-center text-xs text-muted-foreground">
-        {t("noAccount")}{" "}
-        <Link
-          href="/register"
-          className="text-foreground underline underline-offset-4 transition-brand hover:text-w-graphite"
-        >
-          {t("createOne")}
-        </Link>
-      </p>
-    </div>
+    </AuthFormPanel>
   );
 }

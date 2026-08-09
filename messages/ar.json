@@ -973,8 +973,12 @@
     "comingSoon": "منصة قيد الإنشاء"
   },
   "auth": {
+    "accountAccess": "الدخول إلى الحساب",
+    "productEyebrow": "مساحة عمل W-AI",
+    "productTitle": "ابنِ الويب الذي تملكه.",
+    "productDescription": "صمّم وأدر وانشر مواقع متجاوبة من مساحة عمل مستقلة واحدة.",
     "loginTitle": "تسجيل الدخول",
-    "loginSubtitle": "أهلاً بعودتك إلى كوريوس فيسل",
+    "loginSubtitle": "أهلاً بعودتك إلى W-AI",
     "registerTitle": "إنشاء حساب جديد",
     "registerSubtitle": "أنشئ حساباً وأطلق موقعك الأول",
     "name": "الاسم",

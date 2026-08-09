@@ -967,8 +967,12 @@
     "comingSoon": "Platform under construction"
   },
   "auth": {
+    "accountAccess": "Account access",
+    "productEyebrow": "W-AI workspace",
+    "productTitle": "Build the web you own.",
+    "productDescription": "Design, manage, and publish responsive websites from one independent workspace.",
     "loginTitle": "Sign in",
-    "loginSubtitle": "Welcome back to Curious Vessel",
+    "loginSubtitle": "Welcome back to W-AI",
     "registerTitle": "Create your account",
     "registerSubtitle": "Create an account and launch your first site",
     "name": "Name",

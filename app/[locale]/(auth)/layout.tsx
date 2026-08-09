@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { api } from "@/convex/_generated/api";
 import { Link } from "@/i18n/routing";
+import { getTranslations } from "next-intl/server";
 
 import { fetchAuthQuery, getToken } from "@/lib/auth-server";
 import { BrandLockup } from "@/components/brand/brand-mark";
@@ -20,6 +21,7 @@ export default async function AuthLayout({
   params,
 }: AuthLayoutProps) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "auth" });
   const token = await getToken();
 
   if (token) {
@@ -36,20 +38,47 @@ export default async function AuthLayout({
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <header className="border-b border-border">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
+    <div className="min-h-screen bg-background">
+      <header className="absolute inset-x-0 top-0 z-10 h-16 border-b border-border/80 bg-background/90 backdrop-blur-xl">
+        <div className="flex h-full items-center justify-between px-5 sm:px-8">
           <Link
             href="/"
             className="text-xs font-semibold text-foreground transition-opacity hover:opacity-60"
           >
             <BrandLockup />
           </Link>
-          <p className="label-meta">AUTH · WEB BUILDER</p>
+          <p className="text-xs text-muted-foreground">{t("accountAccess")}</p>
         </div>
       </header>
-      <main className="flex flex-1 items-center justify-center px-4 py-16">
-        <div className="w-full max-w-sm border border-border bg-card p-8">
+
+      <main className="grid min-h-screen pt-16 lg:grid-cols-[minmax(360px,0.82fr)_1.18fr]">
+        <aside className="relative hidden min-h-[calc(100vh-4rem)] overflow-hidden bg-[#0a0a0a] p-12 text-white lg:flex lg:flex-col lg:justify-between xl:p-16">
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.16]"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(255,255,255,.16) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.16) 1px, transparent 1px)",
+              backgroundSize: "56px 56px",
+              maskImage:
+                "linear-gradient(to bottom right, black, transparent 72%)",
+            }}
+          />
+
+          <p className="relative text-xs font-medium uppercase tracking-[0.14em] text-white/55">
+            {t("productEyebrow")}
+          </p>
+
+          <div className="relative max-w-xl pb-8">
+            <h2 className="text-5xl font-semibold leading-[0.98] tracking-[-0.055em] xl:text-6xl">
+              {t("productTitle")}
+            </h2>
+            <p className="text-white/58 mt-6 max-w-md text-base leading-7">
+              {t("productDescription")}
+            </p>
+          </div>
+        </aside>
+
+        <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-6 py-14 sm:px-10 lg:px-14 xl:px-20">
           {children}
         </div>
       </main>

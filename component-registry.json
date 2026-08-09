@@ -1,6 +1,15 @@
 {
   "components": [
     {
+      "name": "AuthFormPanel",
+      "path": "components/auth/auth-form-panel.tsx",
+      "kind": "domain-shared",
+      "summary": "Shared borderless authentication frame with consistent title, description, form, and account-switch footer slots",
+      "usedIn": ["login", "registration"],
+      "props": ["title", "subtitle", "children", "footer", "className"],
+      "createdAt": "2026-08-09"
+    },
+    {
       "name": "BrandMark / BrandLockup",
       "path": "components/brand/brand-mark.tsx",
       "kind": "shared-ui",
