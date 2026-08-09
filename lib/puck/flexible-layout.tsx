@@ -5,6 +5,15 @@ export const LENGTH_UNITS = ["px", "%", "vw", "vh", "rem", "em"] as const;
 export type LengthUnit = (typeof LENGTH_UNITS)[number];
 export type FlexibleLength = string | number;
 
+export function initialFlexibleLengthAmount(
+  unit: LengthUnit,
+  axis: "width" | "height",
+): number {
+  if (unit === "%" || unit === "vw" || unit === "vh") return 100;
+  if (unit === "rem" || unit === "em") return axis === "height" ? 15 : 20;
+  return axis === "height" ? 240 : 320;
+}
+
 export type FlexibleLayout = {
   width?: FlexibleLength;
   height?: FlexibleLength;

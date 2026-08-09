@@ -3,12 +3,18 @@ import { describe, expect, it } from "vitest";
 import {
   cssLength,
   flexibleLayoutStyle,
+  initialFlexibleLengthAmount,
   pixelsToFlexibleLength,
   updateComponentLayout,
   withFlexibleLayoutDefaults,
 } from "./flexible-layout";
 
 describe("flexible Puck layout", () => {
+  it("uses visible defaults when changing auto sizing to a numeric unit", () => {
+    expect(initialFlexibleLengthAmount("%", "width")).toBe(100);
+    expect(initialFlexibleLengthAmount("px", "width")).toBe(320);
+    expect(initialFlexibleLengthAmount("px", "height")).toBe(240);
+  });
   it("shows auto sizing for old components without layout data", () => {
     expect(withFlexibleLayoutDefaults(undefined)).toMatchObject({
       width: "auto",

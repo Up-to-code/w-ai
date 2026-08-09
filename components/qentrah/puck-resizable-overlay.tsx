@@ -22,6 +22,12 @@ import {
 } from "@/lib/puck/resize-interaction";
 
 type ResizeDirection = -1 | 0 | 1;
+type OverlayBounds = {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+};
 
 const RESET_PATCH: Partial<FlexibleLayout> = {
   width: undefined,
@@ -52,9 +58,57 @@ export function PuckResizableOverlay({
 }) {
   const { dispatch, getItemById } = usePuck();
   const [measurement, setMeasurement] = useState<string | null>(null);
+  const [portalDocument, setPortalDocument] = useState<Document | null>(null);
+  const [overlayBounds, setOverlayBounds] = useState<OverlayBounds | null>(
+    null,
+  );
   const cleanupRef = useRef<(() => void) | null>(null);
 
   useEffect(() => () => cleanupRef.current?.(), []);
+
+  const registerInteractivePortal = useCallback((node: HTMLElement | null) => {
+    registerOverlayPortal(node, { disableDrag: true });
+    if (node) {
+      setPortalDocument((current) =>
+        current === node.ownerDocument ? current : node.ownerDocument,
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isSelected || !portalDocument) return;
+    const ownerWindow = portalDocument.defaultView;
+    if (!ownerWindow) return;
+    const escapedId = ownerWindow.CSS?.escape
+      ? ownerWindow.CSS.escape(componentId)
+      : componentId.replace(/["\\]/g, "\\$&");
+    const componentRoot = portalDocument.querySelector<HTMLElement>(
+      `[data-puck-component="${escapedId}"]`,
+    );
+    if (!componentRoot) return;
+    const target = resolveResizeTarget(componentRoot);
+    const measure = () => {
+      const rootRect = componentRoot.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      setOverlayBounds({
+        left: targetRect.left - rootRect.left,
+        top: targetRect.top - rootRect.top,
+        width: targetRect.width,
+        height: targetRect.height,
+      });
+    };
+    measure();
+    const observer = new ownerWindow.ResizeObserver(measure);
+    observer.observe(componentRoot);
+    if (target !== componentRoot) observer.observe(target);
+    ownerWindow.addEventListener("resize", measure);
+    portalDocument.addEventListener("scroll", measure, true);
+    return () => {
+      observer.disconnect();
+      ownerWindow.removeEventListener("resize", measure);
+      portalDocument.removeEventListener("scroll", measure, true);
+    };
+  }, [componentId, isSelected, portalDocument]);
 
   const commit = useCallback(
     (patch: Partial<FlexibleLayout>) => {
@@ -286,23 +340,31 @@ export function PuckResizableOverlay({
     [0, 1, "bottom"],
     [-1, 0, "left"],
   ] as const;
+  const bounds = overlayBounds ?? { left: 0, top: 0, width: 0, height: 0 };
+  const positioned = overlayBounds !== null;
 
   return (
     <>
       {children}
+      {positioned ? (
+        <div
+          ref={registerInteractivePortal}
+          className="pointer-events-none absolute border border-blue-600"
+          style={bounds}
+        />
+      ) : null}
       {handles.map(([x, y, label]) => (
         <button
           key={label}
-          ref={(node) => registerOverlayPortal(node, { disableDrag: true })}
+          ref={registerInteractivePortal}
           type="button"
           aria-label={`Resize ${label}`}
           onPointerDown={(event) => startResize(event, x, y)}
           className="pointer-events-auto absolute size-3 rounded-[3px] border-2 border-white bg-blue-600 shadow-sm"
           style={{
-            left: x < 0 ? -6 : undefined,
-            right: x > 0 ? -6 : undefined,
-            top: y < 0 ? -6 : undefined,
-            bottom: y > 0 ? -6 : undefined,
+            left: bounds.left + (x < 0 ? -6 : bounds.width - 6),
+            top: bounds.top + (y < 0 ? -6 : bounds.height - 6),
+            visibility: positioned ? "visible" : "hidden",
             cursor: x === y ? "nwse-resize" : "nesw-resize",
           }}
         />
@@ -310,26 +372,32 @@ export function PuckResizableOverlay({
       {edges.map(([x, y, label]) => (
         <button
           key={label}
-          ref={(node) => registerOverlayPortal(node, { disableDrag: true })}
+          ref={registerInteractivePortal}
           type="button"
           aria-label={`Resize ${label} edge`}
           onPointerDown={(event) => startResize(event, x, y)}
           className={`pointer-events-auto absolute bg-transparent ${x === 0 ? "h-3 cursor-ns-resize" : "w-3 cursor-ew-resize"}`}
           style={{
-            left: x < 0 ? -6 : x > 0 ? undefined : 10,
-            right: x > 0 ? -6 : x < 0 ? undefined : 10,
-            top: y < 0 ? -6 : y > 0 ? undefined : 10,
-            bottom: y > 0 ? -6 : y < 0 ? undefined : 10,
+            left: bounds.left + (x < 0 ? -6 : x > 0 ? bounds.width - 6 : 10),
+            top: bounds.top + (y < 0 ? -6 : y > 0 ? bounds.height - 6 : 10),
+            width: x === 0 ? Math.max(0, bounds.width - 20) : 12,
+            height: y === 0 ? Math.max(0, bounds.height - 20) : 12,
+            visibility: positioned ? "visible" : "hidden",
           }}
         />
       ))}
       <div
-        ref={(node) => registerOverlayPortal(node, { disableDrag: true })}
+        ref={registerInteractivePortal}
         onPointerDown={(event) => {
           event.preventDefault();
           event.stopPropagation();
         }}
-        className="pointer-events-auto absolute -top-10 left-0 flex items-center rounded-md border border-black/10 bg-white p-0.5 text-zinc-700 shadow-sm"
+        className="pointer-events-auto absolute flex items-center rounded-md border border-black/10 bg-white p-0.5 text-zinc-700 shadow-sm"
+        style={{
+          left: bounds.left,
+          top: bounds.top - 40,
+          visibility: positioned ? "visible" : "hidden",
+        }}
       >
         <button
           type="button"
@@ -379,7 +447,13 @@ export function PuckResizableOverlay({
         </button>
       </div>
       {measurement ? (
-        <div className="pointer-events-none absolute left-1/2 top-2 -translate-x-1/2 rounded bg-zinc-950 px-2 py-1 font-mono text-[10px] text-white shadow-sm">
+        <div
+          className="pointer-events-none absolute -translate-x-1/2 rounded bg-zinc-950 px-2 py-1 font-mono text-[10px] text-white shadow-sm"
+          style={{
+            left: bounds.left + bounds.width / 2,
+            top: bounds.top + 8,
+          }}
+        >
           {measurement}
         </div>
       ) : null}

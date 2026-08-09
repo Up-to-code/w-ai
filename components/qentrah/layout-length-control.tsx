@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { FieldProps } from "@puckeditor/core";
 
 import {
+  initialFlexibleLengthAmount,
   LENGTH_UNITS,
   parseFlexibleLength,
   type LengthUnit,
@@ -70,8 +71,12 @@ export function LayoutLengthControl({
           if ((KEYWORDS as readonly string[]).includes(next)) onChange(next);
           else {
             const amount = Number(draft);
+            const nextUnit = next as LengthUnit;
+            const axis = label.toLowerCase().includes("height")
+              ? "height"
+              : "width";
             onChange(
-              `${Number.isFinite(amount) ? amount : parsed.amount}${next as LengthUnit}`,
+              `${parsed.keyword ? initialFlexibleLengthAmount(nextUnit, axis) : Number.isFinite(amount) ? amount : parsed.amount}${nextUnit}`,
             );
           }
         }}
