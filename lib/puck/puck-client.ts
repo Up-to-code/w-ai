@@ -14,7 +14,6 @@ import dynamic from "next/dynamic";
  */
 export const Puck = dynamic(
   async () => {
-    // @ts-expect-error alias defined in next.config.js (browser build)
     const browserModule = await import("@puck-editor");
     return browserModule.Puck;
   },

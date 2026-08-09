@@ -1,8 +1,11 @@
 import type { Config } from "@puckeditor/core";
+
 import {
   CmsCollectionBlock,
   CmsFieldBlock,
 } from "@/components/qentrah/cms-collection-block";
+import { LayoutLengthControl } from "@/components/qentrah/layout-length-control";
+
 import {
   BuilderSection,
   ButtonBlock,
@@ -13,8 +16,8 @@ import {
   FaqList,
   FeatureGrid,
   GalleryGrid,
-  HeroSection,
   HeadingBlock,
+  HeroSection,
   IconBlock,
   ImageText,
   LogoCloud,
@@ -27,6 +30,7 @@ import {
   StatsStrip,
   TextBlock,
 } from "./components";
+import { DEFAULT_FLEXIBLE_LAYOUT, FlexibleLayoutBox } from "./flexible-layout";
 import {
   localizedField,
   type Localized,
@@ -85,14 +89,37 @@ const localizedTextareaField = (label: string) => ({
   label,
 });
 
+const layoutLengthField = (label: string) => ({
+  type: "custom" as const,
+  label,
+  render: LayoutLengthControl,
+});
+
+const flexibleLayoutField = {
+  type: "object" as const,
+  label: "Size & position",
+  objectFields: {
+    width: layoutLengthField("Width"),
+    height: layoutLengthField("Height"),
+    minWidth: layoutLengthField("Minimum width"),
+    minHeight: layoutLengthField("Minimum height"),
+    maxWidth: layoutLengthField("Maximum width"),
+    maxHeight: layoutLengthField("Maximum height"),
+    offsetX: layoutLengthField("Horizontal offset"),
+    offsetY: layoutLengthField("Vertical offset"),
+    grow: { type: "number" as const, label: "Flex grow", min: 0, step: 1 },
+    shrink: { type: "number" as const, label: "Flex shrink", min: 0, step: 1 },
+  },
+};
+
 const L = (_ar: string, en: string) => en;
 const summary = (value: unknown, fallback: string) =>
   typeof value === "string"
     ? value
     : value && typeof value === "object"
-      ? Object.values(value as Record<string, unknown>).find(
+      ? (Object.values(value as Record<string, unknown>).find(
           (item): item is string => typeof item === "string",
-        ) ?? fallback
+        ) ?? fallback)
       : fallback;
 
 /**
@@ -114,7 +141,7 @@ export function buildPuckConfig(
     };
   } = {},
 ): Config {
-  return {
+  const config: Config = {
     root: {
       label: "Page",
       render: ({ children }) => (
@@ -375,9 +402,18 @@ export function buildPuckConfig(
               { label: "Display", value: "display" },
             ],
           },
-          align: { type: "radio", label: "Align", options: [...alignOptions, { label: "End", value: "end" }] },
+          align: {
+            type: "radio",
+            label: "Align",
+            options: [...alignOptions, { label: "End", value: "end" }],
+          },
         },
-        defaultProps: { text: "Double-click to edit heading", level: "2", size: "large", align: "start" },
+        defaultProps: {
+          text: "Double-click to edit heading",
+          level: "2",
+          size: "large",
+          align: "start",
+        },
       },
       ParagraphBlock: {
         label: "Paragraph",
@@ -397,9 +433,17 @@ export function buildPuckConfig(
               { label: "Large", value: "large" },
             ],
           },
-          align: { type: "radio", label: "Align", options: [...alignOptions, { label: "End", value: "end" }] },
+          align: {
+            type: "radio",
+            label: "Align",
+            options: [...alignOptions, { label: "End", value: "end" }],
+          },
         },
-        defaultProps: { text: "Double-click to edit this text.", size: "medium", align: "start" },
+        defaultProps: {
+          text: "Double-click to edit this text.",
+          size: "medium",
+          align: "start",
+        },
       },
       ButtonBlock: {
         label: "Button",
@@ -416,9 +460,18 @@ export function buildPuckConfig(
               { label: "Link", value: "link" },
             ],
           },
-          align: { type: "radio", label: "Align", options: [...alignOptions, { label: "End", value: "end" }] },
+          align: {
+            type: "radio",
+            label: "Align",
+            options: [...alignOptions, { label: "End", value: "end" }],
+          },
         },
-        defaultProps: { label: "Button", href: "#", style: "primary", align: "start" },
+        defaultProps: {
+          label: "Button",
+          href: "#",
+          style: "primary",
+          align: "start",
+        },
       },
       MediaBlock: {
         label: "Media",
@@ -455,7 +508,18 @@ export function buildPuckConfig(
           icon: {
             type: "select",
             label: "Icon",
-            options: ["arrow", "check", "home", "mail", "map", "phone", "star"].map((value) => ({ label: value[0].toUpperCase() + value.slice(1), value })),
+            options: [
+              "arrow",
+              "check",
+              "home",
+              "mail",
+              "map",
+              "phone",
+              "star",
+            ].map((value) => ({
+              label: value[0].toUpperCase() + value.slice(1),
+              value,
+            })),
           },
           size: {
             type: "radio",
@@ -466,7 +530,11 @@ export function buildPuckConfig(
               { label: "L", value: "large" },
             ],
           },
-          align: { type: "radio", label: "Align", options: [...alignOptions, { label: "End", value: "end" }] },
+          align: {
+            type: "radio",
+            label: "Align",
+            options: [...alignOptions, { label: "End", value: "end" }],
+          },
         },
         defaultProps: { icon: "star", size: "medium", align: "start" },
       },
@@ -487,7 +555,10 @@ export function buildPuckConfig(
         },
         defaultProps: {
           eyebrow: L("WEB BUILDER", "WEB BUILDER"),
-          title: L("ابنِ وانشر مواقعك بصرياً.", "Build and publish websites visually."),
+          title: L(
+            "ابنِ وانشر مواقعك بصرياً.",
+            "Build and publish websites visually.",
+          ),
           subtitle: L(
             "صمم الصفحات، اربط النطاقات، وانشر.",
             "Design pages, connect domains, publish.",
@@ -898,7 +969,9 @@ export function buildPuckConfig(
       },
       CmsCollection: {
         label: "CMS collection",
-        render: (props) => <CmsCollectionBlock {...(props as any)} locale={locale} />,
+        render: (props) => (
+          <CmsCollectionBlock {...(props as any)} locale={locale} />
+        ),
         fields: {
           collectionId: {
             type: "select",
@@ -951,9 +1024,21 @@ export function buildPuckConfig(
           }));
           return {
             ...fields,
-            titleField: { type: "select", label: "Title field", options: fieldOptions },
-            bodyField: { type: "select", label: "Body field", options: fieldOptions },
-            imageField: { type: "select", label: "Image field", options: fieldOptions },
+            titleField: {
+              type: "select",
+              label: "Title field",
+              options: fieldOptions,
+            },
+            bodyField: {
+              type: "select",
+              label: "Body field",
+              options: fieldOptions,
+            },
+            imageField: {
+              type: "select",
+              label: "Image field",
+              options: fieldOptions,
+            },
             indexFieldId: {
               type: "select",
               label: "Indexed search / sort field",
@@ -1026,7 +1111,9 @@ export function buildPuckConfig(
       },
       Divider: {
         label: "Divider",
-        render: ({ width }) => <DividerLine width={width as "full" | "narrow" | undefined} />,
+        render: ({ width }) => (
+          <DividerLine width={width as "full" | "narrow" | undefined} />
+        ),
         fields: {
           width: {
             type: "radio",
@@ -1060,4 +1147,30 @@ export function buildPuckConfig(
       },
     },
   };
+
+  const components = Object.fromEntries(
+    Object.entries(config.components).map(([name, component]) => {
+      const render = component.render;
+      return [
+        name,
+        {
+          ...component,
+          fields: { ...component.fields, layout: flexibleLayoutField },
+          defaultProps: {
+            ...component.defaultProps,
+            layout: { ...DEFAULT_FLEXIBLE_LAYOUT },
+          },
+          render: (renderProps: any) => (
+            <FlexibleLayoutBox
+              layout={renderProps.layout as typeof DEFAULT_FLEXIBLE_LAYOUT}
+            >
+              {render(renderProps)}
+            </FlexibleLayoutBox>
+          ),
+        },
+      ];
+    }),
+  );
+
+  return { ...config, components } as Config;
 }

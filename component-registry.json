@@ -135,9 +135,9 @@
     },
     {
       "name": "PuckPageEditor / PageRenderer",
-      "path": "components/qentrah/puck-page-editor.tsx + components/qentrah/page-renderer.tsx + lib/puck/config.tsx",
+      "path": "components/qentrah/puck-page-editor.tsx + components/qentrah/puck-resizable-overlay.tsx + components/qentrah/layout-length-control.tsx + components/qentrah/page-renderer.tsx + lib/puck/config.tsx + lib/puck/flexible-layout.tsx",
       "kind": "tenant-builder",
-      "summary": "Puck 0.23 visual editor and renderer with a shared component tree, sparse locale and viewport overrides, per-locale preview/publishing, dynamic CMS fields, Tiptap rich text, RTL profiles, responsive viewports, and recoverable canvas errors",
+      "summary": "Puck 0.23 visual editor and renderer with stable edge/corner resizing, responsive CSS units, flex sizing, optional magnetic snapping, a shared component tree, sparse locale and viewport overrides, per-locale publishing, CMS fields, RTL profiles, and recoverable canvas errors",
       "usedIn": ["tenant page editor", "tenant page renderer", "page preview"],
       "props": [
         "orgId",
@@ -164,7 +164,11 @@
       "path": "components/dashboard/cms-collection-manager.tsx + components/qentrah/cms-collection-block.tsx",
       "kind": "tenant-cms",
       "summary": "Organization-scoped CMS schema and item administration with stable fields, localized values, draft/published snapshots, pagination, indexed public feeds, Puck repeaters, single-field bindings, and dynamic detail templates",
-      "usedIn": ["site collections dashboard", "Puck editor", "published tenant pages"],
+      "usedIn": [
+        "site collections dashboard",
+        "Puck editor",
+        "published tenant pages"
+      ],
       "props": ["orgId", "orgSlug", "collectionId", "interfaceLocale"],
       "createdAt": "2026-08-09"
     },
