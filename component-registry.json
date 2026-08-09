@@ -135,7 +135,7 @@
     },
     {
       "name": "PuckPageEditor / PageRenderer",
-      "path": "components/qentrah/puck-page-editor.tsx + components/qentrah/puck-resizable-overlay.tsx + components/qentrah/layout-inspector-control.tsx + components/qentrah/layout-length-control.tsx + components/qentrah/page-renderer.tsx + lib/puck/config.tsx + lib/puck/flexible-layout.tsx",
+      "path": "components/qentrah/puck-page-editor.tsx + components/qentrah/puck-resizable-overlay.tsx + components/qentrah/layout-inspector-control.tsx + components/qentrah/layout-length-control.tsx + components/qentrah/page-renderer.tsx + lib/puck/config.tsx + lib/puck/flexible-layout.tsx + lib/puck/resize-interaction.ts",
       "kind": "tenant-builder",
       "summary": "Puck 0.23 visual editor and renderer with constrained nested section slots, individually selectable Hero children, a compact labeled layout inspector, fit/fill/center quick actions, stable edge/corner resizing, responsive CSS units, flex sizing, optional magnetic snapping, an editable scroll-snap Slider, sparse locale and viewport overrides, per-locale publishing, CMS fields, RTL profiles, and recoverable canvas errors",
       "usedIn": ["tenant page editor", "tenant page renderer", "page preview"],

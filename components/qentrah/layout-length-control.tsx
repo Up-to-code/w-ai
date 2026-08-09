@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { FieldProps } from "@puckeditor/core";
 
 import {
@@ -31,6 +32,16 @@ export function LayoutLengthControl({
 }: Pick<FieldProps, "value" | "onChange"> & { label?: string }) {
   const parsed = parseFlexibleLength(value);
   const mode = parsed.keyword ?? parsed.unit;
+  const externalDraft = parsed.keyword ? "" : String(parsed.amount);
+  const [draft, setDraft] = useState(externalDraft);
+
+  useEffect(() => setDraft(externalDraft), [externalDraft]);
+
+  const commitDraft = (nextDraft: string) => {
+    const amount = Number(nextDraft);
+    if (nextDraft.trim() === "" || !Number.isFinite(amount)) return;
+    onChange(`${amount}${parsed.unit}`);
+  };
 
   return (
     <div className="grid min-w-0 grid-cols-[54px_minmax(0,1fr)_82px] items-center gap-1.5">
@@ -40,13 +51,16 @@ export function LayoutLengthControl({
       <Input
         type="number"
         step="any"
-        value={parsed.keyword ? "" : parsed.amount}
+        value={draft}
         disabled={Boolean(parsed.keyword)}
-        onChange={(event) =>
-          onChange(
-            `${event.target.value === "" ? 0 : Number(event.target.value)}${parsed.unit}`,
-          )
-        }
+        onChange={(event) => {
+          setDraft(event.target.value);
+          commitDraft(event.target.value);
+        }}
+        onBlur={() => {
+          if (draft.trim() === "") setDraft(externalDraft);
+          else commitDraft(draft);
+        }}
         className="h-8 min-w-0 flex-1 rounded-md px-2 text-xs"
         aria-label={`${label} value`}
       />
@@ -54,7 +68,12 @@ export function LayoutLengthControl({
         value={mode}
         onValueChange={(next) => {
           if ((KEYWORDS as readonly string[]).includes(next)) onChange(next);
-          else onChange(`${parsed.amount}${next as LengthUnit}`);
+          else {
+            const amount = Number(draft);
+            onChange(
+              `${Number.isFinite(amount) ? amount : parsed.amount}${next as LengthUnit}`,
+            );
+          }
         }}
       >
         <SelectTrigger

@@ -16,6 +16,10 @@ import {
   updateComponentLayout,
   type FlexibleLayout,
 } from "@/lib/puck/flexible-layout";
+import {
+  resolveResizeTarget,
+  screenDeltaToCanvasDelta,
+} from "@/lib/puck/resize-interaction";
 
 type ResizeDirection = -1 | 0 | 1;
 
@@ -79,10 +83,14 @@ export function PuckResizableOverlay({
       const escapedId = ownerWindow.CSS?.escape
         ? ownerWindow.CSS.escape(componentId)
         : componentId.replace(/["\\]/g, "\\$&");
-      const target = ownerDocument.querySelector<HTMLElement>(
+      const componentRoot = ownerDocument.querySelector<HTMLElement>(
         `[data-puck-component="${escapedId}"]`,
       );
-      if (!target) return;
+      if (!componentRoot) return;
+      // Puck owns the outer selection wrapper. FlexibleLayoutBox owns the
+      // persisted size. Previewing a resize on the wrapper and saving it on
+      // the inner box causes the element to jump back on pointer release.
+      const target = resolveResizeTarget(componentRoot);
 
       const component = getItemById(componentId);
       const layout = (component?.props.layout ?? {}) as FlexibleLayout;
@@ -101,8 +109,6 @@ export function PuckResizableOverlay({
         rootFontSize,
         fontSize: Number.parseFloat(computed.fontSize) || rootFontSize,
       };
-      const scaleX = target.offsetWidth / Math.max(1, rect.width);
-      const scaleY = target.offsetHeight / Math.max(1, rect.height);
       const start = {
         x: event.clientX,
         y: event.clientY,
@@ -183,7 +189,12 @@ export function PuckResizableOverlay({
               24,
               Math.round(
                 start.width +
-                  (moveEvent.clientX - start.x) * xDirection * scaleX,
+                  screenDeltaToCanvasDelta(
+                    moveEvent.clientX - start.x,
+                    target.offsetWidth,
+                    rect.width,
+                  ) *
+                    xDirection,
               ),
             ),
             "width",
@@ -208,7 +219,12 @@ export function PuckResizableOverlay({
               16,
               Math.round(
                 start.height +
-                  (moveEvent.clientY - start.y) * yDirection * scaleY,
+                  screenDeltaToCanvasDelta(
+                    moveEvent.clientY - start.y,
+                    target.offsetHeight,
+                    rect.height,
+                  ) *
+                    yDirection,
               ),
             ),
             "height",
