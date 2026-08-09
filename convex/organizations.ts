@@ -3,7 +3,6 @@ import { ConvexError, v } from "convex/values";
 import { components } from "./_generated/api";
 import { mutation, MutationCtx, query, QueryCtx } from "./_generated/server";
 import { authComponent } from "./auth";
-import { requireBetaAccess } from "./beta";
 import {
   cascadeDeleteOrg,
   logEvent,
@@ -128,7 +127,6 @@ export const create = mutation({
   handler: async (ctx, args) => {
     const user = await authComponent.getAuthUser(ctx);
 
-    await requireBetaAccess(ctx, user._id);
     await assertOrgCreateAllowed(ctx, user._id);
 
     const name = requireNonEmpty(args.name, "Organization name", 80);

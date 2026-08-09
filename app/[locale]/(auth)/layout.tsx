@@ -22,6 +22,29 @@ export default async function AuthLayout({
 }: AuthLayoutProps) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "auth" });
+  const isArabic = locale === "ar";
+  const authCopy = {
+    accountAccess: t.has("accountAccess")
+      ? t("accountAccess")
+      : isArabic
+        ? "الدخول إلى الحساب"
+        : "Account access",
+    productEyebrow: t.has("productEyebrow")
+      ? t("productEyebrow")
+      : isArabic
+        ? "مساحة عمل W-AI"
+        : "W-AI workspace",
+    productTitle: t.has("productTitle")
+      ? t("productTitle")
+      : isArabic
+        ? "ابنِ الويب الذي تملكه."
+        : "Build the web you own.",
+    productDescription: t.has("productDescription")
+      ? t("productDescription")
+      : isArabic
+        ? "صمّم وأدر وانشر مواقع متجاوبة من مساحة عمل مستقلة واحدة."
+        : "Design, manage, and publish responsive websites from one independent workspace.",
+  };
   const token = await getToken();
 
   if (token) {
@@ -47,7 +70,9 @@ export default async function AuthLayout({
           >
             <BrandLockup />
           </Link>
-          <p className="text-xs text-muted-foreground">{t("accountAccess")}</p>
+          <p className="text-xs text-muted-foreground">
+            {authCopy.accountAccess}
+          </p>
         </div>
       </header>
 
@@ -65,15 +90,15 @@ export default async function AuthLayout({
           />
 
           <p className="relative text-xs font-medium uppercase tracking-[0.14em] text-white/55">
-            {t("productEyebrow")}
+            {authCopy.productEyebrow}
           </p>
 
           <div className="relative max-w-xl pb-8">
             <h2 className="text-5xl font-semibold leading-[0.98] tracking-[-0.055em] xl:text-6xl">
-              {t("productTitle")}
+              {authCopy.productTitle}
             </h2>
             <p className="text-white/58 mt-6 max-w-md text-base leading-7">
-              {t("productDescription")}
+              {authCopy.productDescription}
             </p>
           </div>
         </aside>
