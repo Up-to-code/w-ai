@@ -11,18 +11,15 @@ export function BrandMark({
     <span
       role="img"
       aria-label={title}
-      className={cn("inline-block h-6 w-6 shrink-0 bg-current", className)}
-      style={{
-        WebkitMaskImage: 'url("/brand/brand-mark.svg")',
-        maskImage: 'url("/brand/brand-mark.svg")',
-        WebkitMaskPosition: "center",
-        maskPosition: "center",
-        WebkitMaskRepeat: "no-repeat",
-        maskRepeat: "no-repeat",
-        WebkitMaskSize: "contain",
-        maskSize: "contain",
-      }}
-    />
+      className={cn(
+        "inline-flex h-6 w-6 shrink-0 items-center justify-center font-sans font-black leading-none tracking-[-0.12em]",
+        className,
+      )}
+    >
+      <span aria-hidden="true" className="-translate-x-[0.04em]">
+        W
+      </span>
+    </span>
   );
 }
 

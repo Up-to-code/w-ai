@@ -80,7 +80,7 @@ describe("tenant request proxy", () => {
 
   it("keeps application-only routes on the application host", () => {
     expect(isAppOnlyPath("/api/domains")).toBe(true);
-    expect(isAppOnlyPath("/brand/brand-mark.svg")).toBe(true);
+    expect(isAppOnlyPath("/brand/brand-logo.svg")).toBe(true);
     expect(isAppOnlyPath("/c/site")).toBe(true);
     expect(isAppOnlyPath("/icons/w-ai-192.png")).toBe(true);
     expect(isAppOnlyPath("/icon.svg")).toBe(true);
