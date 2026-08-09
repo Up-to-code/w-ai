@@ -71,6 +71,7 @@ export function isAppHost(host: string | undefined | null): boolean {
     normalized === "localhost" ||
     normalized === "127.0.0.1" ||
     normalized === "[::1]" ||
+    normalized.endsWith(".vercel.app") ||
     normalized === APP_DOMAIN ||
     normalized === TENANT_DOMAIN
   ) {
