@@ -8,33 +8,21 @@ export function BrandMark({
   title?: string;
 }) {
   return (
-    <svg
-      viewBox="0 0 96 64"
+    <span
       role="img"
       aria-label={title}
-      className={cn("shrink-0", className)}
-      fill="none"
-    >
-      <path
-        d="M16 10 43 54"
-        stroke="currentColor"
-        strokeWidth="12"
-        strokeLinecap="round"
-      />
-      <path
-        d="m45 10 27 44"
-        stroke="currentColor"
-        strokeWidth="12"
-        strokeLinecap="round"
-      />
-      <path
-        d="m84 10-12 21"
-        stroke="currentColor"
-        strokeWidth="12"
-        strokeLinecap="round"
-      />
-      <path d="m43 34 5 8-5 8-5-8 5-8Z" fill="currentColor" />
-    </svg>
+      className={cn("inline-block h-6 w-6 shrink-0 bg-current", className)}
+      style={{
+        WebkitMaskImage: 'url("/brand/brand-mark.svg")',
+        maskImage: 'url("/brand/brand-mark.svg")',
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+      }}
+    />
   );
 }
 

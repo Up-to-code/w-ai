@@ -41,4 +41,25 @@ describe("normalizeAuthOrigin", () => {
 
     expect(normalized).toBe(request);
   });
+
+  it("normalizes the Qentrah aliases to the canonical auth origin", async () => {
+    for (const origin of ["https://qentrah.com", "https://www.qentrah.com"]) {
+      const request = new Request(`${origin}/api/auth/sign-in/email`, {
+        method: "POST",
+        headers: {
+          origin,
+          referer: `${origin}/en/login`,
+        },
+        body: "{}",
+      });
+
+      const normalized = await normalizeAuthOrigin(request);
+
+      expect(normalized.url).toBe("https://w-ai.online/api/auth/sign-in/email");
+      expect(normalized.headers.get("origin")).toBe("https://w-ai.online");
+      expect(normalized.headers.get("referer")).toBe(
+        "https://w-ai.online/en/login",
+      );
+    }
+  });
 });

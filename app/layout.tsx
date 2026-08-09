@@ -20,8 +20,7 @@ export const metadata: Metadata = {
     default: "W-AI",
     template: "%s · W-AI",
   },
-  description:
-    "Build, manage, and publish responsive websites with W-AI.",
+  description: "Build, manage, and publish responsive websites with W-AI.",
   applicationName: "W-AI",
   authors: [{ name: "W-AI" }],
   creator: "W-AI",
@@ -38,17 +37,17 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/icon.svg", type: "image/svg+xml", sizes: "any" },
-      { url: "/icons/vessel-32.png", type: "image/png", sizes: "32x32" },
-      { url: "/icons/vessel-192.png", type: "image/png", sizes: "192x192" },
-      { url: "/icons/vessel-512.png", type: "image/png", sizes: "512x512" },
+      { url: "/icons/w-ai-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/icons/w-ai-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icons/w-ai-512.png", type: "image/png", sizes: "512x512" },
     ],
     apple: [
-      { url: "/icons/vessel-180.png", type: "image/png", sizes: "180x180" },
+      { url: "/icons/w-ai-180.png", type: "image/png", sizes: "180x180" },
     ],
     other: [
       {
         rel: "mask-icon",
-        url: "/icons/vessel-maskable-512.png",
+        url: "/icons/w-ai-maskable-512.png",
         color: "#0a0a0a",
       },
     ],

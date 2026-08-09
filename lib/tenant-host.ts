@@ -1,7 +1,12 @@
-export const APP_DOMAIN = process.env.NEXT_PUBLIC_APP_DOMAIN ?? "qentrah.com";
+/** Canonical host for the W-AI application and authentication UI. */
+export const APP_DOMAIN = process.env.NEXT_PUBLIC_APP_DOMAIN ?? "w-ai.online";
+
+/** Parent zone reserved for published tenant subdomains. */
+export const TENANT_DOMAIN =
+  process.env.NEXT_PUBLIC_TENANT_DOMAIN ?? "qentrah.com";
 
 // App root is always a subdomain-capable parent (tenant subdomains live under it).
-const PARENT_DOMAINS = [APP_DOMAIN, "localhost"];
+const PARENT_DOMAINS = [TENANT_DOMAIN, "localhost"];
 
 const APP_SUBDOMAINS = ["app", "www", "admin", "cms", "docs", "api", "billing"];
 
@@ -20,7 +25,7 @@ export function hostnameFromHostHeader(
 
 /** Canonical hostname for a tenant's site, e.g. `acme.qentrah.com`. */
 export function tenantHostname(slug: string): string {
-  return `${slug}.${APP_DOMAIN}`;
+  return `${slug}.${TENANT_DOMAIN}`;
 }
 
 /** Origin + path for a tenant site. Uses `{slug}.localhost` in dev. */
@@ -66,14 +71,16 @@ export function isAppHost(host: string | undefined | null): boolean {
     normalized === "localhost" ||
     normalized === "127.0.0.1" ||
     normalized === "[::1]" ||
-    normalized === APP_DOMAIN
+    normalized === APP_DOMAIN ||
+    normalized === TENANT_DOMAIN
   ) {
     return true;
   }
   for (const sub of APP_SUBDOMAINS) {
     if (
       normalized === `${sub}.localhost` ||
-      normalized === `${sub}.${APP_DOMAIN}`
+      normalized === `${sub}.${APP_DOMAIN}` ||
+      normalized === `${sub}.${TENANT_DOMAIN}`
     ) {
       return true;
     }

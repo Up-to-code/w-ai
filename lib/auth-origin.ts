@@ -1,12 +1,16 @@
-const PUBLIC_AUTH_ORIGIN = "https://www.w-ai.online";
 const TRUSTED_AUTH_ORIGIN = "https://w-ai.online";
+const PUBLIC_AUTH_ORIGINS = new Set([
+  "https://www.w-ai.online",
+  "https://qentrah.com",
+  "https://www.qentrah.com",
+]);
 
 function replacePublicOrigin(value: string | null): string | null {
   if (!value) return value;
 
   try {
     const url = new URL(value);
-    if (url.origin !== PUBLIC_AUTH_ORIGIN) return value;
+    if (!PUBLIC_AUTH_ORIGINS.has(url.origin)) return value;
 
     const trustedUrl = new URL(TRUSTED_AUTH_ORIGIN);
     url.protocol = trustedUrl.protocol;
@@ -24,7 +28,7 @@ function replacePublicOrigin(value: string | null): string | null {
  */
 export async function normalizeAuthOrigin(request: Request): Promise<Request> {
   const requestUrl = new URL(request.url);
-  if (requestUrl.origin !== PUBLIC_AUTH_ORIGIN) return request;
+  if (!PUBLIC_AUTH_ORIGINS.has(requestUrl.origin)) return request;
 
   const trustedUrl = new URL(TRUSTED_AUTH_ORIGIN);
   requestUrl.protocol = trustedUrl.protocol;

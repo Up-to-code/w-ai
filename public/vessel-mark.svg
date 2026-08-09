@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 64" role="img" aria-labelledby="title">
-  <title id="title">Vessel</title>
-  <path d="M16 10 43 54" stroke="#000" stroke-width="12" stroke-linecap="round"/>
-  <path d="m45 10 27 44" stroke="#000" stroke-width="12" stroke-linecap="round"/>
-  <path d="m84 10-12 21" stroke="#000" stroke-width="12" stroke-linecap="round"/>
-  <path d="m43 34 5 8-5 8-5-8 5-8Z" fill="#000"/>
-</svg>

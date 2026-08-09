@@ -18,6 +18,8 @@ const trustedOrigins = [
   siteUrl,
   "https://w-ai.online",
   "https://www.w-ai.online",
+  "https://qentrah.com",
+  "https://www.qentrah.com",
   ...(process.env.AUTH_TRUSTED_ORIGINS ?? "")
     .split(",")
     .map((origin) => origin.trim())
