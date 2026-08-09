@@ -43,6 +43,14 @@ type CraftNode = {
   nodes?: string[];
 };
 
+function isLegacyLocaleEntry([code, item]: [string, unknown]) {
+  return (
+    code !== "id" &&
+    /^[a-z]{2,5}(?:-[a-z0-9]{2,8})?$/.test(code) &&
+    typeof item === "string"
+  );
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return !!value && typeof value === "object" && !Array.isArray(value);
 }
@@ -54,13 +62,7 @@ function localizedCodes(value: unknown, result = new Set<string>()) {
   }
   if (!isRecord(value)) return result;
   const entries = Object.entries(value);
-  if (
-    entries.length > 0 &&
-    entries.every(([code, item]) =>
-      /^[a-z]{2,5}(?:-[a-z0-9]{2,8})?$/.test(code) &&
-      typeof item === "string",
-    )
-  ) {
+  if (entries.length > 0 && entries.every(isLegacyLocaleEntry)) {
     for (const [code] of entries) result.add(code);
     return result;
   }
@@ -69,16 +71,11 @@ function localizedCodes(value: unknown, result = new Set<string>()) {
 }
 
 function resolveLegacyLocale(value: unknown, locale: string): unknown {
-  if (Array.isArray(value)) return value.map((item) => resolveLegacyLocale(item, locale));
+  if (Array.isArray(value))
+    return value.map((item) => resolveLegacyLocale(item, locale));
   if (!isRecord(value)) return value;
   const entries = Object.entries(value);
-  if (
-    entries.length > 0 &&
-    entries.every(([code, item]) =>
-      /^[a-z]{2,5}(?:-[a-z0-9]{2,8})?$/.test(code) &&
-      typeof item === "string",
-    )
-  ) {
+  if (entries.length > 0 && entries.every(isLegacyLocaleEntry)) {
     return value[locale] ?? value.en ?? Object.values(value)[0] ?? "";
   }
   return Object.fromEntries(
@@ -90,11 +87,15 @@ function resolveLegacyLocale(value: unknown, locale: string): unknown {
 function extractLegacyLocalizedOverrides(data: Data) {
   const overrides: Record<string, NodeOverrides> = {};
   const visit = (value: unknown, fallback: string): unknown => {
-    if (Array.isArray(value)) return value.map((item, index) => visit(item, `${fallback}-${index}`));
+    if (Array.isArray(value))
+      return value.map((item, index) => visit(item, `${fallback}-${index}`));
     if (!isRecord(value)) return value;
     if (typeof value.type !== "string" || !isRecord(value.props)) {
       return Object.fromEntries(
-        Object.entries(value).map(([key, item]) => [key, visit(item, `${fallback}-${key}`)]),
+        Object.entries(value).map(([key, item]) => [
+          key,
+          visit(item, `${fallback}-${key}`),
+        ]),
       );
     }
     const id = nodeId(value as ComponentLike, fallback);
@@ -128,7 +129,7 @@ export function isPageDocumentV2(value: unknown): value is PageDocumentV2 {
 }
 
 export function createPageDocumentV2(data: unknown): PageDocumentV2 {
-  const normalized = normalizePuckData(data);
+  const normalized = normalizeEditableData(data);
   return {
     builder: "puck",
     version: PUCK_DOCUMENT_VERSION,
@@ -142,6 +143,102 @@ function nodeId(component: ComponentLike, fallback: string) {
   return typeof component.props.id === "string" && component.props.id
     ? component.props.id
     : fallback;
+}
+
+function legacyHeroChild(
+  type: "HeadingBlock" | "ParagraphBlock" | "ButtonBlock",
+  id: string,
+  props: Record<string, unknown>,
+): ComponentLike {
+  return { type, props: { id, ...props } };
+}
+
+/** Makes old monolithic heroes editable as constrained, selectable children. */
+function expandLegacyHeroChildren(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(expandLegacyHeroChildren);
+  if (!isRecord(value)) return value;
+  if (value.type === "Hero" && isRecord(value.props)) {
+    const props = value.props;
+    if (Array.isArray(props.titleContent)) return value;
+    const id = nodeId(value as ComponentLike, "hero");
+    const preserved = Object.fromEntries(
+      Object.entries(props).filter(
+        ([key]) =>
+          ![
+            "eyebrow",
+            "title",
+            "subtitle",
+            "ctaLabel",
+            "ctaHref",
+            "secondaryCtaLabel",
+            "secondaryCtaHref",
+          ].includes(key),
+      ),
+    );
+    return {
+      ...value,
+      props: {
+        ...preserved,
+        eyebrowContent: props.eyebrow
+          ? [
+              legacyHeroChild("ParagraphBlock", `${id}-eyebrow`, {
+                text: props.eyebrow,
+                size: "small",
+                align: props.align ?? "center",
+              }),
+            ]
+          : [],
+        titleContent: props.title
+          ? [
+              legacyHeroChild("HeadingBlock", `${id}-title`, {
+                text: props.title,
+                level: "1",
+                size: "display",
+                align: props.align ?? "center",
+              }),
+            ]
+          : [],
+        subtitleContent: props.subtitle
+          ? [
+              legacyHeroChild("ParagraphBlock", `${id}-subtitle`, {
+                text: props.subtitle,
+                size: "large",
+                align: props.align ?? "center",
+              }),
+            ]
+          : [],
+        actions: [
+          ...(props.ctaLabel
+            ? [
+                legacyHeroChild("ButtonBlock", `${id}-primary-action`, {
+                  label: props.ctaLabel,
+                  href: props.ctaHref ?? "#",
+                }),
+              ]
+            : []),
+          ...(props.secondaryCtaLabel
+            ? [
+                legacyHeroChild("ButtonBlock", `${id}-secondary-action`, {
+                  label: props.secondaryCtaLabel,
+                  href: props.secondaryCtaHref ?? "#",
+                  style: "secondary",
+                }),
+              ]
+            : []),
+        ],
+      },
+    };
+  }
+  return Object.fromEntries(
+    Object.entries(value).map(([key, child]) => [
+      key,
+      expandLegacyHeroChildren(child),
+    ]),
+  );
+}
+
+function normalizeEditableData(value: unknown) {
+  return normalizePuckData(expandLegacyHeroChildren(value));
 }
 
 function mergeProps(
@@ -168,7 +265,13 @@ function resolveComponent(
   if (Array.isArray(value)) {
     return value
       .map((item, index) =>
-        resolveComponent(item, document, locale, viewport, `${fallbackId}-${index}`),
+        resolveComponent(
+          item,
+          document,
+          locale,
+          viewport,
+          `${fallbackId}-${index}`,
+        ),
       )
       .filter(Boolean);
   }
@@ -178,7 +281,13 @@ function resolveComponent(
     return Object.fromEntries(
       Object.entries(value).map(([key, child]) => [
         key,
-        resolveComponent(child, document, locale, viewport, `${fallbackId}-${key}`),
+        resolveComponent(
+          child,
+          document,
+          locale,
+          viewport,
+          `${fallbackId}-${key}`,
+        ),
       ]),
     );
   }
@@ -415,7 +524,8 @@ export function applyPuckEdit(
     const previous = current.get(id);
     if (!previous) continue;
     for (const [property, value] of Object.entries(component.props)) {
-      if (property === "id" || equalValue(value, previous.props[property])) continue;
+      if (property === "id" || equalValue(value, previous.props[property]))
+        continue;
       result = setNodeOverride(result, id, property, value, {
         ...(options.locale === options.defaultLocale
           ? {}
@@ -449,7 +559,9 @@ export function deriveCmsBindings(data: Data) {
 }
 
 function craftName(node: CraftNode) {
-  return typeof node.type === "string" ? node.type : node.type?.resolvedName ?? "";
+  return typeof node.type === "string"
+    ? node.type
+    : (node.type?.resolvedName ?? "");
 }
 
 function craftId(prefix: string, id: string) {
@@ -531,7 +643,7 @@ export function convertCraftDocument(serialized: string): Data {
 
 export function normalizePageDocument(value: unknown): PageDocumentV2 {
   if (isPageDocumentV2(value)) {
-    const data = normalizePuckData(value.data);
+    const data = normalizeEditableData(value.data);
     return {
       ...value,
       data,
@@ -541,10 +653,14 @@ export function normalizePageDocument(value: unknown): PageDocumentV2 {
           : deriveCmsBindings(data),
     };
   }
-  if (isRecord(value) && value.builder === "qentrah" && typeof value.serialized === "string") {
+  if (
+    isRecord(value) &&
+    value.builder === "qentrah" &&
+    typeof value.serialized === "string"
+  ) {
     return createPageDocumentV2(convertCraftDocument(value.serialized));
   }
-  const normalized = normalizePuckData(value);
+  const normalized = normalizeEditableData(value);
   const extracted = extractLegacyLocalizedOverrides(normalized);
   return {
     builder: "puck",

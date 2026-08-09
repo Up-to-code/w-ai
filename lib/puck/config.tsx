@@ -15,9 +15,9 @@ import {
   DividerLine,
   FaqList,
   FeatureGrid,
+  FlexibleHeroSection,
   GalleryGrid,
   HeadingBlock,
-  HeroSection,
   IconBlock,
   ImageText,
   LogoCloud,
@@ -540,33 +540,64 @@ export function buildPuckConfig(
       },
       Hero: {
         label: "Hero",
-        render: (props) => <HeroSection {...props} locale={locale} />,
+        render: (props) => <FlexibleHeroSection {...(props as any)} />,
         fields: {
-          eyebrow: localizedField("Eyebrow"),
-          title: localizedField("Title"),
-          subtitle: localizedTextareaField("Subtitle"),
-          ctaLabel: localizedField("Primary CTA"),
-          ctaHref: { type: "text", label: "Primary link" },
-          secondaryCtaLabel: localizedField("Secondary CTA"),
-          secondaryCtaHref: { type: "text", label: "Secondary link" },
+          eyebrowContent: {
+            type: "slot",
+            allow: ["ParagraphBlock", "IconBlock"],
+          },
+          titleContent: { type: "slot", allow: ["HeadingBlock"] },
+          subtitleContent: { type: "slot", allow: ["ParagraphBlock"] },
+          actions: {
+            type: "slot",
+            allow: ["ButtonBlock", "IconBlock"],
+          },
           image: { type: "text", label: "Background image URL" },
           align: { type: "radio", label: "Align", options: alignOptions },
           height: { type: "select", label: "Height", options: heightOptions },
         },
         defaultProps: {
-          eyebrow: L("WEB BUILDER", "WEB BUILDER"),
-          title: L(
-            "ابنِ وانشر مواقعك بصرياً.",
-            "Build and publish websites visually.",
-          ),
-          subtitle: L(
-            "صمم الصفحات، اربط النطاقات، وانشر.",
-            "Design pages, connect domains, publish.",
-          ),
-          ctaLabel: L("ابدأ البناء", "Start building"),
-          ctaHref: "/register",
-          secondaryCtaLabel: L("استكشف", "Explore"),
-          secondaryCtaHref: "#features",
+          eyebrowContent: [
+            {
+              type: "ParagraphBlock",
+              props: { text: "WEB BUILDER", size: "small", align: "center" },
+            },
+          ],
+          titleContent: [
+            {
+              type: "HeadingBlock",
+              props: {
+                text: "Build and publish websites visually.",
+                level: "1",
+                size: "display",
+                align: "center",
+              },
+            },
+          ],
+          subtitleContent: [
+            {
+              type: "ParagraphBlock",
+              props: {
+                text: "Design pages, connect domains, publish.",
+                size: "large",
+                align: "center",
+              },
+            },
+          ],
+          actions: [
+            {
+              type: "ButtonBlock",
+              props: { label: "Start building", href: "/register" },
+            },
+            {
+              type: "ButtonBlock",
+              props: {
+                label: "Explore",
+                href: "#features",
+                style: "secondary",
+              },
+            },
+          ],
           align: "center",
           height: "standard",
         },

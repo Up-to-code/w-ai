@@ -1,9 +1,9 @@
-import { describe, expect, it } from "vitest";
 import type { Data } from "@puckeditor/core";
+import { describe, expect, it } from "vitest";
 
 import {
-  convertCraftDocument,
   applyPuckEdit,
+  convertCraftDocument,
   createPageDocumentV2,
   relinkLocaleOverrides,
   relinkNodeOverride,
@@ -32,10 +32,18 @@ describe("Puck page document v2", () => {
       viewport: "mobile",
     });
 
-    expect(resolvePageDocument(document, "en", "desktop").content[0].props.text).toBe("English");
-    expect(resolvePageDocument(document, "en", "tablet").content[0].props.text).toBe("Tablet");
-    expect(resolvePageDocument(document, "ar", "desktop").content[0].props.text).toBe("العربية");
-    expect(resolvePageDocument(document, "ar", "mobile").content[0].props.text).toBe("عربي جوال");
+    expect(
+      resolvePageDocument(document, "en", "desktop").content[0].props.text,
+    ).toBe("English");
+    expect(
+      resolvePageDocument(document, "en", "tablet").content[0].props.text,
+    ).toBe("Tablet");
+    expect(
+      resolvePageDocument(document, "ar", "desktop").content[0].props.text,
+    ).toBe("العربية");
+    expect(
+      resolvePageDocument(document, "ar", "mobile").content[0].props.text,
+    ).toBe("عربي جوال");
   });
 
   it("relinks by deleting the sparse override", () => {
@@ -49,7 +57,9 @@ describe("Puck page document v2", () => {
     const linked = relinkNodeOverride(localized, "heading-1", "text", {
       locale: "ar",
     });
-    expect(resolvePageDocument(linked, "ar").content[0].props.text).toBe("English");
+    expect(resolvePageDocument(linked, "ar").content[0].props.text).toBe(
+      "English",
+    );
   });
 
   it("relinks a locale without changing another locale", () => {
@@ -61,8 +71,12 @@ describe("Puck page document v2", () => {
       locale: "fr",
     });
     const linked = relinkLocaleOverrides(localized, "ar");
-    expect(resolvePageDocument(linked, "ar").content[0].props.text).toBe("English");
-    expect(resolvePageDocument(linked, "fr").content[0].props.text).toBe("Français");
+    expect(resolvePageDocument(linked, "ar").content[0].props.text).toBe(
+      "English",
+    );
+    expect(resolvePageDocument(linked, "fr").content[0].props.text).toBe(
+      "Français",
+    );
   });
 
   it("converts Craft text without introducing fragment resolver nodes", () => {
@@ -97,8 +111,40 @@ describe("Puck page document v2", () => {
         },
       ],
     });
-    expect(resolvePageDocument(document, "en").content[0].props.text).toBe("English");
-    expect(resolvePageDocument(document, "ar").content[0].props.text).toBe("العربية");
+    expect(resolvePageDocument(document, "en").content[0].props.text).toBe(
+      "English",
+    );
+    expect(resolvePageDocument(document, "ar").content[0].props.text).toBe(
+      "العربية",
+    );
+  });
+
+  it("expands a legacy hero into independently editable constrained children", async () => {
+    const { normalizePageDocument } = await import("./page-document");
+    const document = normalizePageDocument({
+      root: { props: { id: "root" } },
+      content: [
+        {
+          type: "Hero",
+          props: {
+            id: "hero-1",
+            eyebrow: "INTRO",
+            title: "A flexible title",
+            subtitle: "A flexible paragraph",
+            ctaLabel: "Start",
+            ctaHref: "/start",
+          },
+        },
+      ],
+    });
+    const hero = document.data.content[0];
+    expect(hero.props.titleContent[0]).toMatchObject({
+      type: "HeadingBlock",
+      props: { id: "hero-1-title", text: "A flexible title" },
+    });
+    expect(hero.props.subtitleContent[0].props.id).toBe("hero-1-subtitle");
+    expect(hero.props.actions[0].props.href).toBe("/start");
+    expect(hero.props.title).toBeUndefined();
   });
 
   it("detaches only the edited property for a secondary locale", () => {
@@ -109,8 +155,12 @@ describe("Puck page document v2", () => {
       locale: "ar",
       defaultLocale: "en",
     });
-    expect(resolvePageDocument(next, "en").content[0].props.text).toBe("English");
-    expect(resolvePageDocument(next, "ar").content[0].props.text).toBe("العربية");
+    expect(resolvePageDocument(next, "en").content[0].props.text).toBe(
+      "English",
+    );
+    expect(resolvePageDocument(next, "ar").content[0].props.text).toBe(
+      "العربية",
+    );
   });
 
   it("keeps default-locale tablet edits out of desktop", () => {
@@ -122,8 +172,12 @@ describe("Puck page document v2", () => {
       defaultLocale: "en",
       viewport: "tablet",
     });
-    expect(resolvePageDocument(next, "en", "desktop").content[0].props.text).toBe("English");
-    expect(resolvePageDocument(next, "en", "tablet").content[0].props.text).toBe("Tablet only");
+    expect(
+      resolvePageDocument(next, "en", "desktop").content[0].props.text,
+    ).toBe("English");
+    expect(
+      resolvePageDocument(next, "en", "tablet").content[0].props.text,
+    ).toBe("Tablet only");
   });
 
   it("adds and reorders components globally from a secondary locale without leaking translated props", () => {
@@ -131,7 +185,10 @@ describe("Puck page document v2", () => {
       ...data,
       content: [
         ...data.content,
-        { type: "ParagraphBlock", props: { id: "paragraph-1", text: "Shared paragraph" } },
+        {
+          type: "ParagraphBlock",
+          props: { id: "paragraph-1", text: "Shared paragraph" },
+        },
       ],
     });
     const edited = structuredClone(resolvePageDocument(document, "ar"));
@@ -139,7 +196,10 @@ describe("Puck page document v2", () => {
     edited.content = [
       edited.content[1],
       edited.content[0],
-      { type: "ButtonBlock", props: { id: "button-1", label: "New global button" } },
+      {
+        type: "ButtonBlock",
+        props: { id: "button-1", label: "New global button" },
+      },
     ];
     const next = applyPuckEdit(document, edited, {
       locale: "ar",
@@ -151,8 +211,12 @@ describe("Puck page document v2", () => {
       "heading-1",
       "button-1",
     ]);
-    expect(resolvePageDocument(next, "en").content[1].props.text).toBe("English");
-    expect(resolvePageDocument(next, "ar").content[1].props.text).toBe("العربية");
+    expect(resolvePageDocument(next, "en").content[1].props.text).toBe(
+      "English",
+    );
+    expect(resolvePageDocument(next, "ar").content[1].props.text).toBe(
+      "العربية",
+    );
   });
 
   it("deletes components globally from a secondary locale", () => {
@@ -160,7 +224,10 @@ describe("Puck page document v2", () => {
       ...data,
       content: [
         ...data.content,
-        { type: "ParagraphBlock", props: { id: "paragraph-1", text: "Remove me" } },
+        {
+          type: "ParagraphBlock",
+          props: { id: "paragraph-1", text: "Remove me" },
+        },
       ],
     });
     const edited = structuredClone(resolvePageDocument(document, "fr"));

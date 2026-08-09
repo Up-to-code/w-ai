@@ -1,6 +1,15 @@
 import type { CSSProperties, ReactNode } from "react";
 import type { SlotComponent } from "@puckeditor/core";
-import { ArrowRight, Check, Home, Mail, MapPin, Phone, Star } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  Home,
+  Mail,
+  MapPin,
+  Phone,
+  Star,
+} from "lucide-react";
+
 import type { QentrahLocale } from "./localized";
 import { pick } from "./localized";
 
@@ -49,11 +58,17 @@ export function HeroSection({
         : "py-20 md:py-28";
 
   return (
-    <section className={`relative overflow-hidden border-b border-border bg-w-canvas ${py}`}>
+    <section
+      className={`relative overflow-hidden border-b border-border bg-w-canvas ${py}`}
+    >
       {image ? (
         <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={image} alt="" className="absolute inset-0 size-full object-cover" />
+          <img
+            src={image}
+            alt=""
+            className="absolute inset-0 size-full object-cover"
+          />
           <div className="absolute inset-0 bg-background/75" />
         </>
       ) : null}
@@ -63,7 +78,9 @@ export function HeroSection({
         }`}
       >
         {eyebrow ? (
-          <p className="label-meta text-muted-foreground">{t(eyebrow, locale)}</p>
+          <p className="label-meta text-muted-foreground">
+            {t(eyebrow, locale)}
+          </p>
         ) : null}
         {title ? (
           <h1 className="max-w-4xl text-display-sm font-semibold tracking-tight text-foreground md:text-display">
@@ -79,7 +96,7 @@ export function HeroSection({
           {ctaLabel ? (
             <a
               href={ctaHref}
-              className="inline-flex items-center gap-1.5 rounded-sm bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-brand hover:bg-w-carbon"
+              className="transition-brand inline-flex items-center gap-1.5 rounded-sm bg-foreground px-5 py-2.5 text-sm font-medium text-background hover:bg-w-carbon"
             >
               {t(ctaLabel, locale)} ↗
             </a>
@@ -87,12 +104,84 @@ export function HeroSection({
           {secondaryCtaLabel ? (
             <a
               href={secondaryCtaHref}
-              className="inline-flex items-center gap-1.5 rounded-sm border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-brand hover:bg-w-canvas"
+              className="transition-brand inline-flex items-center gap-1.5 rounded-sm border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground hover:bg-w-canvas"
             >
               {t(secondaryCtaLabel, locale)}
             </a>
           ) : null}
         </div>
+      </div>
+    </section>
+  );
+}
+
+export function FlexibleHeroSection({
+  eyebrowContent: EyebrowContent,
+  titleContent: TitleContent,
+  subtitleContent: SubtitleContent,
+  actions: Actions,
+  image,
+  align = "center",
+  height = "standard",
+}: {
+  eyebrowContent: SlotComponent;
+  titleContent: SlotComponent;
+  subtitleContent: SlotComponent;
+  actions: SlotComponent;
+  image?: string;
+  align?: "start" | "center";
+  height?: "compact" | "standard" | "large";
+}) {
+  const centered = align === "center";
+  const padding =
+    height === "large"
+      ? "py-28 md:py-36"
+      : height === "compact"
+        ? "py-14 md:py-18"
+        : "py-20 md:py-28";
+  const slotClass = "w-full min-w-0";
+
+  return (
+    <section
+      className={`relative overflow-hidden border-b border-border bg-w-canvas ${padding}`}
+    >
+      {image ? (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={image}
+            alt=""
+            className="absolute inset-0 size-full object-cover"
+          />
+          <div className="absolute inset-0 bg-background/75" />
+        </>
+      ) : null}
+      <div
+        className={`relative mx-auto flex max-w-6xl flex-col gap-5 px-6 ${
+          centered ? "items-center text-center" : "items-start"
+        }`}
+      >
+        <EyebrowContent
+          allow={["ParagraphBlock", "IconBlock"]}
+          minEmptyHeight={24}
+          className={slotClass}
+        />
+        <TitleContent
+          allow={["HeadingBlock"]}
+          minEmptyHeight={48}
+          className={`${slotClass} max-w-4xl`}
+        />
+        <SubtitleContent
+          allow={["ParagraphBlock"]}
+          minEmptyHeight={40}
+          className={`${slotClass} max-w-2xl`}
+        />
+        <Actions
+          allow={["ButtonBlock", "IconBlock"]}
+          minEmptyHeight={42}
+          className="mt-2 flex min-w-0 flex-wrap gap-3"
+          collisionAxis="x"
+        />
       </div>
     </section>
   );
@@ -117,7 +206,9 @@ export function SectionHeading({
     >
       {eyebrow ? <p className="label-meta mb-3">{t(eyebrow, locale)}</p> : null}
       {title ? (
-        <h2 className="text-h1 font-semibold text-foreground">{t(title, locale)}</h2>
+        <h2 className="text-h1 font-semibold text-foreground">
+          {t(title, locale)}
+        </h2>
       ) : null}
       {body ? (
         <p
@@ -264,7 +355,8 @@ export function BuilderSection({
     style.backgroundPosition = "center";
     style.backgroundSize = "cover";
   }
-  if (backgroundType === "css" && backgroundCss) style.background = backgroundCss;
+  if (backgroundType === "css" && backgroundCss)
+    style.background = backgroundCss;
 
   return (
     <section
@@ -284,7 +376,10 @@ export function BuilderSection({
         />
       ) : null}
       {overlay && overlay !== "rgba(0,0,0,0)" ? (
-        <span className="pointer-events-none absolute inset-0" style={{ background: overlay }} />
+        <span
+          className="pointer-events-none absolute inset-0"
+          style={{ background: overlay }}
+        />
       ) : null}
       {backgroundSound ? <audio src={backgroundSound} autoPlay loop /> : null}
       <Content
@@ -316,20 +411,45 @@ export function ColumnsBlock({
   rtlBehavior?: "auto" | "preserve";
 }) {
   const gapClass =
-    gap === "none" ? "gap-0" : gap === "small" ? "gap-3" : gap === "large" ? "gap-10" : "gap-6";
+    gap === "none"
+      ? "gap-0"
+      : gap === "small"
+        ? "gap-3"
+        : gap === "large"
+          ? "gap-10"
+          : "gap-6";
   const alignClass =
-    align === "start" ? "items-start" : align === "center" ? "items-center" : align === "end" ? "items-end" : "items-stretch";
-  const slotClass = "min-w-0 rounded-sm border border-dashed border-transparent p-2";
+    align === "start"
+      ? "items-start"
+      : align === "center"
+        ? "items-center"
+        : align === "end"
+          ? "items-end"
+          : "items-stretch";
+  const slotClass =
+    "min-w-0 rounded-sm border border-dashed border-transparent p-2";
   return (
     <div
       className={`grid ${columns === "3" ? "md:grid-cols-3" : "md:grid-cols-2"} ${gapClass} ${alignClass}`}
       dir={rtlBehavior === "preserve" ? "ltr" : direction}
       data-rtl-behavior={rtlBehavior}
     >
-      <ColumnOne allow={ATOMIC_COMPONENTS} minEmptyHeight={120} className={slotClass} />
-      <ColumnTwo allow={ATOMIC_COMPONENTS} minEmptyHeight={120} className={slotClass} />
+      <ColumnOne
+        allow={ATOMIC_COMPONENTS}
+        minEmptyHeight={120}
+        className={slotClass}
+      />
+      <ColumnTwo
+        allow={ATOMIC_COMPONENTS}
+        minEmptyHeight={120}
+        className={slotClass}
+      />
       {columns === "3" ? (
-        <ColumnThree allow={ATOMIC_COMPONENTS} minEmptyHeight={120} className={slotClass} />
+        <ColumnThree
+          allow={ATOMIC_COMPONENTS}
+          minEmptyHeight={120}
+          className={slotClass}
+        />
       ) : null}
     </div>
   );
@@ -355,8 +475,17 @@ export function HeadingBlock({
         : size === "medium"
           ? "text-2xl md:text-3xl"
           : "text-lg md:text-xl";
-  const alignment = align === "center" ? "text-center" : align === "end" ? "text-end" : "text-start";
-  return <Tag className={`${sizeClass} ${alignment} font-semibold tracking-tight`}>{text}</Tag>;
+  const alignment =
+    align === "center"
+      ? "text-center"
+      : align === "end"
+        ? "text-end"
+        : "text-start";
+  return (
+    <Tag className={`${sizeClass} ${alignment} font-semibold tracking-tight`}>
+      {text}
+    </Tag>
+  );
 }
 
 export function ParagraphBlock({
@@ -368,9 +497,21 @@ export function ParagraphBlock({
   align?: "start" | "center" | "end";
   size?: "small" | "medium" | "large";
 }) {
-  const sizeClass = size === "large" ? "text-lg" : size === "small" ? "text-sm" : "text-base";
-  const alignment = align === "center" ? "text-center" : align === "end" ? "text-end" : "text-start";
-  return <div className={`${sizeClass} ${alignment} leading-relaxed text-muted-foreground`}>{text}</div>;
+  const sizeClass =
+    size === "large" ? "text-lg" : size === "small" ? "text-sm" : "text-base";
+  const alignment =
+    align === "center"
+      ? "text-center"
+      : align === "end"
+        ? "text-end"
+        : "text-start";
+  return (
+    <div
+      className={`${sizeClass} ${alignment} leading-relaxed text-muted-foreground`}
+    >
+      {text}
+    </div>
+  );
 }
 
 export function ButtonBlock({
@@ -384,7 +525,12 @@ export function ButtonBlock({
   align?: "start" | "center" | "end";
   style?: "primary" | "secondary" | "link";
 }) {
-  const alignment = align === "center" ? "justify-center" : align === "end" ? "justify-end" : "justify-start";
+  const alignment =
+    align === "center"
+      ? "justify-center"
+      : align === "end"
+        ? "justify-end"
+        : "justify-start";
   const appearance =
     style === "secondary"
       ? "border border-border bg-white text-foreground"
@@ -393,7 +539,10 @@ export function ButtonBlock({
         : "bg-[#4353ff] text-white";
   return (
     <div className={`flex ${alignment}`}>
-      <a href={href} className={`inline-flex min-h-10 items-center rounded px-5 text-sm font-medium ${appearance}`}>
+      <a
+        href={href}
+        className={`inline-flex min-h-10 items-center rounded px-5 text-sm font-medium ${appearance}`}
+      >
         {label}
       </a>
     </div>
@@ -411,17 +560,42 @@ export function MediaBlock({
   alt?: string;
   radius?: "none" | "small" | "medium" | "large";
 }) {
-  const rounded = radius === "none" ? "rounded-none" : radius === "small" ? "rounded" : radius === "large" ? "rounded-2xl" : "rounded-lg";
+  const rounded =
+    radius === "none"
+      ? "rounded-none"
+      : radius === "small"
+        ? "rounded"
+        : radius === "large"
+          ? "rounded-2xl"
+          : "rounded-lg";
   if (!source) {
-    return <div className={`flex aspect-video items-center justify-center border border-dashed border-border bg-muted text-xs text-muted-foreground ${rounded}`}>Select media</div>;
+    return (
+      <div
+        className={`flex aspect-video items-center justify-center border border-dashed border-border bg-muted text-xs text-muted-foreground ${rounded}`}
+      >
+        Select media
+      </div>
+    );
   }
-  if (kind === "video") return <video src={source} controls className={`w-full ${rounded}`} />;
-  if (kind === "audio") return <audio src={source} controls className="w-full" />;
+  if (kind === "video")
+    return <video src={source} controls className={`w-full ${rounded}`} />;
+  if (kind === "audio")
+    return <audio src={source} controls className="w-full" />;
   // eslint-disable-next-line @next/next/no-img-element
-  return <img src={source} alt={alt} className={`w-full object-cover ${rounded}`} />;
+  return (
+    <img src={source} alt={alt} className={`w-full object-cover ${rounded}`} />
+  );
 }
 
-const ICONS = { arrow: ArrowRight, check: Check, home: Home, mail: Mail, map: MapPin, phone: Phone, star: Star };
+const ICONS = {
+  arrow: ArrowRight,
+  check: Check,
+  home: Home,
+  mail: Mail,
+  map: MapPin,
+  phone: Phone,
+  star: Star,
+};
 
 export function IconBlock({
   icon = "star",
@@ -433,8 +607,14 @@ export function IconBlock({
   size?: "small" | "medium" | "large";
 }) {
   const Icon = ICONS[icon] || Star;
-  const alignment = align === "center" ? "justify-center" : align === "end" ? "justify-end" : "justify-start";
-  const iconSize = size === "large" ? "size-12" : size === "small" ? "size-5" : "size-8";
+  const alignment =
+    align === "center"
+      ? "justify-center"
+      : align === "end"
+        ? "justify-end"
+        : "justify-start";
+  const iconSize =
+    size === "large" ? "size-12" : size === "small" ? "size-5" : "size-8";
   return (
     <div className={`flex ${alignment}`}>
       <Icon
@@ -469,7 +649,9 @@ export function FeatureGrid({
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
       <div className="mb-10 max-w-2xl">
-        {eyebrow ? <p className="label-meta mb-3">{t(eyebrow, locale)}</p> : null}
+        {eyebrow ? (
+          <p className="label-meta mb-3">{t(eyebrow, locale)}</p>
+        ) : null}
         {title ? (
           <h2 className="text-h1 font-semibold text-foreground">
             {t(title, locale)}
@@ -480,7 +662,7 @@ export function FeatureGrid({
         {(items.length ? items : [{}, {}, {}]).map((item, index) => (
           <article
             key={index}
-            className="border border-border bg-card p-6 transition-brand hover:bg-w-canvas"
+            className="transition-brand border border-border bg-card p-6 hover:bg-w-canvas"
           >
             <div className="mb-5 flex items-center justify-between">
               <span className="flex size-8 items-center justify-center border border-border font-mono text-xs text-muted-foreground">
@@ -512,7 +694,9 @@ export function StatsStrip({
 }: {
   items?: Array<{ value?: string; label?: L }>;
 } & LocaleAware) {
-  const rows = items.length ? items : [{ value: "—" }, { value: "—" }, { value: "—" }];
+  const rows = items.length
+    ? items
+    : [{ value: "—" }, { value: "—" }, { value: "—" }];
   return (
     <section className="border-y border-border bg-w-canvas">
       <div className="mx-auto grid max-w-6xl gap-px bg-border sm:grid-cols-3">
@@ -574,7 +758,9 @@ export function ImageText({
         </h2>
       ) : null}
       {body ? (
-        <p className="mt-4 text-body text-muted-foreground">{t(body, locale)}</p>
+        <p className="mt-4 text-body text-muted-foreground">
+          {t(body, locale)}
+        </p>
       ) : null}
     </div>
   );
@@ -600,7 +786,9 @@ export function GalleryGrid({
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
       <div className="mb-10">
-        {eyebrow ? <p className="label-meta mb-3">{t(eyebrow, locale)}</p> : null}
+        {eyebrow ? (
+          <p className="label-meta mb-3">{t(eyebrow, locale)}</p>
+        ) : null}
         {title ? (
           <h2 className="text-h1 font-semibold text-foreground">
             {t(title, locale)}
@@ -650,12 +838,19 @@ export function LogoCloud({
 } & LocaleAware) {
   const rows = items.length
     ? items
-    : [{ label: "Acme" }, { label: "North" }, { label: "Orbit" }, { label: "Peak" }];
+    : [
+        { label: "Acme" },
+        { label: "North" },
+        { label: "Orbit" },
+        { label: "Peak" },
+      ];
   return (
     <section className="border-y border-border bg-card py-14">
       <div className="mx-auto max-w-6xl px-6">
         <div className="mb-8 text-center">
-          {eyebrow ? <p className="label-meta mb-2">{t(eyebrow, locale)}</p> : null}
+          {eyebrow ? (
+            <p className="label-meta mb-2">{t(eyebrow, locale)}</p>
+          ) : null}
           {title ? (
             <h2 className="text-h2 font-medium text-foreground">
               {t(title, locale)}
@@ -690,12 +885,17 @@ export function FaqList({
   const rows = items.length
     ? items
     : [
-        { q: { ar: "سؤال؟", en: "A question?" }, a: { ar: "إجابة.", en: "An answer." } },
+        {
+          q: { ar: "سؤال؟", en: "A question?" },
+          a: { ar: "إجابة.", en: "An answer." },
+        },
       ];
   return (
     <section className="mx-auto max-w-3xl px-6 py-16">
       <div className="mb-10">
-        {eyebrow ? <p className="label-meta mb-3">{t(eyebrow, locale)}</p> : null}
+        {eyebrow ? (
+          <p className="label-meta mb-3">{t(eyebrow, locale)}</p>
+        ) : null}
         {title ? (
           <h2 className="text-h1 font-semibold text-foreground">
             {t(title, locale)}
@@ -745,12 +945,18 @@ export function PricingCards({
     : [
         { name: { ar: "أساسي", en: "Basic" }, price: "0", highlight: false },
         { name: { ar: "احترافي", en: "Pro" }, price: "19", highlight: true },
-        { name: { ar: "أعمال", en: "Business" }, price: "49", highlight: false },
+        {
+          name: { ar: "أعمال", en: "Business" },
+          price: "49",
+          highlight: false,
+        },
       ];
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
       <div className="mb-10">
-        {eyebrow ? <p className="label-meta mb-3">{t(eyebrow, locale)}</p> : null}
+        {eyebrow ? (
+          <p className="label-meta mb-3">{t(eyebrow, locale)}</p>
+        ) : null}
         {title ? (
           <h2 className="text-h1 font-semibold text-foreground">
             {t(title, locale)}
@@ -769,7 +975,9 @@ export function PricingCards({
           >
             <p
               className={`label-meta mb-6 ${
-                plan.highlight === true || plan.highlight === "yes" ? "text-background/50" : ""
+                plan.highlight === true || plan.highlight === "yes"
+                  ? "text-background/50"
+                  : ""
               }`}
             >
               {t(plan.name, locale) || "Plan"}
@@ -781,7 +989,9 @@ export function PricingCards({
               {plan.period ? (
                 <span
                   className={`text-sm ${
-                    plan.highlight === true || plan.highlight === "yes" ? "text-background/60" : "text-muted-foreground"
+                    plan.highlight === true || plan.highlight === "yes"
+                      ? "text-background/60"
+                      : "text-muted-foreground"
                   }`}
                 >
                   {t(plan.period, locale)}
@@ -790,9 +1000,12 @@ export function PricingCards({
             </div>
             {plan.features ? (
               <ul className="mb-8 flex-1 space-y-2 text-sm opacity-90">
-                {plan.features.split("\n").filter(Boolean).map((line) => (
-                  <li key={line}>· {line}</li>
-                ))}
+                {plan.features
+                  .split("\n")
+                  .filter(Boolean)
+                  .map((line) => (
+                    <li key={line}>· {line}</li>
+                  ))}
               </ul>
             ) : (
               <div className="mb-8 flex-1" />
@@ -833,19 +1046,23 @@ export function CtaBand({
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
       <div className="border border-border bg-card p-10 md:p-14">
-        {eyebrow ? <p className="label-meta mb-3">{t(eyebrow, locale)}</p> : null}
+        {eyebrow ? (
+          <p className="label-meta mb-3">{t(eyebrow, locale)}</p>
+        ) : null}
         {title ? (
           <h2 className="max-w-xl text-h1 font-semibold text-foreground">
             {t(title, locale)}
           </h2>
         ) : null}
         {body ? (
-          <p className="mt-4 max-w-lg text-muted-foreground">{t(body, locale)}</p>
+          <p className="mt-4 max-w-lg text-muted-foreground">
+            {t(body, locale)}
+          </p>
         ) : null}
         {ctaLabel ? (
           <a
             href={ctaHref}
-            className="mt-8 inline-flex items-center gap-1.5 rounded-sm bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-brand hover:bg-w-carbon"
+            className="transition-brand mt-8 inline-flex items-center gap-1.5 rounded-sm bg-foreground px-5 py-2.5 text-sm font-medium text-background hover:bg-w-carbon"
           >
             {t(ctaLabel, locale)} ↗
           </a>
@@ -877,7 +1094,9 @@ export function ContactBand({
     <section className="mx-auto max-w-6xl px-6 py-16">
       <div className="grid gap-8 border border-border bg-card p-8 md:grid-cols-[1fr_260px] md:p-10">
         <div>
-          {eyebrow ? <p className="label-meta mb-3">{t(eyebrow, locale)}</p> : null}
+          {eyebrow ? (
+            <p className="label-meta mb-3">{t(eyebrow, locale)}</p>
+          ) : null}
           {title ? (
             <h2 className="text-h1 font-semibold text-foreground">
               {t(title, locale)}
@@ -942,7 +1161,9 @@ export function PropertyShowcase({
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
       <div className="mb-10">
-        {eyebrow ? <p className="label-meta mb-3">{t(eyebrow, locale)}</p> : null}
+        {eyebrow ? (
+          <p className="label-meta mb-3">{t(eyebrow, locale)}</p>
+        ) : null}
         {title ? (
           <h2 className="text-h1 font-semibold text-foreground">
             {t(title, locale)}
@@ -954,7 +1175,7 @@ export function PropertyShowcase({
           <a
             key={index}
             href={item.href || "#"}
-            className="group flex flex-col border border-border bg-card transition-brand hover:bg-w-canvas"
+            className="transition-brand group flex flex-col border border-border bg-card hover:bg-w-canvas"
           >
             <div className="aspect-[4/3] overflow-hidden bg-w-canvas">
               {item.image ? (
@@ -962,7 +1183,7 @@ export function PropertyShowcase({
                 <img
                   src={item.image}
                   alt=""
-                  className="size-full object-cover transition-brand group-hover:scale-[1.02]"
+                  className="transition-brand size-full object-cover group-hover:scale-[1.02]"
                 />
               ) : (
                 <div className="flex size-full items-center justify-center">
